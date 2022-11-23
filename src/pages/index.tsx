@@ -2,7 +2,13 @@ import { ArrowDownRight } from "lucide-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { LayoutMenu, LayoutTitle } from "../components/layout";
+import {
+  LayoutMenu,
+  LayoutTitle,
+  LayoutPrev,
+  LayoutAbout,
+  LayoutCTA,
+} from "../components/layout";
 
 import { trpc } from "../utils/trpc";
 
@@ -37,6 +43,21 @@ const Home: NextPage = () => {
 
       {/* MENU */}
       <LayoutMenu />
+
+      {/* PREVIOUS */}
+      <LayoutPrev>
+        <div>Hello</div>
+      </LayoutPrev>
+
+      {/* ABOUT */}
+      <LayoutAbout>
+        <div>Hello</div>
+      </LayoutAbout>
+
+      {/* CTA */}
+      <LayoutCTA>
+        <div>Hello</div>
+      </LayoutCTA>
     </>
   );
 };
