@@ -10,6 +10,7 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
+import { Button } from "../components/ui";
 
 import { trpc } from "../utils/trpc";
 
@@ -65,7 +66,18 @@ const Home: NextPage = () => {
 
       {/* CTA */}
       <LayoutCTA>
-        <div>Hello</div>
+        <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
+          <Button variant="primary">
+            <Link href="/play">Jouer</Link>
+          </Button>
+
+          <Button>
+            <Link href="/topics">
+              Soumettre un
+              <span className="underline underline-offset-4">sujet</span>
+            </Link>
+          </Button>
+        </div>
       </LayoutCTA>
     </>
   );
