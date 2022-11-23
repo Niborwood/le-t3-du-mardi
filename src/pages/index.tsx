@@ -1,6 +1,7 @@
 import { ArrowDownRight } from "lucide-react";
 import { type NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import {
   LayoutMenu,
@@ -51,7 +52,15 @@ const Home: NextPage = () => {
 
       {/* ABOUT */}
       <LayoutAbout>
-        <div>Hello</div>
+        <div className="grid place-items-center">
+          <Image
+            src="/finite-logo.png"
+            alt="Logo"
+            className="w-24 2xl:w-48"
+            width={200}
+            height={200}
+          />
+        </div>
       </LayoutAbout>
 
       {/* CTA */}
