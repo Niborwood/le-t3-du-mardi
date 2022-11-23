@@ -2,7 +2,7 @@ import { ArrowDownRight } from "lucide-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { LayoutTitle } from "../components/layout";
+import { LayoutMenu, LayoutTitle } from "../components/layout";
 
 import { trpc } from "../utils/trpc";
 
@@ -18,6 +18,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* TITLE */}
       <LayoutTitle>
         <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-8xl 2xl:row-span-2 2xl:text-9xl">
           Le <span className="rotate-3 text-emerald-700">top 3</span> du mardi
@@ -33,6 +34,9 @@ const Home: NextPage = () => {
           />
         </p>
       </LayoutTitle>
+
+      {/* MENU */}
+      <LayoutMenu />
     </>
   );
 };

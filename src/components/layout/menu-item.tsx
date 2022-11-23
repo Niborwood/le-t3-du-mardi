@@ -1,22 +1,28 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { menus } from "./layout-menu";
+import { useRouter } from "next/router";
 
 type MenuItemProps = {
-  menuItem: typeof menus[number];
-  isActive: boolean;
+  item: typeof menus[number];
 };
 
-const MenuItem = ({ menuItem, isActive }: MenuItemProps) => {
+const MenuItem = ({ item }: MenuItemProps) => {
+  const router = useRouter();
+  const isActive =
+    router.pathname === "/"
+      ? item.id === "home"
+      : router.pathname.includes(item.id);
+
   return (
     <button className="min-w-full uppercase">
       <Link
         className="flex items-center justify-start gap-1 2xl:justify-end"
-        href={`/${menuItem.id}`}
+        href={`/${item.id}`}
         v-auto-animate
       >
         {isActive && <ArrowRight size={16} className="relative" />}
-        <div>{menuItem.name}</div>
+        <div>{item.name}</div>
       </Link>
     </button>
   );
