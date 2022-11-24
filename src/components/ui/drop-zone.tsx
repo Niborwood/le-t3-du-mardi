@@ -8,11 +8,25 @@ type DropZoneProps = {
 
 const DropZone = ({ index, item }: DropZoneProps) => {
   const [isActive, setIsActive] = useState(false);
-  const hasAnswer = true;
+  const [hasAnswer, setHasAnswer] = useState(false);
+  const [answer, setAnswer] = useState("");
 
   const toggleActive = (e: any) => {
     e.preventDefault();
     setIsActive((prev) => !prev);
+  };
+
+  const onDrop = (event: DragEvent) => {
+    const eventAnswer = event.dataTransfer?.getData("text/plain");
+
+    if (!eventAnswer) return;
+    const target = event.target as HTMLElement;
+
+    const index = +target.id.split("-")[1];
+
+    setIsActive(false);
+    setHasAnswer(true);
+    setAnswer(eventAnswer);
   };
 
   return (
@@ -29,7 +43,7 @@ const DropZone = ({ index, item }: DropZoneProps) => {
       onDragEnter={toggleActive}
       onDragLeave={toggleActive}
       onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => e.preventDefault()}
+      onDrop={(e: DragEvent) => onDrop(e)}
     >
       {hasAnswer ? (
         <span className="text-lg">
