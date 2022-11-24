@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import type { DragEventHandler } from "react";
 import { useState } from "react";
 
 type DropZoneProps = {
@@ -16,7 +17,7 @@ const DropZone = ({ index, item }: DropZoneProps) => {
     setIsActive((prev) => !prev);
   };
 
-  const onDrop = (event: DragEvent) => {
+  const onDrop = (event: DragEventHandler<HTMLDivElement>) => {
     const eventAnswer = event.dataTransfer?.getData("text/plain");
 
     if (!eventAnswer) return;
@@ -43,7 +44,7 @@ const DropZone = ({ index, item }: DropZoneProps) => {
       onDragEnter={toggleActive}
       onDragLeave={toggleActive}
       onDragOver={(e) => e.preventDefault()}
-      onDrop={(e: DragEvent) => onDrop(e)}
+      onDrop={onDrop}
     >
       {hasAnswer ? (
         <span className="text-lg">
