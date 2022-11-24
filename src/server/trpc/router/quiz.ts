@@ -13,4 +13,15 @@ export const quizRouter = router({
   getAllTopics: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany();
   }),
+  getLastTopics: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.topic.findMany({
+      take: 3,
+      where: {
+        used: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }),
 });
