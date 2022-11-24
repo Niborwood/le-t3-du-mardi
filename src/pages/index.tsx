@@ -52,7 +52,7 @@ const Home: NextPage = () => {
 
       {/* PREVIOUS */}
       <LayoutPrev>
-        <main className="space-between order-2 flex flex-col gap-2 space-y-2 rounded-md bg-zinc-50 p-2 2xl:order-none 2xl:grid-rows-4 2xl:gap-4">
+        <main className="space-between order-2 flex flex-col gap-2 rounded-md  bg-zinc-50 p-2 2xl:order-none 2xl:grid-rows-4 2xl:gap-4">
           {lastTopics.data?.map((topic, index) => (
             <button
               className={`flex flex-row-reverse items-center justify-end gap-2 rounded-md bg-zinc-50 px-4 py-6 text-left text-xl font-light uppercase text-zinc-900 transition-all hover:scale-105 lg:py-3 2xl:gap-4 2xl:py-0 2xl:row-start-${
@@ -71,15 +71,9 @@ const Home: NextPage = () => {
           ))}
 
           {/* See More */}
-          <button className="flex flex-row-reverse items-center justify-end gap-2 rounded-md border-4 border-zinc-900 px-4 py-6 font-bold uppercase text-zinc-900 transition-all hover:scale-105 lg:py-3 2xl:row-start-4  2xl:py-0">
-            <span>
-              Voir{" "}
-              <span className="font-semibold text-zinc-900">
-                plus de sujets
-              </span>
-            </span>
-            <Plus className="min-w-[30px]" />
-          </button>
+          <Button variant="secondary" size="md">
+            Voir plus de sujets
+          </Button>
         </main>
 
         <aside className="order-1 grid h-full w-full place-content-center place-items-center gap-4 rounded-lg bg-zinc-50 p-8 text-center text-4xl text-zinc-800 lg:p-4 2xl:order-none">

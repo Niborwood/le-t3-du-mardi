@@ -5,19 +5,23 @@ type ButtonProps = {
   children: ReactNode;
   variant?: "primary" | "secondary";
   disabled?: boolean;
+  size?: "sm" | "md" | "lg";
 };
 
 const Button = ({
   children,
   variant = "primary",
   disabled = false,
+  size = "lg",
 }: ButtonProps) => {
   return (
     <button
       type="button"
       className={classNames(
-        "rounded-lg p-6 font-clash text-4xl font-semibold uppercase transition-all",
+        "rounded-lg font-clash font-semibold uppercase transition-all",
         {
+          "p-2 text-lg": size === "md",
+          "p-6 text-4xl": size === "lg",
           "cursor-not-allowed opacity-50 hover:text-zinc-50": disabled,
           "bg-emerald-600 text-zinc-50 hover:bg-emerald-700 hover:text-zinc-50":
             variant === "primary",
