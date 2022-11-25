@@ -1,3 +1,6 @@
+import { useState, useMemo } from "react";
+import { trpc } from "../utils/trpc";
+
 // COMPONENTS
 import type { NextPage } from "next";
 import {
@@ -7,8 +10,37 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
+import { Button, DropZone } from "../components/ui";
 
 const Play: NextPage = () => {
+  // TRPC DATA
+  const currentTopic = trpc.quiz.getCurrentTopic.useQuery();
+  const answersMutation = trpc.quiz.postAnswers.useMutation();
+
+  const [topList, setTopList] = useState<[string, string, string]>([
+    "Premier",
+    "Deuxième",
+    "Troisième",
+  ]);
+
+  const isAbleToSubmit = useMemo(
+    () => topList.every((item) => !!item),
+    [topList]
+  );
+
+  const postAnswers = () => {
+    if (!isAbleToSubmit || !currentTopic.data) {
+      return;
+    }
+
+    answersMutation.mutateAsync({
+      topicId: currentTopic.data?.id,
+      answers: topList,
+    });
+
+    setTopList(["", "", ""]);
+  };
+
   return (
     <>
       <LayoutTitle>
@@ -19,10 +51,25 @@ const Play: NextPage = () => {
         <div>Play</div>
       </LayoutPrev>
       <LayoutAbout>
-        <div>Play</div>
+        <div className="grid h-full w-full place-items-center">
+          <Button disabled={!isAbleToSubmit} onClick={postAnswers}>
+            Valider
+          </Button>
+        </div>
       </LayoutAbout>
+
+      {/* 3 tops zones */}
       <LayoutCTA>
-        <div>Play</div>
+        <section className="grid gap-8 rounded-md bg-slate-50 p-8 lg:col-span-2 lg:grid-cols-3">
+          {topList.map((top, index) => (
+            <DropZone
+              key={index}
+              index={index}
+              item={top}
+              updateTop={setTopList}
+            />
+          ))}
+        </section>
       </LayoutCTA>
     </>
   );

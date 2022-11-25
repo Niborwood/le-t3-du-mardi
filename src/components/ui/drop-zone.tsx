@@ -1,10 +1,12 @@
 import classNames from "classnames";
 import type { DragEventHandler } from "react";
 import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 type DropZoneProps = {
   index: number;
-  item: any;
+  item: string;
+  updateTop: Dispatch<SetStateAction<[string, string, string]>>;
 };
 
 const DropZone = ({ index, item }: DropZoneProps) => {
@@ -50,7 +52,7 @@ const DropZone = ({ index, item }: DropZoneProps) => {
         <span className="text-lg">
           TOP {index + 1}
           <br />
-          {item.answer}
+          {item}
         </span>
       ) : (
         <span>TOP {index + 1}</span>

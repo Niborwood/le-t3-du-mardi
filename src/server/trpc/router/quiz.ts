@@ -10,6 +10,8 @@ export const quizRouter = router({
         greeting: `Hello ${input?.text ?? "world"}`,
       };
     }),
+
+  // Get procedures
   getAllTopics: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany();
   }),
@@ -24,4 +26,27 @@ export const quizRouter = router({
       },
     });
   }),
+  getCurrentTopic: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.topic.findFirst({
+      where: {
+        used: false,
+      },
+      orderBy: {
+        votes: "desc",
+      },
+    });
+  }),
+
+  // Post procedures
+  postAnswers: publicProcedure
+    .input(z.object({ answers: z.array(z.string()), topicId: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.answer.createMany({
+        data: input.answers.map((answer, index) => ({
+          name: answer,
+          score: input.answers.length - index,
+          topicId: input.topicId,
+        })),
+      });
+    }),
 });

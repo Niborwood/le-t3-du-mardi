@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowLeft, ArrowRight, Plus } from "lucide-react";
+import { ArrowDownRight, ArrowLeft, ArrowRight } from "lucide-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";

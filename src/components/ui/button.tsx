@@ -6,6 +6,7 @@ type ButtonProps = {
   variant?: "primary" | "secondary";
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
+  onClick?: () => void;
 };
 
 const Button = ({
@@ -13,10 +14,12 @@ const Button = ({
   variant = "primary",
   disabled = false,
   size = "lg",
+  onClick,
 }: ButtonProps) => {
   return (
     <button
       type="button"
+      onClick={onClick}
       className={classNames(
         "rounded-lg font-clash font-semibold uppercase transition-all",
         {
