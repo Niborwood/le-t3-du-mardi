@@ -11,7 +11,7 @@ export const quizRouter = router({
       };
     }),
 
-  // Get procedures
+  // Query procedures
   getAllTopics: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany();
   }),
@@ -37,9 +37,14 @@ export const quizRouter = router({
     });
   }),
 
-  // Post procedures
+  // Mutation procedures
   postAnswers: publicProcedure
-    .input(z.object({ answers: z.array(z.string()), topicId: z.string() }))
+    .input(
+      z.object({
+        answers: z.array(z.string().min(1).trim()),
+        topicId: z.string().cuid(),
+      })
+    )
     .mutation(({ ctx, input }) => {
       return ctx.prisma.answer.createMany({
         data: input.answers.map((answer, index) => ({

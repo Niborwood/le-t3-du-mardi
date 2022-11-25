@@ -24,7 +24,6 @@ export const menus = [
 ] as const;
 
 const LayoutMenu = () => {
-  console.log("Hey hey hey");
   return (
     <nav className="hidden rounded-lg lg:order-2 lg:grid 2xl:order-none 2xl:grid-cols-2">
       <div className="grid lg:items-center lg:px-4 2xl:col-start-2 2xl:place-items-center">
