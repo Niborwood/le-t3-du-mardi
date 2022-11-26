@@ -64,6 +64,7 @@ export const quizRouter = router({
           name: answer,
           score: input.answers.length - index,
           topicId: input.topicId,
+          userId: ctx.session?.user?.id || "claxv5jgh0006tojg4pflb1ad", // test ID
         })),
       });
     }),

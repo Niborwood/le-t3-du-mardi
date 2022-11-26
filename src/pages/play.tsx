@@ -1,6 +1,7 @@
 import type { FormEvent } from "react";
 import { useState, useMemo } from "react";
 import { trpc } from "../utils/trpc";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 // COMPONENTS
 import type { NextPage } from "next";
@@ -14,6 +15,8 @@ import {
 import { Button, DropZone, DraggableLabel } from "../components/ui";
 
 const Play: NextPage = () => {
+  // AUTOANIMATE
+
   // TRPC DATA
   const { data: currentTopic, isLoading: currentTopicIsLoading } =
     trpc.quiz.getCurrentTopic.useQuery();
@@ -21,6 +24,7 @@ const Play: NextPage = () => {
     trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id);
   const answersMutation = trpc.quiz.postAnswers.useMutation();
 
+  // STATE
   const [topList, setTopList] = useState<[string, string, string]>([
     "",
     "",
@@ -29,12 +33,24 @@ const Play: NextPage = () => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [inputAnswer, setInputAnswer] = useState<string>("");
   const [inputSearch, setInputSearch] = useState<string>("");
+  const [parent] = useAutoAnimate(/* optional config */);
 
+  // COMPUTED
   const isAbleToSubmit = useMemo(
     () => topList.every((item) => !!item),
     [topList]
   );
 
+  const filteredResults = useMemo(() => {
+    if (!currentAnswers) return [];
+    if (!inputSearch) return currentAnswers;
+
+    return currentAnswers.filter((answer) =>
+      answer.name.toLowerCase().includes(inputSearch.toLowerCase())
+    );
+  }, [currentAnswers, inputSearch]);
+
+  // FORM
   const onSubmitAnswer = (event: FormEvent) => {
     event.preventDefault();
 
@@ -65,15 +81,6 @@ const Play: NextPage = () => {
 
     setTopList(["", "", ""]);
   };
-
-  const filteredResults = useMemo(() => {
-    if (!currentAnswers) return [];
-    if (!inputSearch) return currentAnswers;
-
-    return currentAnswers.filter((answer) =>
-      answer.name.toLowerCase().includes(inputSearch.toLowerCase())
-    );
-  }, [currentAnswers, inputSearch]);
 
   return (
     <>
@@ -106,7 +113,10 @@ const Play: NextPage = () => {
               </button>
             </form>
 
-            <div className="mt-8 grid gap-2 lg:grid-cols-3 lg:place-items-center 2xl:mt-16 2xl:grid-cols-1 2xl:place-items-start">
+            <div
+              className="mt-8 grid gap-2 lg:grid-cols-3 lg:place-items-center 2xl:mt-16 2xl:grid-cols-1 2xl:place-items-start"
+              ref={parent}
+            >
               {answers.map((answer) => (
                 <DraggableLabel key={answer} answer={answer} type="answer" />
               ))}
@@ -132,7 +142,7 @@ const Play: NextPage = () => {
             {/* Answers List */}
             <div
               className="mt-8 grid gap-2 lg:grid-cols-2 2xl:mt-16"
-              v-auto-animate
+              ref={parent}
             >
               {!currentAnswersIsLoading &&
                 filteredResults.map((answer) => (
