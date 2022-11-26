@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import type { Dispatch, SetStateAction, DragEventHandler } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 type DropZoneProps = {
   index: number;
@@ -9,20 +9,20 @@ type DropZoneProps = {
 };
 
 const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
-  console.log(index, item);
   const [isActive, setIsActive] = useState(false);
-  const [hasAnswer, setHasAnswer] = useState(true);
+  const [hasAnswer, setHasAnswer] = useState(false);
 
-  const toggleActive = (e: DragEventHandler<HTMLDivElement>) => {
+  const toggleActive = (e: DragEvent) => {
     e.preventDefault();
     setIsActive((prev) => !prev);
   };
 
-  const onDrop = (event: DragEventHandler<HTMLDivElement>) => {
+  const onDrop = (event: DragEvent) => {
     const eventAnswer = event.dataTransfer?.getData("text/plain");
 
     if (!eventAnswer) return;
-    const target = event.target as HTMLElement;
+    const target = event.target;
+    if (!target) return;
 
     const index = +target.id.split("-")[1];
 
@@ -31,7 +31,7 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
     updateTop((prev) => {
       const newTop = [...prev];
       newTop[index] = eventAnswer;
-      return newTop;
+      return newTop as [string, string, string];
     });
   };
 

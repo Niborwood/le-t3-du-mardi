@@ -11,21 +11,24 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
-import { Button, DropZone } from "../components/ui";
+import { Button, DropZone, DraggableLabel } from "../components/ui";
 
 const Play: NextPage = () => {
   // TRPC DATA
-  const { data: currentTopic, isLoading } =
+  const { data: currentTopic, isLoading: currentTopicIsLoading } =
     trpc.quiz.getCurrentTopic.useQuery();
+  const { data: currentAnswers, isLoading: currentAnswersIsLoading } =
+    trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id);
   const answersMutation = trpc.quiz.postAnswers.useMutation();
 
   const [topList, setTopList] = useState<[string, string, string]>([
-    "Premier",
-    "Deuxième",
-    "Troisième",
+    "",
+    "",
+    "",
   ]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [inputAnswer, setInputAnswer] = useState<string>("");
+  const [inputSearch, setInputSearch] = useState<string>("");
 
   const isAbleToSubmit = useMemo(
     () => topList.every((item) => !!item),
@@ -50,7 +53,7 @@ const Play: NextPage = () => {
     setInputAnswer("");
   };
 
-  const postAnswers = () => {
+  const postAnswers = async () => {
     if (!isAbleToSubmit || !currentTopic) {
       return;
     }
@@ -63,11 +66,21 @@ const Play: NextPage = () => {
     setTopList(["", "", ""]);
   };
 
+  const filteredResults = useMemo(() => {
+    if (!currentAnswers) return [];
+    if (!inputSearch) return currentAnswers;
+
+    return currentAnswers.filter((answer) =>
+      answer.name.toLowerCase().includes(inputSearch.toLowerCase())
+    );
+  }, [currentAnswers, inputSearch]);
+
   return (
     <>
       {/* ANSWERS */}
       <LayoutTitle>
         <section className="grid gap-8 p-2 2xl:col-span-2 2xl:grid-cols-2 2xl:gap-16 2xl:p-8">
+          {/* New answers from the player */}
           <div>
             <h3 className="border-zinc-900 pb-2 text-xl 2xl:border-b-2 2xl:text-3xl">
               Proposez une réponse :
@@ -95,18 +108,40 @@ const Play: NextPage = () => {
 
             <div className="mt-8 grid gap-2 lg:grid-cols-3 lg:place-items-center 2xl:mt-16 2xl:grid-cols-1 2xl:place-items-start">
               {answers.map((answer) => (
-                <div
-                  key={answer}
-                  className="h-full w-full cursor-move rounded-md border-2 border-dashed border-zinc-900 p-2 font-semibold 2xl:p-6 2xl:text-2xl"
-                  draggable="true"
-                  id={answer}
-                  onDragStart={(e) =>
-                    e.dataTransfer.setData("text/plain", answer)
-                  }
-                >
-                  {answer}
-                </div>
+                <DraggableLabel key={answer} answer={answer} type="answer" />
               ))}
+            </div>
+          </div>
+
+          {/* Pre-existing answers */}
+          <div>
+            <h3 className="border-zinc-900 pb-2 text-xl 2xl:border-b-2 2xl:text-3xl">
+              Ou choisissez-en une déjà donnée :
+            </h3>
+
+            {/* Search Form */}
+            <input
+              className="w-full border-b-4 border-zinc-800 bg-transparent p-4 tracking-wider outline-none focus:ring-0"
+              type="text"
+              placeholder="Terme à rechercher"
+              name="answer"
+              value={inputSearch}
+              onChange={(e) => setInputSearch(e.target.value)}
+            />
+
+            {/* Answers List */}
+            <div
+              className="mt-8 grid gap-2 lg:grid-cols-2 2xl:mt-16"
+              v-auto-animate
+            >
+              {!currentAnswersIsLoading &&
+                filteredResults.map((answer) => (
+                  <DraggableLabel
+                    key={answer.name}
+                    answer={answer.name}
+                    type="search"
+                  />
+                ))}
             </div>
           </div>
         </section>
@@ -120,7 +155,7 @@ const Play: NextPage = () => {
             <span className="font-archivo font-extralight">TOP 3 </span>
             <br />
             <span className="text-7xl font-bold text-zinc-50">
-              {!isLoading && currentTopic?.name}
+              {!currentTopicIsLoading && currentTopic?.name}
             </span>
           </h2>
         </section>

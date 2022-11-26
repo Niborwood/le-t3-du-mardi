@@ -36,6 +36,19 @@ export const quizRouter = router({
       },
     });
   }),
+  getCurrentAnswers: publicProcedure
+    .input(z.string().cuid().optional())
+    .query(({ ctx, input }) => {
+      if (!input) return [];
+
+      return ctx.prisma.answer.groupBy({
+        by: ["name"],
+        where: {
+          topicId: input,
+          banned: false,
+        },
+      });
+    }),
 
   // Mutation procedures
   postAnswers: publicProcedure
