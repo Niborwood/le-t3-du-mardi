@@ -172,7 +172,7 @@ const Play: NextPage = () => {
       </LayoutPrev>
 
       {/* VALIDATE BUTTON */}
-      <LayoutAbout>
+      <LayoutAbout logo={false}>
         <div className="grid h-full w-full place-items-center">
           <Button disabled={!isAbleToSubmit} onClick={postAnswers}>
             Valider

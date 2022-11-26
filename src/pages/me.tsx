@@ -9,9 +9,12 @@ import {
   LayoutTitle,
 } from "../components/layout";
 import { Button } from "../components/ui";
-import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
+import classNames from "classnames";
 
 const Me: NextPage = () => {
+  const { data: sessionData } = useSession();
+
   return (
     <>
       {/* Title */}
@@ -19,24 +22,37 @@ const Me: NextPage = () => {
         <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-8xl 2xl:row-span-2 2xl:text-9xl">
           Le <span className="rotate-3 text-emerald-600">profil</span> du mardi
         </h1>
+        {!sessionData ? (
+          <div>Not connected</div>
+        ) : (
+          <div>Connected. Hello {sessionData.user?.name + " !" || "!"}</div>
+        )}
       </LayoutTitle>
 
       <LayoutMenu />
 
-      <LayoutPrev />
+      <LayoutPrev>
+        {sessionData && (
+          <div className="col-span-2 rounded-md bg-zinc-50 p-4">
+            <h2 className="text-zinc-900">Historique</h2>
+          </div>
+        )}
+      </LayoutPrev>
+
       <LayoutAbout />
 
       <LayoutCTA>
-        <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
-          {/* <Button variant="secondary">
-            <Link href="/topics">
-              <span className="underline underline-offset-4">Voter</span> pour
-              un sujet
-            </Link>
-          </Button> */}
+        <div className="grid gap-4 lg:col-span-2 lg:grid-cols-1 2xl:grid-cols-2">
+          {sessionData && <Button variant="secondary">Mes réponses</Button>}
 
-          <Button variant="primary" className="2xl:col-start-2">
-            <Link href="/play">Me connecter</Link>
+          <Button
+            variant="primary"
+            onClick={sessionData ? () => signOut() : () => signIn()}
+            className={classNames({
+              "col-start-2": !sessionData,
+            })}
+          >
+            {sessionData ? "Déconnexion" : "Me connecter"}
           </Button>
         </div>
       </LayoutCTA>
