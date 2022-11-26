@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useState, useMemo } from "react";
 import { trpc } from "../utils/trpc";
 
@@ -14,7 +15,8 @@ import { Button, DropZone } from "../components/ui";
 
 const Play: NextPage = () => {
   // TRPC DATA
-  const currentTopic = trpc.quiz.getCurrentTopic.useQuery();
+  const { data: currentTopic, isLoading } =
+    trpc.quiz.getCurrentTopic.useQuery();
   const answersMutation = trpc.quiz.postAnswers.useMutation();
 
   const [topList, setTopList] = useState<[string, string, string]>([
@@ -22,19 +24,39 @@ const Play: NextPage = () => {
     "Deuxième",
     "Troisième",
   ]);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [inputAnswer, setInputAnswer] = useState<string>("");
 
   const isAbleToSubmit = useMemo(
     () => topList.every((item) => !!item),
     [topList]
   );
 
+  const onSubmitAnswer = (event: FormEvent) => {
+    event.preventDefault();
+
+    // If nothing in answer or answer already in list, do nothing
+    if (!inputAnswer || answers.includes(inputAnswer)) return;
+
+    // If answerList is > 3, remove first item and replace with new answer
+    if (answers.length >= 3) {
+      setAnswers((prev) => [...prev.slice(1), inputAnswer]);
+    } else {
+      // Else just push new answer
+      setAnswers([...answers, inputAnswer]);
+    }
+
+    // Clean the input
+    setInputAnswer("");
+  };
+
   const postAnswers = () => {
-    if (!isAbleToSubmit || !currentTopic.data) {
+    if (!isAbleToSubmit || !currentTopic) {
       return;
     }
 
     answersMutation.mutateAsync({
-      topicId: currentTopic.data?.id,
+      topicId: currentTopic.id,
       answers: topList,
     });
 
@@ -43,13 +65,68 @@ const Play: NextPage = () => {
 
   return (
     <>
+      {/* ANSWERS */}
       <LayoutTitle>
-        <div>Play</div>
+        <section className="grid gap-8 p-2 2xl:col-span-2 2xl:grid-cols-2 2xl:gap-16 2xl:p-8">
+          <div>
+            <h3 className="border-zinc-900 pb-2 text-xl 2xl:border-b-2 2xl:text-3xl">
+              Proposez une réponse :
+            </h3>
+
+            <form
+              onSubmit={onSubmitAnswer}
+              className="mt-4 flex w-full flex-col justify-between gap-8 lg:flex-row"
+            >
+              <input
+                className="w-full border-b-4 border-zinc-800 bg-transparent p-4 tracking-wider outline-none focus:ring-0"
+                type="text"
+                placeholder="Votre réponse"
+                name="answer"
+                value={inputAnswer}
+                onChange={(e) => setInputAnswer(e.target.value)}
+              />
+              <button
+                className="rounded-md bg-emerald-600 p-4 font-bold text-zinc-50"
+                type="submit"
+              >
+                Enregistrer
+              </button>
+            </form>
+
+            <div className="mt-8 grid gap-2 lg:grid-cols-3 lg:place-items-center 2xl:mt-16 2xl:grid-cols-1 2xl:place-items-start">
+              {answers.map((answer) => (
+                <div
+                  key={answer}
+                  className="h-full w-full cursor-move rounded-md border-2 border-dashed border-zinc-900 p-2 font-semibold 2xl:p-6 2xl:text-2xl"
+                  draggable="true"
+                  id={answer}
+                  onDragStart={(e) =>
+                    e.dataTransfer.setData("text/plain", answer)
+                  }
+                >
+                  {answer}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </LayoutTitle>
       <LayoutMenu />
+
+      {/* TOP TITLE */}
       <LayoutPrev>
-        <div>Play</div>
+        <section className="col-span-2 grid items-center rounded-md bg-emerald-600 p-8 font-clash text-3xl font-semibold text-zinc-50/90">
+          <h2>
+            <span className="font-archivo font-extralight">TOP 3 </span>
+            <br />
+            <span className="text-7xl font-bold text-zinc-50">
+              {!isLoading && currentTopic?.name}
+            </span>
+          </h2>
+        </section>
       </LayoutPrev>
+
+      {/* VALIDATE BUTTON */}
       <LayoutAbout>
         <div className="grid h-full w-full place-items-center">
           <Button disabled={!isAbleToSubmit} onClick={postAnswers}>
@@ -58,7 +135,7 @@ const Play: NextPage = () => {
         </div>
       </LayoutAbout>
 
-      {/* 3 tops zones */}
+      {/* DROP ZONES */}
       <LayoutCTA>
         <section className="grid gap-8 rounded-md lg:col-span-2 lg:grid-cols-3">
           {topList.map((top, index) => (
