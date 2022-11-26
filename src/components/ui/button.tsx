@@ -7,6 +7,7 @@ type ButtonProps = {
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
   onClick?: () => void;
+  className?: string;
 };
 
 const Button = ({
@@ -15,6 +16,7 @@ const Button = ({
   disabled = false,
   size = "lg",
   onClick,
+  className,
 }: ButtonProps) => {
   return (
     <button
@@ -30,7 +32,8 @@ const Button = ({
             variant === "primary",
           "border-4 border-zinc-900 bg-transparent text-zinc-900 hover:border-emerald-600 hover:text-emerald-600":
             variant !== "primary",
-        }
+        },
+        className
       )}
     >
       {children}

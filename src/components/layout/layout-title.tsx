@@ -1,11 +1,12 @@
 import classNames from "classnames";
+import type { ReactNode } from "react";
 
 const LayoutTitle = ({
   children,
   empty = false,
 }: {
-  children?: React.ReactNode;
-  empty: boolean;
+  children: ReactNode;
+  empty?: boolean;
 }) => {
   return (
     <section
