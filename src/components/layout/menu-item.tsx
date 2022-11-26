@@ -18,8 +18,7 @@ const MenuItem = ({ item }: MenuItemProps) => {
     <button className="min-w-full uppercase">
       <Link
         className="flex items-center justify-start gap-1 2xl:justify-end"
-        href={`/${item.id}`}
-        v-auto-animate
+        href={`/${item.id === "home" ? "/" : item.id}`}
       >
         {isActive && <ArrowRight size={16} className="relative" />}
         <div>{item.name}</div>

@@ -74,7 +74,7 @@ const Home: NextPage = () => {
 
           {/* See More */}
           <Button variant="secondary" size="md">
-            Voir plus de sujets
+            Historique
           </Button>
         </main>
 

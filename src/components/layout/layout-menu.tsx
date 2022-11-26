@@ -14,8 +14,8 @@ export const menus = [
     name: "Sujets",
   },
   {
-    id: "log",
-    name: "Journal",
+    id: "me",
+    name: "Moi",
   },
   {
     id: "about",

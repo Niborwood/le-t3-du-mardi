@@ -164,7 +164,7 @@ const Play: NextPage = () => {
           <h2>
             <span className="font-archivo font-extralight">TOP 3 </span>
             <br />
-            <span className="text-7xl font-bold text-zinc-50">
+            <span className="text-7xl font-bold text-zinc-50" ref={parent}>
               {!currentTopicIsLoading && currentTopic?.name}
             </span>
           </h2>
