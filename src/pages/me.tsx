@@ -22,11 +22,16 @@ const Me: NextPage = () => {
         <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-8xl 2xl:row-span-2 2xl:text-9xl">
           Le <span className="rotate-3 text-emerald-600">profil</span> du mardi
         </h1>
-        {!sessionData ? (
-          <div>Not connected</div>
-        ) : (
-          <div>Connected. Hello {sessionData.user?.name + " !" || "!"}</div>
-        )}
+        <LayoutTitle.Footer>
+          {!sessionData ? (
+            <div>
+              Non connecté. Vous devez vous inscrire ou vous connecter pour
+              participer.
+            </div>
+          ) : (
+            <div>Hello {sessionData.user?.name + " !" || "!"}</div>
+          )}
+        </LayoutTitle.Footer>
       </LayoutTitle>
 
       <LayoutMenu />

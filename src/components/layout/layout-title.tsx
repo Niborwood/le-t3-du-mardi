@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ArrowDownRight } from "lucide-react";
 import type { ReactNode } from "react";
 
 const LayoutTitle = ({
@@ -22,4 +23,17 @@ const LayoutTitle = ({
   );
 };
 
+const Footer = ({ children }: { children: ReactNode }) => {
+  return (
+    <div className="flex flex-col items-end justify-between gap-4 border-t-2 border-zinc-800 py-4 text-lg 2xl:flex-row 2xl:text-2xl">
+      <span>{children}</span>
+      <ArrowDownRight
+        className="relative top-1 rotate-45 2xl:rotate-0"
+        size={40}
+      />
+    </div>
+  );
+};
+
+LayoutTitle.Footer = Footer;
 export default LayoutTitle;
