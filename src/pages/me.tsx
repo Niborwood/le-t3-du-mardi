@@ -38,9 +38,14 @@ const Me: NextPage = () => {
 
       <LayoutPrev>
         {sessionData && (
-          <div className="col-span-2 rounded-md bg-zinc-50 p-4">
-            <h2 className="text-zinc-900">Historique</h2>
-          </div>
+          <>
+            <div className="rounded-md bg-zinc-50 p-4 text-xl">
+              <h2 className="text-zinc-900">Historique </h2>
+            </div>
+            <div className="rounded-md bg-zinc-50 p-4 text-xl">
+              <h2 className="text-zinc-900">Email</h2>
+            </div>
+          </>
         )}
       </LayoutPrev>
 
@@ -53,12 +58,19 @@ const Me: NextPage = () => {
           <Button
             variant="primary"
             onClick={sessionData ? () => signOut() : () => signIn()}
-            className={classNames({
-              "col-start-2": !sessionData,
-            })}
           >
             {sessionData ? "Déconnexion" : "Me connecter"}
           </Button>
+
+          {!sessionData && (
+            <p className="flex items-end justify-end text-sm 2xl:w-2/3">
+              En vous inscrivant, vous acceptez de recevoir un (1) email par
+              semaine, le mardi, à 9h et quelques, qui n&apos;aura d&apos;autre
+              but que de vous rappeler que c&apos;est mardi et que c&apos;est
+              top 3. Vous aurez la possibilité de vous désinscrire de cet envoi
+              à tout moment.
+            </p>
+          )}
         </div>
       </LayoutCTA>
     </>
