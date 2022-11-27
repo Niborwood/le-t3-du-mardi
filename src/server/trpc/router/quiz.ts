@@ -51,6 +51,7 @@ export const quizRouter = router({
     }),
   getPastTopics: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany({
+      take: 4,
       where: {
         used: true,
       },
