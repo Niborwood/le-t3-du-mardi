@@ -193,7 +193,7 @@ const Play: NextPage = () => {
 
       {/* DROP ZONES */}
       <LayoutCTA>
-        <section className="grid gap-8 rounded-md lg:col-span-2 lg:grid-cols-3">
+        <section className="grid gap-8 rounded-md 2xl:col-span-2 2xl:grid-cols-3">
           {topList.map((top, index) => (
             <DropZone
               key={index}
