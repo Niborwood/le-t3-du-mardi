@@ -49,6 +49,16 @@ export const quizRouter = router({
         },
       });
     }),
+  getPastTopics: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.topic.findMany({
+      where: {
+        used: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }),
 
   // Mutation procedures
   postAnswers: publicProcedure
