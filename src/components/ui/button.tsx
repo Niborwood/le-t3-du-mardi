@@ -27,7 +27,7 @@ const Button = ({
       type="button"
       onClick={onClick}
       className={classNames(
-        "w-full rounded-lg font-clash font-semibold uppercase transition-all",
+        "h-full w-full rounded-lg font-clash font-semibold uppercase transition-all",
         {
           "p-2 text-lg": size === "md",
           "p-6 text-4xl": size === "lg",
