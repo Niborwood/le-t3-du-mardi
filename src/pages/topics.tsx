@@ -36,10 +36,10 @@ const Topics: NextPage = () => {
           </div>
           <div className="grid grid-rows-2 gap-4">
             <Button variant="secondary">
-              <ChevronUp size={60} className="m-auto" />
+              {/* <ChevronUp size={60} className="m-auto" /> */}+ 1
             </Button>
             <Button variant="secondary">
-              <ChevronDown size={60} className="m-auto" />
+              {/* <ChevronDown size={60} className="m-auto" /> */}- 1
             </Button>
           </div>
         </div>
