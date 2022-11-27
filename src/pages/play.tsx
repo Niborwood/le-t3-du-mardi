@@ -2,6 +2,8 @@ import type { FormEvent } from "react";
 import { useState, useMemo } from "react";
 import { trpc } from "../utils/trpc";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 // COMPONENTS
 import type { NextPage } from "next";
@@ -16,6 +18,11 @@ import { Button, DropZone, DraggableLabel } from "../components/ui";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
+  const [parent] = useAutoAnimate(/* optional config */);
+
+  // NEXT-AUTH
+  const { data: sessionData } = useSession();
+  const router = useRouter();
 
   // TRPC DATA
   const { data: currentTopic, isLoading: currentTopicIsLoading } =
@@ -33,9 +40,8 @@ const Play: NextPage = () => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [inputAnswer, setInputAnswer] = useState<string>("");
   const [inputSearch, setInputSearch] = useState<string>("");
-  const [parent] = useAutoAnimate(/* optional config */);
 
-  // COMPUTED
+  // DERIVED
   const isAbleToSubmit = useMemo(
     () => topList.every((item) => !!item),
     [topList]
@@ -81,6 +87,11 @@ const Play: NextPage = () => {
 
     setTopList(["", "", ""]);
   };
+
+  // REROUTE IF NOT LOGGED IN
+  if (!sessionData) {
+    router.replace("/me");
+  }
 
   return (
     <>

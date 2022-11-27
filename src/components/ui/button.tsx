@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import classNames from "classnames";
+import Link from "next/link";
 
 type ButtonProps = {
   children: ReactNode;
@@ -8,6 +9,7 @@ type ButtonProps = {
   size?: "sm" | "md" | "lg";
   onClick?: () => void;
   className?: string;
+  href?: string;
 };
 
 const Button = ({
@@ -17,13 +19,15 @@ const Button = ({
   size = "lg",
   onClick,
   className,
+  href,
 }: ButtonProps) => {
-  return (
+  // Generating button
+  const button = (
     <button
       type="button"
       onClick={onClick}
       className={classNames(
-        "rounded-lg font-clash font-semibold uppercase transition-all",
+        "w-full rounded-lg font-clash font-semibold uppercase transition-all",
         {
           "p-2 text-lg": size === "md",
           "p-6 text-4xl": size === "lg",
@@ -38,6 +42,14 @@ const Button = ({
     >
       {children}
     </button>
+  );
+
+  return href ? (
+    <Link className="block" href={href}>
+      {button}
+    </Link>
+  ) : (
+    button
   );
 };
 

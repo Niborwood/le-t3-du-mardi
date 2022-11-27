@@ -10,7 +10,6 @@ import {
 } from "../components/layout";
 import { Button } from "../components/ui";
 import { signIn, signOut, useSession } from "next-auth/react";
-import classNames from "classnames";
 
 const Me: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -53,13 +52,16 @@ const Me: NextPage = () => {
 
       <LayoutCTA>
         <div className="grid gap-4 lg:col-span-2 lg:grid-cols-1 2xl:grid-cols-2">
-          {sessionData && <Button variant="secondary">Mes réponses</Button>}
+          {sessionData && (
+            <Button variant="secondary">Voter pour un sujet</Button>
+          )}
 
           <Button
             variant="primary"
-            onClick={sessionData ? () => signOut() : () => signIn()}
+            onClick={sessionData ? undefined : () => signIn()}
+            href={sessionData ? "/play" : undefined}
           >
-            {sessionData ? "Déconnexion" : "Me connecter"}
+            {sessionData ? "Jouer" : "Me connecter"}
           </Button>
 
           {!sessionData && (
