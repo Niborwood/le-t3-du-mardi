@@ -60,6 +60,19 @@ export const quizRouter = router({
       },
     });
   }),
+  getTopicsToVote: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.topic.findMany({
+      where: {
+        used: false,
+        current: false,
+        users: {
+          none: {
+            userId: ctx.session?.user?.id,
+          },
+        },
+      },
+    });
+  }),
 
   // Mutation procedures
   postAnswers: publicProcedure
