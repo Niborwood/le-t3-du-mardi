@@ -99,7 +99,7 @@ const Home: NextPage = () => {
 
       {/* CTA */}
       <LayoutCTA>
-        <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
+        <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2">
           <Button variant="secondary">
             <Link href="/topics">
               <span className="underline underline-offset-4">Voter</span> pour
