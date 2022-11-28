@@ -18,7 +18,7 @@ import { Button, DropZone, DraggableLabel } from "../components/ui";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
-  const [parent] = useAutoAnimate(/* optional config */);
+  const [parent] = useAutoAnimate<HTMLDivElement>(/* optional config */);
 
   // NEXT-AUTH
   const { data: sessionData } = useSession();
@@ -89,7 +89,7 @@ const Play: NextPage = () => {
   };
 
   // REROUTE IF NOT LOGGED IN
-  if (!sessionData) {
+  if (!sessionData && typeof window !== "undefined") {
     router.replace("/me");
   }
 

@@ -24,6 +24,8 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
     const target = event.target;
     if (!target) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const index = +target.id.split("-")[1];
 
     setIsActive(false);
