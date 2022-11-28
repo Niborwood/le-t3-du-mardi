@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction, DragEventHandler } from "react";
 
 type DropZoneProps = {
   index: number;
@@ -12,12 +12,12 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
   const [isActive, setIsActive] = useState(false);
   const [hasAnswer, setHasAnswer] = useState(false);
 
-  const toggleActive = (e: DragEvent) => {
+  const toggleActive: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     setIsActive((prev) => !prev);
   };
 
-  const onDrop = (event: DragEvent) => {
+  const onDrop: DragEventHandler<HTMLDivElement> = (event) => {
     const eventAnswer = event.dataTransfer?.getData("text/plain");
 
     if (!eventAnswer) return;

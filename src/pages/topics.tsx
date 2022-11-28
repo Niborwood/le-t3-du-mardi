@@ -1,6 +1,5 @@
 import { ArrowDownRight, ChevronDown, ChevronUp } from "lucide-react";
 import type { NextPage } from "next";
-import { useState } from "react";
 import {
   LayoutAbout,
   LayoutCTA,
