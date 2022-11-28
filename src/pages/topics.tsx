@@ -33,16 +33,22 @@ const Topics: NextPage = () => {
     return refetch();
   };
 
-  // refetch topicsToVote
-
   return (
     <>
       {/* Topic list */}
       <LayoutTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
-          {pastTopics?.map((topic) => (
-            <div key={topic.id}>{topic.name}</div>
-          ))}
+        <div className="row-span-2 grid grid-rows-3">
+          <div className="row-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2"></div>
+          <div className="grid grid-cols-4 gap-4">
+            {pastTopics?.map((topic) => (
+              <button
+                key={topic.id}
+                className="grid place-items-center rounded-md border-4 border-zinc-900/70 font-clash text-xl font-bold text-zinc-900/70 transition-all hover:border-zinc-900 hover:text-zinc-900"
+              >
+                {topic.name}
+              </button>
+            ))}
+          </div>
         </div>
       </LayoutTitle>
 
@@ -82,7 +88,7 @@ const Topics: NextPage = () => {
             </div>
           </div>
         ) : (
-          <div className="col-span-2 grid place-items-center rounded-md bg-zinc-100 text-zinc-900">
+          <div className="col-span-2 grid place-items-center rounded-md bg-zinc-100 p-8 text-zinc-900">
             <div>
               <h3 className="text-2xl">Vous avez voté pour tous les sujets.</h3>
               <p>Proposez-en vous-même puisque vous êtes si malins</p>
