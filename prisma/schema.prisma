@@ -25,15 +25,27 @@ model Answer {
 }
 
 model Topic {
-  id        String   @id @default(cuid())
+  id        String          @id @default(cuid())
   name      String
-  banned    Boolean  @default(false)
-  next      Boolean  @default(false)
-  votes     Int      @default(0)
-  used      Boolean  @default(false)
+  banned    Boolean         @default(false)
+  current   Boolean         @default(false)
+  votes     Int             @default(0)
+  used      Boolean         @default(false)
   answers   Answer[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  users     TopicsOnUsers[]
+}
+
+model TopicsOnUsers {
+  topicId   String
+  topic     Topic    @relation(fields: [topicId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@id([topicId, userId])
 }
 
 // Necessary for Next auth
@@ -64,14 +76,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String          @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?         @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   answers       Answer[]
+  topics        TopicsOnUsers[]
 }
 
 model VerificationToken {
