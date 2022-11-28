@@ -1,6 +1,7 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 
 export const quizRouter = router({
   hello: publicProcedure
@@ -39,7 +40,7 @@ export const quizRouter = router({
   getCurrentAnswers: publicProcedure
     .input(z.string().cuid().optional())
     .query(({ ctx, input }) => {
-      if (!input) return [];
+      if (!input) throw new TRPCError({ code: "BAD_REQUEST" });
 
       return ctx.prisma.answer.groupBy({
         by: ["name"],
@@ -60,14 +61,14 @@ export const quizRouter = router({
       },
     });
   }),
-  getTopicToVote: publicProcedure.query(({ ctx }) => {
+  getTopicToVote: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findFirst({
       where: {
         used: false,
         current: false,
         users: {
           none: {
-            userId: ctx.session?.user?.id,
+            userId: ctx.session.user.id,
           },
         },
       },
@@ -75,7 +76,7 @@ export const quizRouter = router({
   }),
 
   // Mutation procedures
-  postAnswers: publicProcedure
+  postAnswers: protectedProcedure
     .input(
       z.object({
         answers: z.array(z.string().min(1).trim()),
@@ -88,12 +89,12 @@ export const quizRouter = router({
           name: answer,
           score: input.answers.length - index,
           topicId: input.topicId,
-          userId: ctx.session?.user?.id || "claxv5jgh0006tojg4pflb1ad", // test ID
+          userId: ctx.session.user.id || "claxv5jgh0006tojg4pflb1ad", // test ID
         })),
       });
     }),
 
-  postTopicVote: publicProcedure
+  postTopicVote: protectedProcedure
     .input(
       z.object({
         topicId: z.string().cuid(),
@@ -101,6 +102,13 @@ export const quizRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const topic = await ctx.prisma.topic.findUnique({
+        where: {
+          id: input.topicId,
+        },
+      });
+      if (!topic) throw new TRPCError({ code: "BAD_REQUEST" });
+
       await ctx.prisma.topic.update({
         where: {
           id: input.topicId,
@@ -115,7 +123,7 @@ export const quizRouter = router({
       return ctx.prisma.topicsOnUsers.create({
         data: {
           topicId: input.topicId,
-          userId: ctx.session?.user?.id || "claxv5jgh0006tojg4pflb1ad", // test ID
+          userId: ctx.session.user.id || "claxv5jgh0006tojg4pflb1ad", // test ID
         },
       });
     }),
