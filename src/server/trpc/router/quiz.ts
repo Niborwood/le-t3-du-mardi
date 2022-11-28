@@ -60,8 +60,8 @@ export const quizRouter = router({
       },
     });
   }),
-  getTopicsToVote: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.topic.findMany({
+  getTopicToVote: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.topic.findFirst({
       where: {
         used: false,
         current: false,
@@ -90,6 +90,33 @@ export const quizRouter = router({
           topicId: input.topicId,
           userId: ctx.session?.user?.id || "claxv5jgh0006tojg4pflb1ad", // test ID
         })),
+      });
+    }),
+
+  postTopicVote: publicProcedure
+    .input(
+      z.object({
+        topicId: z.string().cuid(),
+        type: z.enum(["increment", "decrement"]),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.topic.update({
+        where: {
+          id: input.topicId,
+        },
+        data: {
+          votes: {
+            [input.type]: 1,
+          },
+        },
+      });
+
+      return ctx.prisma.topicsOnUsers.create({
+        data: {
+          topicId: input.topicId,
+          userId: ctx.session?.user?.id || "claxv5jgh0006tojg4pflb1ad", // test ID
+        },
       });
     }),
 });
