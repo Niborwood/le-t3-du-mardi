@@ -66,7 +66,7 @@ const Topics: NextPage = () => {
               <p>
                 Voté le <br />
                 <span className="font-clash text-2xl font-semibold 2xl:text-4xl">
-                  {currentTopic?.votedAt.toLocaleDateString("fr-FR", {
+                  {currentTopic?.votedAt?.toLocaleDateString("fr-FR", {
                     weekday: "long",
                     year: "numeric",
                     month: "long",
