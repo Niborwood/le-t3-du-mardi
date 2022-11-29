@@ -1,5 +1,7 @@
+import classNames from "classnames";
 import { ArrowDownRight, ChevronDown, ChevronUp } from "lucide-react";
 import type { NextPage } from "next";
+import { useState } from "react";
 import {
   LayoutAbout,
   LayoutCTA,
@@ -11,8 +13,10 @@ import { Button } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
+  // TRPC
   const { data: pastTopics, isLoading: pastTopicsIsLoading } =
     trpc.quiz.getPastTopics.useQuery();
+  console.log("🚀 ~ file: topics.tsx ~ line 18 ~ pastTopics", pastTopics);
 
   const {
     data: topicToVote,
@@ -22,6 +26,15 @@ const Topics: NextPage = () => {
 
   const mutateVoteTopic = trpc.quiz.postTopicVote.useMutation();
 
+  // STATE
+  const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
+    pastTopics?.[0]?.id
+  );
+
+  // DERIVED
+  const currentTopic = pastTopics?.find((t) => t.id === currentTopicId);
+
+  // VOTE
   const handleVote = (type: "increment" | "decrement") => {
     if (!topicToVote) return;
     mutateVoteTopic.mutateAsync({
@@ -37,13 +50,56 @@ const Topics: NextPage = () => {
     <>
       {/* Topic list */}
       <LayoutTitle>
-        <div className="row-span-2 grid grid-rows-3">
-          <div className="row-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2"></div>
-          <div className="grid grid-cols-4 gap-4">
+        <div className="row-span-2 grid grid-rows-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+            {/* Title */}
+            <h2 className="flex flex-col text-2xl">
+              <span>Top 3</span>
+              <span className="font-clash text-5xl font-bold 2xl:text-7xl">
+                {currentTopic?.name}
+              </span>
+            </h2>
+
+            {/* Stats */}
+            <div className="space-y-4">
+              <p>
+                Voté le <br />
+                <span className="font-clash text-2xl font-semibold 2xl:text-4xl">
+                  {currentTopic?.votedAt.toLocaleDateString("fr-FR", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </p>
+              <p>
+                Nombre de votes <br />
+                <span className="font-clash text-4xl font-semibold">128</span>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            {/* Top 1 to 3 */}
+            <div></div>
+            {/* Top 3 to 10 */}
+            <div>Hello 4 to 10</div>
+          </div>
+          <div className="grid gap-4 2xl:grid-cols-4">
             {pastTopics?.map((topic) => (
               <button
                 key={topic.id}
-                className="grid place-items-center rounded-md border-4 border-zinc-900/70 font-clash text-xl font-bold text-zinc-900/70 transition-all hover:border-zinc-900 hover:text-zinc-900"
+                onClick={() => setCurrentTopicId(topic.id)}
+                className={classNames(
+                  "grid place-items-center rounded-md border-4 font-clash text-xl font-bold transition-all hover:border-zinc-900 hover:text-zinc-900",
+                  {
+                    "border-zinc-900 text-zinc-900":
+                      topic.id === currentTopicId,
+                    "border-zinc-900/30 text-zinc-900/30":
+                      topic.id !== currentTopicId,
+                  }
+                )}
               >
                 {topic.name}
               </button>

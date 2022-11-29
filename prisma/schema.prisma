@@ -32,6 +32,7 @@ model Topic {
   votes     Int             @default(0)
   used      Boolean         @default(false)
   answers   Answer[]
+  votedAt   DateTime?
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
   users     TopicsOnUsers[]

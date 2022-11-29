@@ -49,7 +49,7 @@ export const quizRouter = router({
         used: true,
       },
       orderBy: {
-        createdAt: "desc",
+        votedAt: "desc",
       },
     });
   }),
