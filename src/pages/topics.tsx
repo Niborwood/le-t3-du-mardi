@@ -55,8 +55,8 @@ const Topics: NextPage = () => {
     <>
       {/* Topic list */}
       <LayoutTitle>
-        <div className="row-span-2 grid grid-rows-6 gap-4">
-          <div className="row-span-2 grid grid-cols-3 border-b-4 border-zinc-900 md:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3">
+        <div className="space-y-4 lg:row-span-2 lg:grid lg:grid-rows-6 lg:gap-4 lg:space-y-0">
+          <div className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3">
             {/* Title */}
             <h2 className="col-span-2 flex flex-col text-2xl">
               <span>Top 3</span>
@@ -79,7 +79,7 @@ const Topics: NextPage = () => {
                 </span>
               </p>
               <p>
-                Nombre de points <br />
+                Nombre de votes <br />
                 <span className="font-clash text-4xl font-semibold">
                   {currentTopic?._count.answers}
                 </span>
@@ -87,9 +87,9 @@ const Topics: NextPage = () => {
             </div>
           </div>
 
-          <div className="row-span-3 grid grid-cols-2">
+          <div className="lg:row-span-3 lg:grid lg:grid-cols-2">
             {/* Top 1 to 3 */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 lg:grid-cols-2">
               {/* Top 1 */}
               <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
                 <span className="font-clash text-7xl font-bold">1. </span>
@@ -102,7 +102,7 @@ const Topics: NextPage = () => {
               </div>
 
               {/* Top 2 & 3 */}
-              <div className="grid grid-rows-2 p-2">
+              <div className="mb-4 grid grid-rows-2 2xl:mb-0 2xl:p-2">
                 {topAnswers?.slice(1, 3).map((answer, index) => (
                   <div className="row-span-2 flex flex-col" key={answer.name}>
                     <span className="font-clash text-3xl font-semibold">
@@ -115,7 +115,7 @@ const Topics: NextPage = () => {
               </div>
             </div>
             {/* Top 3 to 10 */}
-            <div className="grid grid-flow-col grid-rows-3 gap-2">
+            <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-2">
               {topAnswers?.slice(3, 12).map((answer, index) => (
                 <div key={answer.name}>
                   <p className="font-clash text-lg font-semibold">
