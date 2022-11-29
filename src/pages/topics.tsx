@@ -16,7 +16,7 @@ const Topics: NextPage = () => {
   const { data: pastTopics, isLoading: pastTopicsIsLoading } =
     trpc.quiz.getPastTopics.useQuery(undefined, {
       onSuccess: (data) => {
-        setCurrentTopicId(data[0]?.id);
+        if (!currentTopicId) setCurrentTopicId(data[0]?.id);
       },
     });
 
@@ -55,12 +55,12 @@ const Topics: NextPage = () => {
     <>
       {/* Topic list */}
       <LayoutTitle>
-        <div className="row-span-2 grid grid-rows-3 gap-4">
-          <div className="grid grid-cols-1 border-b-4 border-zinc-900 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+        <div className="row-span-2 grid grid-rows-6 gap-4">
+          <div className="row-span-2 grid grid-cols-3 border-b-4 border-zinc-900 md:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3">
             {/* Title */}
-            <h2 className="flex flex-col text-2xl">
+            <h2 className="col-span-2 flex flex-col text-2xl">
               <span>Top 3</span>
-              <span className="font-clash text-5xl font-bold 2xl:text-7xl">
+              <span className="font-clash text-4xl font-bold 2xl:text-6xl">
                 {currentTopic?.name}
               </span>
             </h2>
@@ -69,7 +69,7 @@ const Topics: NextPage = () => {
             <div className="space-y-4">
               <p>
                 Voté le <br />
-                <span className="font-clash text-2xl font-semibold 2xl:text-4xl">
+                <span className="font-clash text-2xl font-semibold 2xl:text-2xl">
                   {currentTopic?.votedAt?.toLocaleDateString("fr-FR", {
                     weekday: "long",
                     year: "numeric",
@@ -79,7 +79,7 @@ const Topics: NextPage = () => {
                 </span>
               </p>
               <p>
-                Nombre de votes <br />
+                Nombre de points <br />
                 <span className="font-clash text-4xl font-semibold">
                   {currentTopic?._count.answers}
                 </span>
@@ -87,7 +87,7 @@ const Topics: NextPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2">
+          <div className="row-span-3 grid grid-cols-2">
             {/* Top 1 to 3 */}
             <div className="grid grid-cols-2 gap-4">
               {/* Top 1 */}
@@ -96,30 +96,38 @@ const Topics: NextPage = () => {
                 <span className="font-clash text-3xl font-semibold">
                   {topAnswers?.[0]?.name}
                 </span>
-                <span>{topAnswers?.[0]?._sum.score} votes</span>
+                <span className="text-xl">
+                  {topAnswers?.[0]?._sum.score} points
+                </span>
               </div>
 
               {/* Top 2 & 3 */}
               <div className="grid grid-rows-2 p-2">
-                <div className="row-span-2 flex flex-col">
-                  <span className="font-clash text-4xl font-semibold">
-                    <span className="font-bold">2.</span>{" "}
-                    {topAnswers?.[1]?.name}
-                  </span>
-                  <span>{topAnswers?.[1]?._sum.score} votes</span>
-                </div>
-
-                <div className="row-span-2 flex flex-col">
-                  <span className="font-clash text-4xl font-semibold">
-                    <span className="font-bold">3.</span>{" "}
-                    {topAnswers?.[2]?.name}
-                  </span>
-                  <span>{topAnswers?.[2]?._sum.score} votes</span>
-                </div>
+                {topAnswers?.slice(1, 3).map((answer, index) => (
+                  <div className="row-span-2 flex flex-col" key={answer.name}>
+                    <span className="font-clash text-3xl font-semibold">
+                      <span className="font-bold">{index + 2}.</span>{" "}
+                      {answer.name}
+                    </span>
+                    <span className="text-lg">{answer._sum.score} points</span>
+                  </div>
+                ))}
               </div>
             </div>
             {/* Top 3 to 10 */}
-            <div>Hello 4 to 10</div>
+            <div className="grid grid-flow-col grid-rows-3 gap-2">
+              {topAnswers?.slice(3, 12).map((answer, index) => (
+                <div key={answer.name}>
+                  <p className="font-clash text-lg font-semibold">
+                    {index + 4}. {answer.name}
+                  </p>{" "}
+                  <p>
+                    {answer._sum.score} point
+                    {answer._sum.score && answer._sum.score > 1 ? "s" : ""}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="grid gap-4 2xl:grid-cols-4">
             {pastTopics?.map((topic) => (
