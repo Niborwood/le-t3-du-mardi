@@ -36,9 +36,17 @@ export const quizRouter = router({
 
       return ctx.prisma.answer.groupBy({
         by: ["name"],
+        _sum: {
+          score: true,
+        },
         where: {
           topicId: input,
           banned: false,
+        },
+        orderBy: {
+          _sum: {
+            score: "desc",
+          },
         },
       });
     }),
@@ -50,6 +58,14 @@ export const quizRouter = router({
       },
       orderBy: {
         votedAt: "desc",
+      },
+      include: {
+        _count: true,
+        answers: {
+          where: {
+            banned: false,
+          },
+        },
       },
     });
   }),

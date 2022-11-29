@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { ArrowDownRight, ChevronDown, ChevronUp } from "lucide-react";
 import type { NextPage } from "next";
 import { useState } from "react";
 import {
@@ -16,7 +15,6 @@ const Topics: NextPage = () => {
   // TRPC
   const { data: pastTopics, isLoading: pastTopicsIsLoading } =
     trpc.quiz.getPastTopics.useQuery();
-  console.log("🚀 ~ file: topics.tsx ~ line 18 ~ pastTopics", pastTopics);
 
   const {
     data: topicToVote,
@@ -30,6 +28,9 @@ const Topics: NextPage = () => {
   const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
     pastTopics?.[0]?.id
   );
+
+  const { data: topAnswers, isLoading } =
+    trpc.quiz.getCurrentAnswers.useQuery(currentTopicId);
 
   // DERIVED
   const currentTopic = pastTopics?.find((t) => t.id === currentTopicId);
@@ -51,7 +52,7 @@ const Topics: NextPage = () => {
       {/* Topic list */}
       <LayoutTitle>
         <div className="row-span-2 grid grid-rows-3 gap-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+          <div className="grid grid-cols-1 border-b-4 border-zinc-900 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
             {/* Title */}
             <h2 className="flex flex-col text-2xl">
               <span>Top 3</span>
@@ -75,14 +76,44 @@ const Topics: NextPage = () => {
               </p>
               <p>
                 Nombre de votes <br />
-                <span className="font-clash text-4xl font-semibold">128</span>
+                <span className="font-clash text-4xl font-semibold">
+                  {currentTopic?._count.answers}
+                </span>
               </p>
             </div>
           </div>
 
-          <div>
+          <div className="grid grid-cols-2">
             {/* Top 1 to 3 */}
-            <div></div>
+            <div className="grid grid-cols-2 gap-4">
+              {/* Top 1 */}
+              <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
+                <span className="font-clash text-7xl font-bold">1. </span>
+                <span className="font-clash text-3xl font-semibold">
+                  {topAnswers?.[0]?.name}
+                </span>
+                <span>{topAnswers?.[0]?._sum.score} votes</span>
+              </div>
+
+              {/* Top 2 & 3 */}
+              <div className="grid grid-rows-2 p-2">
+                <div className="row-span-2 flex flex-col">
+                  <span className="font-clash text-4xl font-semibold">
+                    <span className="font-bold">2.</span>{" "}
+                    {topAnswers?.[1]?.name}
+                  </span>
+                  <span>{topAnswers?.[1]?._sum.score} votes</span>
+                </div>
+
+                <div className="row-span-2 flex flex-col">
+                  <span className="font-clash text-4xl font-semibold">
+                    <span className="font-bold">3.</span>{" "}
+                    {topAnswers?.[2]?.name}
+                  </span>
+                  <span>{topAnswers?.[2]?._sum.score} votes</span>
+                </div>
+              </div>
+            </div>
             {/* Top 3 to 10 */}
             <div>Hello 4 to 10</div>
           </div>
