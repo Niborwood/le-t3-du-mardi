@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import type { NextPage } from "next";
+import type { FormEventHandler } from "react";
 import { useState } from "react";
 import {
   LayoutAbout,
@@ -51,6 +52,11 @@ const Topics: NextPage = () => {
     return refetch();
   };
 
+  // POST TOPIC
+  const handlePostTopic: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       {/* Topic list */}
@@ -93,7 +99,7 @@ const Topics: NextPage = () => {
               {/* Top 1 */}
               <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
                 <span className="font-clash text-7xl font-bold">1. </span>
-                <span className="font-clash text-3xl font-semibold">
+                <span className="break-words font-clash text-3xl font-semibold">
                   {topAnswers?.[0]?.name}
                 </span>
                 <span className="text-xl">
@@ -106,7 +112,9 @@ const Topics: NextPage = () => {
                 {topAnswers?.slice(1, 3).map((answer, index) => (
                   <div className="row-span-2 flex flex-col" key={answer.name}>
                     <span className="font-clash text-3xl font-semibold">
-                      <span className="font-bold">{index + 2}.</span>{" "}
+                      <span className="break-words font-bold">
+                        {index + 2}.
+                      </span>{" "}
                       {answer.name}
                     </span>
                     <span className="text-lg">{answer._sum.score} points</span>
@@ -114,14 +122,14 @@ const Topics: NextPage = () => {
                 ))}
               </div>
             </div>
-            {/* Top 3 to 10 */}
+            {/* Top 4 to 12 */}
             <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-2">
               {topAnswers?.slice(3, 12).map((answer, index) => (
                 <div key={answer.name}>
                   <p className="font-clash text-lg font-semibold">
                     {index + 4}. {answer.name}
                   </p>{" "}
-                  <p>
+                  <p className="break-words">
                     {answer._sum.score} point
                     {answer._sum.score && answer._sum.score > 1 ? "s" : ""}
                   </p>
@@ -129,6 +137,7 @@ const Topics: NextPage = () => {
               ))}
             </div>
           </div>
+
           <div className="grid gap-4 2xl:grid-cols-4">
             {pastTopics?.map((topic) => (
               <button
@@ -201,7 +210,29 @@ const Topics: NextPage = () => {
 
       {/* Selected topic with aggregated stats */}
       <LayoutCTA>
-        <div>Hello</div>
+        <form
+          action=""
+          className="col-span-2 grid grid-cols-2 gap-8"
+          onSubmit={handlePostTopic}
+        >
+          <div className="flex flex-col justify-between p-0">
+            <div>
+              <h4 className="text-3xl">Proposez votre sujet du mardi !</h4>
+              <p>
+                Vous avez une idée de sujet pour le mardi ? Proposez-le ici.
+                S&apos;il rassemble assez de votes, il sera sélectionné pour le
+                prochain mardi.
+              </p>
+            </div>
+            <input
+              type="text"
+              className="w-full border-b-4 border-zinc-900 bg-transparent px-2 py-2 tracking-wider text-zinc-900 outline-none focus:ring-0"
+              placeholder="Une idée de sujet (40 caractères max.)"
+              maxLength={40}
+            />
+          </div>
+          <Button variant="secondary">Proposer le sujet</Button>
+        </form>
       </LayoutCTA>
     </>
   );
