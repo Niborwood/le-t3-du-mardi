@@ -14,7 +14,11 @@ import { trpc } from "../utils/trpc";
 const Topics: NextPage = () => {
   // TRPC
   const { data: pastTopics, isLoading: pastTopicsIsLoading } =
-    trpc.quiz.getPastTopics.useQuery();
+    trpc.quiz.getPastTopics.useQuery(undefined, {
+      onSuccess: (data) => {
+        setCurrentTopicId(data[0]?.id);
+      },
+    });
 
   const {
     data: topicToVote,
@@ -26,7 +30,7 @@ const Topics: NextPage = () => {
 
   // STATE
   const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
-    pastTopics?.[0]?.id
+    undefined
   );
 
   const { data: topAnswers, isLoading } =
