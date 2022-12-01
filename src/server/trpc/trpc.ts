@@ -34,6 +34,23 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 });
 
 /**
+ * Reusable middleware to ensure
+ * user is admin
+ */
+const isAdmin = t.middleware(({ ctx, next }) => {
+  if (!ctx.session || !ctx.session.user || ctx.session.user.role !== "ADMIN") {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
+
+/**
  * Protected procedure
  **/
 export const protectedProcedure = t.procedure.use(isAuthed);
+export const adminProcedure = t.procedure.use(isAdmin);
