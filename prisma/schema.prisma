@@ -33,9 +33,13 @@ model Topic {
   used      Boolean         @default(false)
   answers   Answer[]
   votedAt   DateTime?
+  userId    String          @default("claxv5jgh0006tojg4pflb1ad")
+  user      User            @relation(fields: [userId], references: [id])
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
   users     TopicsOnUsers[]
+
+  @@index([userId])
 }
 
 model TopicsOnUsers {
@@ -86,6 +90,7 @@ model User {
   sessions      Session[]
   answers       Answer[]
   topics        TopicsOnUsers[]
+  Topic         Topic[]
 }
 
 model VerificationToken {

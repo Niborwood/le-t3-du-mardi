@@ -135,4 +135,14 @@ export const quizRouter = router({
         },
       });
     }),
+
+  postTopic: protectedProcedure
+    .input(z.string().min(1).trim())
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.topic.create({
+        data: {
+          name: input,
+        },
+      });
+    }),
 });

@@ -212,7 +212,7 @@ const Topics: NextPage = () => {
       <LayoutCTA>
         <form
           action=""
-          className="col-span-2 grid grid-cols-2 gap-8"
+          className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2 2xl:gap-8"
           onSubmit={handlePostTopic}
         >
           <div className="flex flex-col justify-between p-0">
