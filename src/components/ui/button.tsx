@@ -10,6 +10,7 @@ type ButtonProps = {
   onClick?: () => void;
   className?: string;
   href?: string;
+  type?: "button" | "submit" | "reset";
 };
 
 const Button = ({
@@ -20,11 +21,12 @@ const Button = ({
   onClick,
   className,
   href,
+  type = "button",
 }: ButtonProps) => {
   // Generating button
   const button = (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       className={classNames(
         "h-full w-full rounded-lg font-clash font-semibold uppercase transition-all",

@@ -28,11 +28,13 @@ const Topics: NextPage = () => {
   } = trpc.quiz.getTopicToVote.useQuery();
 
   const mutateVoteTopic = trpc.quiz.postTopicVote.useMutation();
+  const mutatePostVote = trpc.quiz.postTopic.useMutation();
 
   // STATE
   const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
     undefined
   );
+  const [postTopicInput, setPostTopicInput] = useState("");
 
   const { data: topAnswers, isLoading } =
     trpc.quiz.getCurrentAnswers.useQuery(currentTopicId);
@@ -55,6 +57,9 @@ const Topics: NextPage = () => {
   // POST TOPIC
   const handlePostTopic: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+    console.log("here");
+    mutatePostVote.mutateAsync(postTopicInput);
+    setPostTopicInput("");
   };
 
   return (
@@ -95,7 +100,7 @@ const Topics: NextPage = () => {
 
           <div className="lg:row-span-3 lg:grid lg:grid-cols-2">
             {/* Top 1 to 3 */}
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4 2xl:grid-cols-2">
               {/* Top 1 */}
               <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
                 <span className="font-clash text-7xl font-bold">1. </span>
@@ -123,7 +128,7 @@ const Topics: NextPage = () => {
               </div>
             </div>
             {/* Top 4 to 12 */}
-            <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-2">
+            <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-0">
               {topAnswers?.slice(3, 12).map((answer, index) => (
                 <div key={answer.name}>
                   <p className="font-clash text-lg font-semibold">
@@ -211,13 +216,12 @@ const Topics: NextPage = () => {
       {/* Selected topic with aggregated stats */}
       <LayoutCTA>
         <form
-          action=""
           className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2 2xl:gap-8"
           onSubmit={handlePostTopic}
         >
           <div className="flex flex-col justify-between p-0">
             <div>
-              <h4 className="text-3xl">Proposez votre sujet du mardi !</h4>
+              <h4 className="text-3xl">Proposez votre sujet du mardi&nbsp;!</h4>
               <p>
                 Vous avez une idée de sujet pour le mardi ? Proposez-le ici.
                 S&apos;il rassemble assez de votes, il sera sélectionné pour le
@@ -229,9 +233,13 @@ const Topics: NextPage = () => {
               className="w-full border-b-4 border-zinc-900 bg-transparent px-2 py-2 tracking-wider text-zinc-900 outline-none focus:ring-0"
               placeholder="Une idée de sujet (40 caractères max.)"
               maxLength={40}
+              value={postTopicInput}
+              onChange={(e) => setPostTopicInput(e.target.value)}
             />
           </div>
-          <Button variant="secondary">Proposer le sujet</Button>
+          <Button type="submit" variant="secondary">
+            Proposer le sujet
+          </Button>
         </form>
       </LayoutCTA>
     </>

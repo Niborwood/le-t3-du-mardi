@@ -141,7 +141,8 @@ export const quizRouter = router({
     .mutation(async ({ ctx, input }) => {
       return ctx.prisma.topic.create({
         data: {
-          name: input,
+          name: input.toLowerCase(),
+          userId: ctx.session.user.id || "claxv5jgh0006tojg4pflb1ad", // test ID
         },
       });
     }),
