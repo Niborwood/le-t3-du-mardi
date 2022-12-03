@@ -28,6 +28,7 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const index = +target.id.split("-")[1];
+    console.log(index);
 
     setIsActive(false);
     setHasAnswer(true);
@@ -56,13 +57,13 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
       onDrop={onDrop}
     >
       {hasAnswer ? (
-        <span className="text-lg">
+        <span id={`top-${index}`} className="text-lg">
           TOP {index + 1}
           <br />
           {item}
         </span>
       ) : (
-        <span>TOP {index + 1}</span>
+        <span id={`top-${index}`}>TOP {index + 1}</span>
       )}
     </div>
   );
