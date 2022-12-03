@@ -71,7 +71,7 @@ const Topics: NextPage = () => {
             {/* Title */}
             <h2 className="col-span-2 flex flex-col text-2xl">
               <span>Top 3</span>
-              <span className="font-clash text-4xl font-bold 2xl:text-6xl">
+              <span className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl">
                 {currentTopic?.name}
               </span>
             </h2>

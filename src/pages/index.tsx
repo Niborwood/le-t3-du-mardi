@@ -100,15 +100,13 @@ const Home: NextPage = () => {
       {/* CTA */}
       <LayoutCTA>
         <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2">
-          <Button variant="secondary">
-            <Link href="/topics">
-              <span className="underline underline-offset-4">Voter</span> pour
-              un sujet
-            </Link>
+          <Button variant="secondary" href="/topics">
+            <span className="underline underline-offset-4">Voter</span> /{" "}
+            <span className="underline underline-offset-4">Proposer</span> un
+            sujet
           </Button>
-
-          <Button variant="primary">
-            <Link href="/play">Jouer</Link>
+          <Button variant="primary" href="/play">
+            Jouer
           </Button>
         </div>
       </LayoutCTA>
