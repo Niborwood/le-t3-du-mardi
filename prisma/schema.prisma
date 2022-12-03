@@ -86,17 +86,18 @@ enum Role {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  role          Role            @default(USER)
-  name          String?
-  email         String?         @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  answers       Answer[]
-  topics        TopicsOnUsers[]
-  Topic         Topic[]
+  id             String          @id @default(cuid())
+  role           Role            @default(USER)
+  name           String?
+  email          String?         @unique
+  emailVerified  DateTime?
+  image          String?
+  isUnsubscribed Boolean         @default(false)
+  accounts       Account[]
+  sessions       Session[]
+  answers        Answer[]
+  topics         TopicsOnUsers[]
+  Topic          Topic[]
 }
 
 model VerificationToken {
