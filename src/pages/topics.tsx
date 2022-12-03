@@ -14,6 +14,7 @@ import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
   // TRPC
+  const utils = trpc.useContext();
   const { data: pastTopics, isLoading: pastTopicsIsLoading } =
     trpc.quiz.getPastTopics.useQuery(undefined, {
       onSuccess: (data) => {
@@ -21,14 +22,23 @@ const Topics: NextPage = () => {
       },
     });
 
-  const {
-    data: topicToVote,
-    isLoading: topicToVoteIsLoading,
-    refetch,
-  } = trpc.quiz.getTopicToVote.useQuery();
+  const { data: topicToVote, isLoading: topicToVoteIsLoading } =
+    trpc.quiz.getTopicToVote.useQuery();
 
-  const mutateVoteTopic = trpc.quiz.postTopicVote.useMutation();
-  const mutatePostVote = trpc.quiz.postTopic.useMutation();
+  const mutateVoteTopic = trpc.quiz.postTopicVote.useMutation({
+    onSuccess: () => {
+      invalidateTopicToVote();
+    },
+  });
+  const mutatePostVote = trpc.quiz.postTopic.useMutation({
+    onSuccess: () => {
+      invalidateTopicToVote();
+    },
+  });
+
+  const invalidateTopicToVote = () => {
+    utils.quiz.getTopicToVote.invalidate();
+  };
 
   // STATE
   const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
@@ -49,9 +59,6 @@ const Topics: NextPage = () => {
       topicId: topicToVote.id,
       type,
     });
-
-    // Refetch topicstoVote
-    return refetch();
   };
 
   // POST TOPIC
