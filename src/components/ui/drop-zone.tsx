@@ -28,7 +28,6 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const index = +target.id.split("-")[1];
-    console.log(index);
 
     setIsActive(false);
     setHasAnswer(true);
