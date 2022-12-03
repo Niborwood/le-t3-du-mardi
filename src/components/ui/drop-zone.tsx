@@ -14,6 +14,7 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
 
   const toggleActive: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsActive((prev) => !prev);
   };
 
@@ -42,7 +43,8 @@ const DropZone = ({ index, item, updateTop }: DropZoneProps) => {
       className={classNames(
         "grid place-content-center rounded-lg border-2 border-dashed border-zinc-900 text-3xl font-extralight text-zinc-900 transition-all duration-500",
         {
-          "!border-0 bg-emerald-600 !text-zinc-50": isActive || hasAnswer,
+          "!border-transparent bg-emerald-600 !text-zinc-50":
+            isActive || hasAnswer,
           "bg-emerald-600/60": isActive,
         }
       )}
