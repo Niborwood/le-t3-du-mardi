@@ -14,13 +14,18 @@ import { trpc } from "../utils/trpc";
 
 const Me: NextPage = () => {
   const { data: sessionData } = useSession();
+  const utils = trpc.useContext();
 
   // TRPC QUERY
   const { data: user, isLoading: userIsLoading } =
     trpc.user.getStats.useQuery();
 
   // MUTATIONS
-  const mutateUnsubscribe = trpc.user.unsubscribe.useMutation();
+  const mutateUnsubscribe = trpc.user.unsubscribe.useMutation({
+    onSuccess: () => {
+      utils.user.getStats.invalidate();
+    },
+  });
 
   // HANDLERS
   const handleUnsubscribe = async () => {
@@ -54,11 +59,25 @@ const Me: NextPage = () => {
       <LayoutPrev>
         {sessionData && (
           <>
-            <div className="space-y-4 rounded-md bg-zinc-50 p-4 text-xl text-zinc-900">
-              <h2 className="font-semibold text-zinc-900">Stats </h2>
+            <div className="space-y-4 rounded-md bg-zinc-50 p-4 text-zinc-900">
+              <h2 className="text-xl font-semibold text-zinc-900">Stats </h2>
+              <div>
+                <p className="font-clash text-4xl font-semibold">
+                  {user?._count.answers}
+                </p>
+                <p className="text-md lg:text-lg">réponses données</p>
+              </div>
+              <div>
+                <p className="font-clash text-4xl font-semibold">
+                  {user?._count.topics}
+                </p>
+                <p className="text-md lg:text-lg">sujets proposés</p>
+              </div>
             </div>
-            <div className="flex flex-col gap-4 rounded-md bg-zinc-50 p-4 text-xl text-zinc-900">
-              <h2 className="font-semibold text-zinc-900">Newsletter</h2>
+            <div className="flex flex-col gap-4 rounded-md bg-zinc-50 p-4 text-zinc-900">
+              <h2 className="text-xl font-semibold text-zinc-900">
+                Newsletter
+              </h2>
               <p>
                 {user?.isUnsubscribed
                   ? "Vous souhaitez de nouveau"

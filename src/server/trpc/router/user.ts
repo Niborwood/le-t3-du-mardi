@@ -27,6 +27,16 @@ export const userRouter = router({
       where: {
         id: ctx.session.user.id,
       },
+      include: {
+        // sum of topics created
+        _count: {
+          select: {
+            topics: true,
+            answers: true,
+          },
+        },
+      },
+      // sum of topics voted
     });
   }),
 });
