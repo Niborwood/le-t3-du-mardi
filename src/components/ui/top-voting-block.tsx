@@ -6,27 +6,25 @@ import { useState } from "react";
 type TopVotingBlockProps = {
   variant: "one" | "two-three";
   index: 1 | 2 | 3;
+  value: string;
+  setValue: (index: 1 | 2 | 3, value: string) => void;
+  currentAnswers?: string[];
 };
 
-const people = [
-  { id: 1, name: "Wade Cooper" },
-  { id: 2, name: "Arlene Mccoy" },
-  { id: 3, name: "Devon Webb" },
-  { id: 4, name: "Tom Cook" },
-];
-
-export const TopVotingBlock = ({ variant, index }: TopVotingBlockProps) => {
-  const [selectedPerson, setSelectedPerson] = useState<{
-    id: number;
-    name: string;
-  }>();
+export const TopVotingBlock = ({
+  variant,
+  index,
+  value,
+  setValue,
+  currentAnswers,
+}: TopVotingBlockProps) => {
   const [query, setQuery] = useState("");
 
-  const filteredPeople =
+  const filterdAnswers =
     query === ""
-      ? people
-      : people.filter((person) => {
-          return person.name.toLowerCase().includes(query.toLowerCase());
+      ? currentAnswers
+      : currentAnswers?.filter((answer) => {
+          return answer.toLowerCase().includes(query.toLowerCase());
         });
 
   return (
@@ -55,7 +53,7 @@ export const TopVotingBlock = ({ variant, index }: TopVotingBlockProps) => {
 
       {/* COMBOBOX */}
       <div className="relative w-full">
-        <Combobox value={selectedPerson} onChange={setSelectedPerson}>
+        <Combobox value={value} onChange={(value) => setValue(index, value)}>
           <div className="">
             <div
               className={classNames(
@@ -70,7 +68,7 @@ export const TopVotingBlock = ({ variant, index }: TopVotingBlockProps) => {
             >
               <Combobox.Input
                 className={classNames(
-                  "w-full border-none bg-transparent py-2 pl-3 pr-10 text-xl leading-5 outline-none focus:ring-0",
+                  "w-full border-none bg-transparent py-2 pl-3 pr-10 text-xl leading-5 tracking-wider outline-none focus:ring-0",
                   {
                     // Variant One
                     "border-b-4 border-zinc-50 text-zinc-50": variant === "one",
@@ -78,7 +76,6 @@ export const TopVotingBlock = ({ variant, index }: TopVotingBlockProps) => {
                     "text-zinc-900": variant === "two-three",
                   }
                 )}
-                displayValue={(person: any) => person?.name || ""}
                 onChange={(event) => setQuery(event.target.value)}
               />
               <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -95,38 +92,42 @@ export const TopVotingBlock = ({ variant, index }: TopVotingBlockProps) => {
             </div>
 
             <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-zinc-50 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {filteredPeople.length === 0 && query !== "" ? (
-                <div className="relative cursor-default select-none py-2 px-4 text-zinc-700">
-                  Nothing found.
-                </div>
-              ) : (
-                filteredPeople.map((person) => (
-                  <Combobox.Option
-                    key={person.id}
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-emerald-600 text-white" : "text-gray-900"
-                      }`
-                    }
-                    value={person}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <span>{person.name}</span>
-                        {selected ? (
-                          <span
-                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "text-emerald-600"
-                            }`}
-                          >
-                            <Check className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Combobox.Option>
-                ))
+              {query.length > 0 && (
+                <Combobox.Option
+                  className={() =>
+                    `relative cursor-pointer select-none py-2 pl-4 pr-4 text-zinc-900`
+                  }
+                  value={query}
+                >
+                  Ajouter la réponse &quot;{query}&quot;
+                </Combobox.Option>
               )}
+              {filterdAnswers?.map((answer) => (
+                <Combobox.Option
+                  key={answer}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-4 pr-4 ${
+                      active ? "bg-emerald-600 text-white" : "text-gray-900"
+                    }`
+                  }
+                  value={answer}
+                >
+                  {({ selected, active }) => (
+                    <>
+                      <span>{answer}</span>
+                      {selected ? (
+                        <span
+                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                            active ? "text-white" : "text-emerald-600"
+                          }`}
+                        >
+                          <Check className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                      ) : null}
+                    </>
+                  )}
+                </Combobox.Option>
+              ))}
             </Combobox.Options>
           </div>
         </Combobox>

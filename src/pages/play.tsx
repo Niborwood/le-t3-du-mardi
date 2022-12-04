@@ -29,6 +29,7 @@ const Play: NextPage = () => {
     trpc.quiz.getCurrentTopic.useQuery();
   const { data: currentAnswers, isLoading: currentAnswersIsLoading } =
     trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id);
+
   const answersMutation = trpc.quiz.postAnswers.useMutation();
 
   // STATE
@@ -37,9 +38,7 @@ const Play: NextPage = () => {
     "",
     "",
   ]);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const [inputAnswer, setInputAnswer] = useState<string>("");
-  const [inputSearch, setInputSearch] = useState<string>("");
+  console.log("🚀 ~ file: play.tsx ~ line 41 ~ topList", topList);
 
   // DERIVED
   const isAbleToSubmit = useMemo(
@@ -47,32 +46,10 @@ const Play: NextPage = () => {
     [topList]
   );
 
-  const filteredResults = useMemo(() => {
-    if (!currentAnswers) return [];
-    if (!inputSearch) return currentAnswers;
-
-    return currentAnswers.filter((answer) =>
-      answer.name.toLowerCase().includes(inputSearch.toLowerCase())
-    );
-  }, [currentAnswers, inputSearch]);
-
-  // FORM
-  const onSubmitAnswer = (event: FormEvent) => {
-    event.preventDefault();
-
-    // If nothing in answer or answer already in list, do nothing
-    if (!inputAnswer || answers.includes(inputAnswer)) return;
-
-    // If answerList is > 3, remove first item and replace with new answer
-    if (answers.length >= 3) {
-      setAnswers((prev) => [...prev.slice(1), inputAnswer]);
-    } else {
-      // Else just push new answer
-      setAnswers([...answers, inputAnswer]);
-    }
-
-    // Clean the input
-    setInputAnswer("");
+  const updateList = (index: 1 | 2 | 3, value: string) => {
+    const newList = [...topList];
+    newList[index - 1] = value;
+    setTopList(newList as [string, string, string]);
   };
 
   const postAnswers = async () => {
@@ -98,10 +75,28 @@ const Play: NextPage = () => {
       {/* ANSWERS */}
       <LayoutTitle>
         <section className="grid-rows row-span-2 grid gap-4 2xl:gap-8">
-          <TopVotingBlock variant="one" index={1} />
+          <TopVotingBlock
+            variant="one"
+            index={1}
+            value={topList[0]}
+            setValue={updateList}
+            currentAnswers={currentAnswers?.map((a) => a.name)}
+          />
           <div className="grid gap-4 2xl:grid-cols-2 2xl:gap-8">
-            <TopVotingBlock variant="two-three" index={2} />
-            <TopVotingBlock variant="two-three" index={3} />
+            <TopVotingBlock
+              variant="two-three"
+              index={2}
+              value={topList[1]}
+              setValue={updateList}
+              currentAnswers={currentAnswers?.map((a) => a.name)}
+            />
+            <TopVotingBlock
+              variant="two-three"
+              index={3}
+              value={topList[2]}
+              setValue={updateList}
+              currentAnswers={currentAnswers?.map((a) => a.name)}
+            />
           </div>
         </section>
       </LayoutTitle>
@@ -121,26 +116,28 @@ const Play: NextPage = () => {
       </LayoutPrev>
 
       {/* VALIDATE BUTTON */}
-      <LayoutAbout logo={false}>
-        <div className="grid h-full w-full place-items-center">
-          <Button disabled={!isAbleToSubmit} onClick={postAnswers}>
-            Valider
-          </Button>
-        </div>
-      </LayoutAbout>
+      <LayoutAbout />
 
       {/* DROP ZONES */}
       <LayoutCTA>
-        <section className="grid grid-cols-3 gap-8 rounded-md lg:grid-cols-1 2xl:col-span-2 2xl:grid-cols-3">
-          {topList.map((top, index) => (
-            <DropZone
-              key={index}
-              index={index}
-              item={top}
-              updateTop={setTopList}
-            />
-          ))}
-        </section>
+        <div>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro eos
+          ducimus deserunt adipisci pariatur debitis similique! Vel assumenda
+          labore deserunt illo nobis aperiam iusto sit odit doloremque modi, est
+          natus quibusdam! Assumenda molestiae corrupti error fuga accusamus.
+          Cupiditate nihil blanditiis, vel ratione dicta aspernatur recusandae.
+          Nemo est exercitationem sit minima. Nisi voluptate fuga ut dignissimos
+          eligendi perspiciatis dolore harum impedit.
+        </div>
+        <div>
+          <Button
+            className="h-full w-full"
+            disabled={!isAbleToSubmit}
+            onClick={postAnswers}
+          >
+            Valider
+          </Button>
+        </div>
       </LayoutCTA>
     </>
   );
