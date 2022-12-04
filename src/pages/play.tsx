@@ -14,7 +14,12 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
-import { Button, DropZone, DraggableLabel } from "../components/ui";
+import {
+  Button,
+  DropZone,
+  DraggableLabel,
+  TopVotingBlock,
+} from "../components/ui";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
@@ -97,73 +102,11 @@ const Play: NextPage = () => {
     <>
       {/* ANSWERS */}
       <LayoutTitle>
-        <section className="grid gap-8 p-2 2xl:col-span-2 2xl:grid-cols-2 2xl:gap-16 2xl:p-8">
-          {/* New answers from the player */}
-          <div>
-            <h3 className="border-zinc-900 pb-2 text-xl 2xl:border-b-2 2xl:text-3xl">
-              Proposez une réponse :
-            </h3>
-
-            <form
-              onSubmit={onSubmitAnswer}
-              className="mt-4 flex w-full flex-col justify-between gap-8 lg:flex-row"
-            >
-              <input
-                className="w-full border-b-4 border-zinc-800 bg-transparent p-4 tracking-wider outline-none focus:ring-0"
-                type="text"
-                placeholder="Votre réponse"
-                name="answer"
-                value={inputAnswer}
-                onChange={(e) => setInputAnswer(e.target.value)}
-              />
-              <button
-                className="rounded-md bg-emerald-600 p-4 font-bold text-zinc-50"
-                type="submit"
-              >
-                Enregistrer
-              </button>
-            </form>
-
-            <div
-              className="mt-8 grid gap-2 lg:grid-cols-3 lg:place-items-center 2xl:mt-16 2xl:grid-cols-1 2xl:place-items-start"
-              ref={parent}
-            >
-              {answers.map((answer) => (
-                <DraggableLabel key={answer} answer={answer} type="answer" />
-              ))}
-            </div>
-          </div>
-
-          {/* Pre-existing answers */}
-          <div>
-            <h3 className="border-zinc-900 pb-2 text-xl 2xl:border-b-2 2xl:text-3xl">
-              Ou choisissez-en une déjà donnée :
-            </h3>
-
-            {/* Search Form */}
-            <input
-              className="w-full border-b-4 border-zinc-800 bg-transparent p-4 tracking-wider outline-none focus:ring-0"
-              type="text"
-              placeholder="Terme à rechercher"
-              name="answer"
-              value={inputSearch}
-              onChange={(e) => setInputSearch(e.target.value)}
-            />
-
-            {/* Answers List */}
-            <div
-              className="mt-8 grid gap-2 lg:grid-cols-2 2xl:mt-16"
-              ref={parent}
-            >
-              {!currentAnswersIsLoading &&
-                filteredResults.map((answer) => (
-                  <DraggableLabel
-                    key={answer.name}
-                    answer={answer.name}
-                    type="search"
-                  />
-                ))}
-            </div>
+        <section className="row-span-2 grid gap-8">
+          <TopVotingBlock variant="one" />
+          <div className="grid grid-cols-2 gap-8">
+            <TopVotingBlock variant="two-three" />
+            <TopVotingBlock variant="two-three" />
           </div>
         </section>
       </LayoutTitle>
