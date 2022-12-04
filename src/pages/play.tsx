@@ -14,12 +14,7 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
-import {
-  Button,
-  DropZone,
-  DraggableLabel,
-  TopVotingBlock,
-} from "../components/ui";
+import { Button, DropZone, TopVotingBlock } from "../components/ui";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
@@ -102,11 +97,11 @@ const Play: NextPage = () => {
     <>
       {/* ANSWERS */}
       <LayoutTitle>
-        <section className="row-span-2 grid gap-8">
-          <TopVotingBlock variant="one" />
-          <div className="grid grid-cols-2 gap-8">
-            <TopVotingBlock variant="two-three" />
-            <TopVotingBlock variant="two-three" />
+        <section className="grid-rows row-span-2 grid gap-4 2xl:gap-8">
+          <TopVotingBlock variant="one" index={1} />
+          <div className="grid gap-4 2xl:grid-cols-2 2xl:gap-8">
+            <TopVotingBlock variant="two-three" index={2} />
+            <TopVotingBlock variant="two-three" index={3} />
           </div>
         </section>
       </LayoutTitle>
