@@ -29,7 +29,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       className={classNames(
-        "h-full w-full rounded-lg p-4 font-clash font-semibold uppercase transition-all",
+        "rounded-lg p-4 font-clash font-semibold uppercase transition-all",
         {
           "p-2 text-lg": size === "md",
           "p-6 text-4xl": size === "lg",
@@ -38,6 +38,7 @@ const Button = ({
             variant === "primary",
           "border-4 border-zinc-900 bg-transparent text-zinc-900 hover:border-emerald-600 hover:text-emerald-600":
             variant !== "primary",
+          "h-full w-full": !!href,
         },
         className
       )}
