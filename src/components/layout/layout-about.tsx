@@ -14,9 +14,9 @@ const LayoutAbout = ({
         <div className="grid place-items-center">
           <Link href="/">
             <Image
-              src="/finite-logo.png"
+              src="/favicon.png"
               alt="Logo"
-              className="w-24 2xl:w-48"
+              className="w-24 rounded-lg 2xl:w-48"
               width={200}
               height={200}
             />
