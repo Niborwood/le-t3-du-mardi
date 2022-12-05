@@ -34,11 +34,9 @@ const Play: NextPage = () => {
   const { data: userVotes, isLoading: userVotesIsLoading } =
     trpc.quiz.hasUserAlreadyVoted.useQuery();
 
-  console.log("🚀 ~ file: play.tsx:34 ~ userVotes", userVotes);
-
   const answersMutation = trpc.quiz.postAnswers.useMutation({
     onSuccess: () => {
-      utils.quiz.getCurrentAnswers.invalidate();
+      utils.quiz.hasUserAlreadyVoted.invalidate();
     },
   });
 
