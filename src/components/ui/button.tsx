@@ -42,6 +42,7 @@ const Button = ({
         },
         className
       )}
+      disabled={disabled}
     >
       {children}
     </button>
