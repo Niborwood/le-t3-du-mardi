@@ -25,12 +25,12 @@ const Topics: NextPage = () => {
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery();
 
-  const mutateVoteTopic = trpc.quiz.postTopicVote.useMutation({
+  const { mutateAsync: voteForTopic } = trpc.quiz.postTopicVote.useMutation({
     onSuccess: () => {
       invalidateTopicToVote();
     },
   });
-  const mutatePostVote = trpc.quiz.postTopic.useMutation({
+  const { mutateAsync: postTopic } = trpc.quiz.postTopic.useMutation({
     onSuccess: () => {
       invalidateTopicToVote();
     },
@@ -53,9 +53,9 @@ const Topics: NextPage = () => {
   const currentTopic = pastTopics?.find((t) => t.id === currentTopicId);
 
   // VOTE
-  const handleVote = (type: "increment" | "decrement") => {
+  const handleVote = async (type: "increment" | "decrement") => {
     if (!topicToVote) return;
-    mutateVoteTopic.mutateAsync({
+    await voteForTopic({
       topicId: topicToVote.id,
       type,
     });
@@ -64,8 +64,7 @@ const Topics: NextPage = () => {
   // POST TOPIC
   const handlePostTopic: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    console.log("here");
-    mutatePostVote.mutateAsync(postTopicInput);
+    await postTopic(postTopicInput);
     setPostTopicInput("");
   };
 
