@@ -192,7 +192,19 @@ const Topics: NextPage = () => {
 
       {/* Topic scores */}
       <LayoutPrev>
-        {topicToVote ? (
+        {!sessionData ? (
+          <div className="col-span-2 grid place-items-center rounded-md bg-zinc-100 p-8 text-center text-zinc-900">
+            <div>
+              <h3 className="text-2xl">
+                Vous devez{" "}
+                <Link className="font-normal text-emerald-600" href="/me">
+                  être connecté
+                </Link>{" "}
+                pour voter pour les prochains sujets.
+              </h3>
+            </div>
+          </div>
+        ) : topicToVote ? (
           <div className="col-span-2 grid grid-rows-2 gap-4 rounded-md bg-zinc-100 p-8 text-zinc-900 2xl:grid-cols-2 2xl:grid-rows-1">
             <div className="flex flex-col justify-between p-2">
               <h3 className="text-2xl">
@@ -261,7 +273,7 @@ const Topics: NextPage = () => {
               />
             ) : (
               <p className="text-sm">
-                <Link href="/me" className="font-bold text-emerald-600">
+                <Link href="/me" className="font-normal text-emerald-600">
                   Connectez-vous
                 </Link>{" "}
                 pour proposer un sujet.
