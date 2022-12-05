@@ -23,13 +23,26 @@ export const quizRouter = router({
     return ctx.prisma.topic.findFirst({
       where: {
         used: false,
+        current: true,
       },
       orderBy: {
         votes: "desc",
       },
     });
   }),
-  getCurrentAnswers: publicProcedure
+  hasUserAlreadyVoted: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.answer.findMany({
+      where: {
+        userId: ctx.session.user.id,
+        topic: {
+          used: false,
+          current: true,
+        },
+      },
+      take: 3,
+    });
+  }),
+  getCurrentAnswers: protectedProcedure
     .input(z.string().cuid().optional())
     .query(({ ctx, input }) => {
       if (!input) throw new TRPCError({ code: "BAD_REQUEST" });

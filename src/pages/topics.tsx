@@ -208,7 +208,7 @@ const Topics: NextPage = () => {
             </div>
           </div>
         ) : (
-          <div className="col-span-2 grid place-items-center rounded-md bg-zinc-100 p-8 text-zinc-900">
+          <div className="col-span-2 grid place-items-center rounded-md bg-zinc-100 p-8 text-center text-zinc-900">
             <div>
               <h3 className="text-2xl">Vous avez voté pour tous les sujets.</h3>
               <p>Proposez-en vous-même puisque vous êtes si malins</p>
@@ -245,7 +245,7 @@ const Topics: NextPage = () => {
             />
           </div>
           <Button type="submit" variant="secondary">
-            Proposer le sujet
+            Proposer
           </Button>
         </form>
       </LayoutCTA>

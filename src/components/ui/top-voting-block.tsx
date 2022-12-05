@@ -9,6 +9,7 @@ type TopVotingBlockProps = {
   value: string;
   setValue: (index: 1 | 2 | 3, value: string) => void;
   currentAnswers?: string[];
+  userVote?: string;
 };
 
 export const TopVotingBlock = ({
@@ -17,6 +18,7 @@ export const TopVotingBlock = ({
   value,
   setValue,
   currentAnswers,
+  userVote,
 }: TopVotingBlockProps) => {
   const [query, setQuery] = useState("");
 
@@ -30,7 +32,7 @@ export const TopVotingBlock = ({
   return (
     <div
       className={classNames(
-        "flex w-full items-center gap-2 rounded-md border-4 p-8",
+        "flex w-full flex-col items-center gap-2 rounded-md border-4 p-8 2xl:flex-row",
         {
           // Variant One
           "border-emerald-600 bg-emerald-600 py-12 text-zinc-50 2xl:py-8":
@@ -53,84 +55,100 @@ export const TopVotingBlock = ({
 
       {/* COMBOBOX */}
       <div className="relative w-full">
-        <Combobox value={value} onChange={(value) => setValue(index, value)}>
-          <div className="">
-            <div
-              className={classNames(
-                "relative w-full cursor-default overflow-hidden border-b-4 bg-transparent text-left text-2xl focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75",
-                {
-                  // Variant One
-                  "border-zinc-50 text-zinc-50": variant === "one",
-                  // Variant Two-Three
-                  "border-zinc-900 text-zinc-900": variant === "two-three",
-                }
-              )}
-            >
-              <Combobox.Input
+        {userVote ? (
+          <div
+            className={classNames("font-clash font-bold", {
+              // Variant One
+              "text-center text-4xl 2xl:text-7xl": variant === "one",
+              // Variant Two-Three
+              "text-center text-2xl 2xl:text-5xl": variant === "two-three",
+            })}
+          >
+            {userVote}
+          </div>
+        ) : (
+          <Combobox value={value} onChange={(value) => setValue(index, value)}>
+            <div className="">
+              <div
                 className={classNames(
-                  "w-full border-none bg-transparent py-2 pl-3 pr-10 text-xl leading-5 tracking-wider outline-none focus:ring-0",
+                  "relative w-full cursor-default overflow-hidden border-b-4 bg-transparent text-left text-2xl focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75",
                   {
                     // Variant One
-                    "border-b-4 border-zinc-50 text-zinc-50": variant === "one",
+                    "border-zinc-50 text-zinc-50": variant === "one",
                     // Variant Two-Three
-                    "text-zinc-900": variant === "two-three",
+                    "border-zinc-900 text-zinc-900": variant === "two-three",
                   }
                 )}
-                onChange={(event) => setQuery(event.target.value)}
-              />
-              <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                <ChevronsUpDown
-                  className={classNames("h-5 w-5", {
-                    // Variant One
-                    "text-zinc-50": variant === "one",
-                    // Variant Two-Three
-                    "text-zinc-900": variant === "two-three",
-                  })}
-                  aria-hidden="true"
-                />
-              </Combobox.Button>
-            </div>
-
-            <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-zinc-50 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {query.length > 0 && (
-                <Combobox.Option
-                  className={() =>
-                    `relative cursor-pointer select-none py-2 pl-4 pr-4 text-zinc-900`
-                  }
-                  value={query}
-                >
-                  Ajouter la réponse &quot;{query}&quot;
-                </Combobox.Option>
-              )}
-              {filterdAnswers?.map((answer) => (
-                <Combobox.Option
-                  key={answer}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-4 pr-4 ${
-                      active ? "bg-emerald-600 text-white" : "text-gray-900"
-                    }`
-                  }
-                  value={answer}
-                >
-                  {({ selected, active }) => (
-                    <>
-                      <span>{answer}</span>
-                      {selected ? (
-                        <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                            active ? "text-white" : "text-emerald-600"
-                          }`}
-                        >
-                          <Check className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
+              >
+                <Combobox.Input
+                  className={classNames(
+                    "w-full border-none bg-transparent py-2 pl-3 pr-10 text-base leading-5 tracking-wider outline-none focus:ring-0 2xl:text-xl",
+                    {
+                      // Variant One
+                      "border-b-4 border-zinc-50 text-zinc-50 placeholder:text-zinc-50/70":
+                        variant === "one",
+                      // Variant Two-Three
+                      "text-zinc-900": variant === "two-three",
+                    }
                   )}
-                </Combobox.Option>
-              ))}
-            </Combobox.Options>
-          </div>
-        </Combobox>
+                  onChange={(event) => setQuery(event.target.value)}
+                  maxLength={30}
+                  placeholder={`Top ${index}`}
+                />
+                <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <ChevronsUpDown
+                    className={classNames("h-5 w-5", {
+                      // Variant One
+                      "text-zinc-50": variant === "one",
+                      // Variant Two-Three
+                      "text-zinc-900": variant === "two-three",
+                    })}
+                    aria-hidden="true"
+                  />
+                </Combobox.Button>
+              </div>
+
+              <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-zinc-50 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {query.length > 0 && (
+                  <Combobox.Option
+                    className={() =>
+                      `relative cursor-pointer select-none py-2 pl-4 pr-4 text-zinc-900`
+                    }
+                    value={query}
+                  >
+                    Ajouter la réponse &quot;{query}&quot;
+                  </Combobox.Option>
+                )}
+                {filterdAnswers?.map((answer) => (
+                  <Combobox.Option
+                    key={answer}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-4 pr-4 ${
+                        active ? "bg-emerald-600 text-white" : "text-gray-900"
+                      }`
+                    }
+                    value={answer}
+                  >
+                    {({ selected, active }) => (
+                      <>
+                        <span>{answer}</span>
+                        {selected ? (
+                          <span
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                              active ? "text-white" : "text-emerald-600"
+                            }`}
+                          >
+                            <Check className="h-5 w-5" aria-hidden="true" />
+                          </span>
+                        ) : null}
+                      </>
+                    )}
+                  </Combobox.Option>
+                ))}
+              </Combobox.Options>
+            </div>
+          </Combobox>
+        )}
       </div>
     </div>
   );

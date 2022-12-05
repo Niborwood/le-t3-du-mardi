@@ -1,4 +1,3 @@
-import type { FormEvent } from "react";
 import { useState, useMemo } from "react";
 import { trpc } from "../utils/trpc";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -14,11 +13,13 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
-import { Button, DropZone, TopVotingBlock } from "../components/ui";
+import { Button, TopVotingBlock } from "../components/ui";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
   const [parent] = useAutoAnimate<HTMLDivElement>(/* optional config */);
+
+  const utils = trpc.useContext();
 
   // NEXT-AUTH
   const { data: sessionData } = useSession();
@@ -29,8 +30,16 @@ const Play: NextPage = () => {
     trpc.quiz.getCurrentTopic.useQuery();
   const { data: currentAnswers, isLoading: currentAnswersIsLoading } =
     trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id);
+  const { data: userVotes, isLoading: userVotesIsLoading } =
+    trpc.quiz.hasUserAlreadyVoted.useQuery();
 
-  const answersMutation = trpc.quiz.postAnswers.useMutation();
+  console.log("🚀 ~ file: play.tsx:34 ~ userVotes", userVotes);
+
+  const answersMutation = trpc.quiz.postAnswers.useMutation({
+    onSuccess: () => {
+      utils.quiz.getCurrentAnswers.invalidate();
+    },
+  });
 
   // STATE
   const [topList, setTopList] = useState<[string, string, string]>([
@@ -38,7 +47,6 @@ const Play: NextPage = () => {
     "",
     "",
   ]);
-  console.log("🚀 ~ file: play.tsx ~ line 41 ~ topList", topList);
 
   // DERIVED
   const isAbleToSubmit = useMemo(
@@ -81,6 +89,7 @@ const Play: NextPage = () => {
             value={topList[0]}
             setValue={updateList}
             currentAnswers={currentAnswers?.map((a) => a.name)}
+            userVote={userVotes?.[0]?.name}
           />
           <div className="grid gap-4 2xl:grid-cols-2 2xl:gap-8">
             <TopVotingBlock
@@ -89,6 +98,7 @@ const Play: NextPage = () => {
               value={topList[1]}
               setValue={updateList}
               currentAnswers={currentAnswers?.map((a) => a.name)}
+              userVote={userVotes?.[1]?.name}
             />
             <TopVotingBlock
               variant="two-three"
@@ -96,6 +106,7 @@ const Play: NextPage = () => {
               value={topList[2]}
               setValue={updateList}
               currentAnswers={currentAnswers?.map((a) => a.name)}
+              userVote={userVotes?.[2]?.name}
             />
           </div>
         </section>
@@ -135,7 +146,7 @@ const Play: NextPage = () => {
             disabled={!isAbleToSubmit}
             onClick={postAnswers}
           >
-            Valider
+            {userVotes?.length ? "Vous avez déjà voté !" : "Voter"}
           </Button>
         </div>
       </LayoutCTA>
