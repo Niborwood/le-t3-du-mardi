@@ -100,7 +100,7 @@ export const quizRouter = router({
   postAnswers: protectedProcedure
     .input(
       z.object({
-        answers: z.array(z.string().min(1).trim()),
+        answers: z.array(z.string().min(1).max(30).trim()).length(3),
         topicId: z.string().cuid(),
       })
     )
