@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
 import type { FormEventHandler } from "react";
 import { useState } from "react";
 import {
@@ -14,6 +16,8 @@ import { Button } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
+  const { data: sessionData } = useSession();
+
   // TRPC
   const utils = trpc.useContext();
   const { data: pastTopics, isLoading: pastTopicsIsLoading } =
@@ -246,18 +250,29 @@ const Topics: NextPage = () => {
                 prochain mardi.
               </p>
             </div>
-            <input
-              type="text"
-              className="w-full border-b-4 border-zinc-900 bg-transparent px-2 py-2 tracking-wider text-zinc-900 outline-none focus:ring-0"
-              placeholder="Une idée de sujet (40 caractères max.)"
-              maxLength={40}
-              value={postTopicInput}
-              onChange={(e) => setPostTopicInput(e.target.value)}
-            />
+            {sessionData ? (
+              <input
+                type="text"
+                className="w-full border-b-4 border-zinc-900 bg-transparent px-2 py-2 tracking-wider text-zinc-900 outline-none focus:ring-0"
+                placeholder="Une idée de sujet (40 caractères max.)"
+                maxLength={40}
+                value={postTopicInput}
+                onChange={(e) => setPostTopicInput(e.target.value)}
+              />
+            ) : (
+              <p className="text-sm">
+                <Link href="/me" className="font-bold text-emerald-600">
+                  Connectez-vous
+                </Link>{" "}
+                pour proposer un sujet.
+              </p>
+            )}
           </div>
-          <Button type="submit" variant="secondary">
-            Proposer
-          </Button>
+          {sessionData && (
+            <Button type="submit" variant="secondary" disabled={!!sessionData}>
+              Proposer
+            </Button>
+          )}
         </form>
       </LayoutCTA>
     </>
