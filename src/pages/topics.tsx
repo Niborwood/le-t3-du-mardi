@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import type { NextPage } from "next";
+import Head from "next/head";
 import type { FormEventHandler } from "react";
 import { useState } from "react";
 import {
@@ -70,6 +71,9 @@ const Topics: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Sujets | Le top 3 du mardi</title>
+      </Head>
       {/* Topic list */}
       <LayoutTitle>
         {!pastTopics?.length ? (
