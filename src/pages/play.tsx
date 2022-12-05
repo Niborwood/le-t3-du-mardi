@@ -138,7 +138,8 @@ const Play: NextPage = () => {
             On est <strong>mardi</strong> ! Vous pouvez donc voter pour le top 3
             du mardi. Rien de compliqué&nbsp;: choisissez vos 3 réponses
             préférées et validez. Vous ne pourrez pas modifier vos réponses une
-            fois validées.
+            fois validées. Les réponses sont disponibles dès le{" "}
+            <strong>mercredi</strong> !
           </p>
           <p>
             Le barême est calculé sur la base d&apos;un machine learning GPT-3.
@@ -157,7 +158,7 @@ const Play: NextPage = () => {
             disabled={!isAbleToSubmit}
             onClick={postAnswers}
           >
-            {userVotes?.length ? "Vous avez déjà voté !" : "Voter"}
+            {userVotes?.length ? "Vous avez déjà voté, rdv demain !" : "Voter"}
           </Button>
         </div>
       </LayoutCTA>
