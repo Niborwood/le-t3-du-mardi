@@ -72,103 +72,111 @@ const Topics: NextPage = () => {
     <>
       {/* Topic list */}
       <LayoutTitle>
-        <div className="space-y-4 lg:row-span-2 lg:grid lg:grid-rows-6 lg:gap-4 lg:space-y-0">
-          <div className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3">
-            {/* Title */}
-            <h2 className="col-span-2 flex flex-col text-2xl">
-              <span>Top 3</span>
-              <span className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl">
-                {currentTopic?.name}
-              </span>
-            </h2>
-
-            {/* Stats */}
-            <div className="space-y-4">
-              <p>
-                Voté le <br />
-                <span className="font-clash text-2xl font-semibold 2xl:text-2xl">
-                  {currentTopic?.votedAt?.toLocaleDateString("fr-FR", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-              </p>
-              <p>
-                Nombre de votes <br />
-                <span className="font-clash text-4xl font-semibold">
-                  {currentTopic?._count.answers}
-                </span>
-              </p>
-            </div>
+        {!pastTopics?.length ? (
+          <div className="col-span-full row-span-full grid place-items-center">
+            Il n&apos;y a pas encore d&apos;historique.
           </div>
+        ) : (
+          <div className="space-y-4 lg:row-span-2 lg:grid lg:grid-rows-6 lg:gap-4 lg:space-y-0">
+            <div className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3">
+              {/* Title */}
+              <h2 className="col-span-2 flex flex-col text-2xl">
+                <span>Top 3</span>
+                <span className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl">
+                  {currentTopic?.name}
+                </span>
+              </h2>
 
-          <div className="lg:row-span-3 lg:grid lg:grid-cols-2">
-            {/* Top 1 to 3 */}
-            <div className="grid gap-4 2xl:grid-cols-2">
-              {/* Top 1 */}
-              <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
-                <span className="font-clash text-7xl font-bold">1. </span>
-                <span className="break-words font-clash text-3xl font-semibold">
-                  {topAnswers?.[0]?.name}
-                </span>
-                <span className="text-xl">
-                  {topAnswers?.[0]?._sum.score} points
-                </span>
+              {/* Stats */}
+              <div className="space-y-4">
+                <p>
+                  Voté le <br />
+                  <span className="font-clash text-2xl font-semibold 2xl:text-2xl">
+                    {currentTopic?.votedAt?.toLocaleDateString("fr-FR", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                </p>
+                <p>
+                  Nombre de votes <br />
+                  <span className="font-clash text-4xl font-semibold">
+                    {currentTopic?._count.answers}
+                  </span>
+                </p>
               </div>
+            </div>
 
-              {/* Top 2 & 3 */}
-              <div className="mb-4 grid grid-rows-2 2xl:mb-0 2xl:p-2">
-                {topAnswers?.slice(1, 3).map((answer, index) => (
-                  <div className="row-span-2 flex flex-col" key={answer.name}>
-                    <span className="font-clash text-3xl font-semibold">
-                      <span className="break-words font-bold">
-                        {index + 2}.
-                      </span>{" "}
-                      {answer.name}
-                    </span>
-                    <span className="text-lg">{answer._sum.score} points</span>
+            <div className="lg:row-span-3 lg:grid lg:grid-cols-2">
+              {/* Top 1 to 3 */}
+              <div className="grid gap-4 2xl:grid-cols-2">
+                {/* Top 1 */}
+                <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
+                  <span className="font-clash text-7xl font-bold">1. </span>
+                  <span className="break-words font-clash text-3xl font-semibold">
+                    {topAnswers?.[0]?.name}
+                  </span>
+                  <span className="text-xl">
+                    {topAnswers?.[0]?._sum.score} points
+                  </span>
+                </div>
+
+                {/* Top 2 & 3 */}
+                <div className="mb-4 grid grid-rows-2 2xl:mb-0 2xl:p-2">
+                  {topAnswers?.slice(1, 3).map((answer, index) => (
+                    <div className="row-span-2 flex flex-col" key={answer.name}>
+                      <span className="font-clash text-3xl font-semibold">
+                        <span className="break-words font-bold">
+                          {index + 2}.
+                        </span>{" "}
+                        {answer.name}
+                      </span>
+                      <span className="text-lg">
+                        {answer._sum.score} points
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Top 4 to 12 */}
+              <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-0">
+                {topAnswers?.slice(3, 12).map((answer, index) => (
+                  <div key={answer.name}>
+                    <p className="font-clash text-lg font-semibold">
+                      {index + 4}. {answer.name}
+                    </p>{" "}
+                    <p className="break-words">
+                      {answer._sum.score} point
+                      {answer._sum.score && answer._sum.score > 1 ? "s" : ""}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
-            {/* Top 4 to 12 */}
-            <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-0">
-              {topAnswers?.slice(3, 12).map((answer, index) => (
-                <div key={answer.name}>
-                  <p className="font-clash text-lg font-semibold">
-                    {index + 4}. {answer.name}
-                  </p>{" "}
-                  <p className="break-words">
-                    {answer._sum.score} point
-                    {answer._sum.score && answer._sum.score > 1 ? "s" : ""}
-                  </p>
-                </div>
+
+            <div className="grid gap-4 2xl:grid-cols-4">
+              {pastTopics?.map((topic) => (
+                <button
+                  key={topic.id}
+                  onClick={() => setCurrentTopicId(topic.id)}
+                  className={classNames(
+                    "grid place-items-center rounded-md border-4 font-clash text-xl font-bold transition-all hover:border-zinc-900 hover:text-zinc-900",
+                    {
+                      "border-zinc-900 text-zinc-900":
+                        topic.id === currentTopicId,
+                      "border-zinc-900/30 text-zinc-900/30":
+                        topic.id !== currentTopicId,
+                    }
+                  )}
+                >
+                  {topic.name}
+                </button>
               ))}
             </div>
           </div>
-
-          <div className="grid gap-4 2xl:grid-cols-4">
-            {pastTopics?.map((topic) => (
-              <button
-                key={topic.id}
-                onClick={() => setCurrentTopicId(topic.id)}
-                className={classNames(
-                  "grid place-items-center rounded-md border-4 font-clash text-xl font-bold transition-all hover:border-zinc-900 hover:text-zinc-900",
-                  {
-                    "border-zinc-900 text-zinc-900":
-                      topic.id === currentTopicId,
-                    "border-zinc-900/30 text-zinc-900/30":
-                      topic.id !== currentTopicId,
-                  }
-                )}
-              >
-                {topic.name}
-              </button>
-            ))}
-          </div>
-        </div>
+        )}
       </LayoutTitle>
 
       {/* Menu */}
