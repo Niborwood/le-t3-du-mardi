@@ -11,6 +11,7 @@ import {
 import { Button } from "../components/ui";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
+import Head from "next/head";
 
 const Me: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -34,6 +35,9 @@ const Me: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Moi | Le top 3 du mardi</title>
+      </Head>
       {/* Title */}
       <LayoutTitle>
         <h1 className="py-8 font-clash text-7xl font-extrabold uppercase 2xl:row-span-2 2xl:text-9xl">
