@@ -281,7 +281,7 @@ const Topics: NextPage = () => {
             )}
           </div>
           {sessionData && (
-            <Button type="submit" variant="secondary" disabled={!!sessionData}>
+            <Button type="submit" variant="secondary" disabled={!sessionData}>
               Proposer
             </Button>
           )}
