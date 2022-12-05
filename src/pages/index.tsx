@@ -73,7 +73,7 @@ const Home: NextPage = () => {
               ))
             ) : (
               <div className="col-auto grid place-items-center p-8 text-zinc-900">
-                Il n'y a pas encore d'historique.
+                Il n&apos;y a pas encore d&apos;historique.
               </div>
             )}
           </div>
