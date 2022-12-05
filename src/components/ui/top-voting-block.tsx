@@ -57,12 +57,15 @@ export const TopVotingBlock = ({
       <div className="relative w-full">
         {userVote ? (
           <div
-            className={classNames("font-clash font-bold", {
-              // Variant One
-              "text-center text-4xl 2xl:text-7xl": variant === "one",
-              // Variant Two-Three
-              "text-center text-2xl 2xl:text-5xl": variant === "two-three",
-            })}
+            className={classNames(
+              "text-center font-clash font-bold 2xl:text-left",
+              {
+                // Variant One
+                " text-4xl 2xl:text-7xl": variant === "one",
+                // Variant Two-Three
+                " text-2xl 2xl:text-5xl": variant === "two-three",
+              }
+            )}
           >
             {userVote}
           </div>
