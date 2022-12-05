@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 
       {/* TITLE */}
       <LayoutTitle>
-        <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-8xl 2xl:row-span-2 2xl:text-9xl">
+        <h1 className="py-8 font-clash text-7xl font-extrabold uppercase 2xl:row-span-2 2xl:text-9xl">
           Le <span className="rotate-3 text-emerald-600">top 3</span> du mardi
         </h1>
         <p className="flex flex-col items-end justify-between gap-4 border-t-2 border-zinc-800 py-4 text-lg 2xl:flex-row 2xl:text-2xl">
