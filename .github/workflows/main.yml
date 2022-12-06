@@ -1,0 +1,13 @@
+name: API call to Tuesday endpoint
+on:
+  schedule:
+    - cron: "0 0 * * 2"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: New topic every tuesday
+        run: |
+          curl --request POST \
+          --url 'https://top3dumardi.vercel.app/api/cron' \
+          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
