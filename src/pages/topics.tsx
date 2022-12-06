@@ -30,11 +30,12 @@ const Topics: NextPage = () => {
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery();
 
-  const { mutateAsync: voteForTopic } = trpc.quiz.postTopicVote.useMutation({
-    onSuccess: () => {
-      invalidateTopicToVote();
-    },
-  });
+  const { mutateAsync: voteForTopic, isLoading: voteForTopicIsLoading } =
+    trpc.quiz.postTopicVote.useMutation({
+      onSuccess: () => {
+        invalidateTopicToVote();
+      },
+    });
   const { mutateAsync: postTopic } = trpc.quiz.postTopic.useMutation({
     onSuccess: () => {
       invalidateTopicToVote();
@@ -223,12 +224,14 @@ const Topics: NextPage = () => {
               <Button
                 variant="secondary"
                 onClick={() => handleVote("increment")}
+                disabled={voteForTopicIsLoading}
               >
                 {/* <ChevronUp size={60} className="m-auto" /> */}+ 1
               </Button>
               <Button
                 variant="secondary"
                 onClick={() => handleVote("decrement")}
+                disabled={voteForTopicIsLoading}
               >
                 {/* <ChevronDown size={60} className="m-auto" /> */}- 1
               </Button>
