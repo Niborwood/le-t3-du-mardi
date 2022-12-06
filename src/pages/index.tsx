@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react";
 const Home: NextPage = () => {
   const lastTopics = trpc.quiz.getLastTopics.useQuery();
   const { data: sessionData } = useSession();
+  const isTuesday = new Date().getDay() === 2;
 
   return (
     <>
@@ -107,13 +108,17 @@ const Home: NextPage = () => {
       {/* CTA */}
       <LayoutCTA>
         <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2">
-          <Button variant="secondary" href={sessionData ? "/topics" : "/me"}>
-            <span className="underline underline-offset-4">Voter</span> /{" "}
-            <span className="underline underline-offset-4">Proposer</span> un
-            sujet
+          <Button
+            variant="secondary"
+            href={sessionData || isTuesday ? "/topics" : "/me"}
+          >
+            Voir les anciens résultats
           </Button>
-          <Button variant="primary" href={sessionData ? "/play" : "/me"}>
-            {sessionData ? "Voter" : "Se connecter pour voter"}
+          <Button
+            variant="primary"
+            href={sessionData || isTuesday ? "/play" : "/me"}
+          >
+            {sessionData || isTuesday ? "Voter" : "Se connecter pour voter"}
           </Button>
         </div>
       </LayoutCTA>

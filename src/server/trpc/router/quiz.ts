@@ -12,7 +12,14 @@ export const quizRouter = router({
     return ctx.prisma.topic.findMany({
       take: 3,
       where: {
-        used: true,
+        OR: [
+          {
+            used: true,
+          },
+          {
+            current: true,
+          },
+        ],
       },
       orderBy: {
         createdAt: "desc",
@@ -42,7 +49,7 @@ export const quizRouter = router({
       take: 3,
     });
   }),
-  getCurrentAnswers: protectedProcedure
+  getCurrentAnswers: publicProcedure
     .input(z.string().cuid().optional())
     .query(({ ctx, input }) => {
       if (!input) throw new TRPCError({ code: "BAD_REQUEST" });
