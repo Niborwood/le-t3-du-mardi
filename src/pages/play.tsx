@@ -158,7 +158,7 @@ const Play: NextPage = () => {
             disabled={!isAbleToSubmit}
             onClick={postAnswers}
           >
-            {userVotes?.length ? "Vous avez déjà voté, rdv demain !" : "Voter"}
+            {userVotes?.length ? "Vous avez déjà voté !" : "Voter"}
           </Button>
         </div>
       </LayoutCTA>

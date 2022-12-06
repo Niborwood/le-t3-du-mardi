@@ -61,9 +61,9 @@ export const TopVotingBlock = ({
               "text-center font-clash font-bold 2xl:text-left",
               {
                 // Variant One
-                " text-4xl 2xl:text-7xl": variant === "one",
+                " text-3xl 2xl:text-7xl": variant === "one",
                 // Variant Two-Three
-                " text-2xl 2xl:text-5xl": variant === "two-three",
+                " text-xl 2xl:text-5xl": variant === "two-three",
               }
             )}
           >
