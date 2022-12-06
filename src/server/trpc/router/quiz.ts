@@ -67,7 +67,14 @@ export const quizRouter = router({
     return ctx.prisma.topic.findMany({
       take: 4,
       where: {
-        used: true,
+        OR: [
+          {
+            used: true,
+          },
+          {
+            current: true,
+          },
+        ],
       },
       orderBy: {
         votedAt: "desc",
