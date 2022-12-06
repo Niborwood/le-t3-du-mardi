@@ -118,7 +118,7 @@ const Topics: NextPage = () => {
               </div>
             </div>
 
-            <div className="lg:row-span-3 lg:grid lg:grid-cols-2">
+            <div className="lg:row-span-3 2xl:grid 2xl:grid-cols-2">
               {/* Top 1 to 3 */}
               <div className="grid gap-4 2xl:grid-cols-2">
                 {/* Top 1 */}
