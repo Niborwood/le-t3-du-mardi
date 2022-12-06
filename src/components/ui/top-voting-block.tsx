@@ -114,8 +114,10 @@ export const TopVotingBlock = ({
               <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-zinc-50 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {query.length > 0 && (
                   <Combobox.Option
-                    className={() =>
-                      `relative cursor-pointer select-none py-2 pl-4 pr-4 text-zinc-900`
+                    className={({ active }) =>
+                      `relative cursor-pointer select-none py-2 pr-4 text-zinc-900 ${
+                        active ? "pl-10" : "pl-4"
+                      }`
                     }
                     value={query}
                   >
@@ -126,8 +128,10 @@ export const TopVotingBlock = ({
                   <Combobox.Option
                     key={answer}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-4 pr-4 ${
-                        active ? "bg-emerald-600 text-white" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pr-4 ${
+                        active
+                          ? "bg-emerald-600 pl-10 text-white"
+                          : "pl-4 text-gray-900"
                       }`
                     }
                     value={answer}

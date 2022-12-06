@@ -14,6 +14,7 @@ import {
   LayoutCTA,
 } from "../components/layout";
 import { Button, TopVotingBlock } from "../components/ui";
+import Head from "next/head";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
@@ -33,11 +34,9 @@ const Play: NextPage = () => {
   const { data: userVotes, isLoading: userVotesIsLoading } =
     trpc.quiz.hasUserAlreadyVoted.useQuery();
 
-  console.log("🚀 ~ file: play.tsx:34 ~ userVotes", userVotes);
-
   const answersMutation = trpc.quiz.postAnswers.useMutation({
     onSuccess: () => {
-      utils.quiz.getCurrentAnswers.invalidate();
+      utils.quiz.hasUserAlreadyVoted.invalidate();
     },
   });
 
@@ -80,6 +79,9 @@ const Play: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Jouer | Le Top 3 du Mardi</title>
+      </Head>
       {/* ANSWERS */}
       <LayoutTitle>
         <section className="grid-rows row-span-2 grid gap-4 2xl:gap-8">
@@ -131,14 +133,24 @@ const Play: NextPage = () => {
 
       {/* DROP ZONES */}
       <LayoutCTA>
-        <div>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro eos
-          ducimus deserunt adipisci pariatur debitis similique! Vel assumenda
-          labore deserunt illo nobis aperiam iusto sit odit doloremque modi, est
-          natus quibusdam! Assumenda molestiae corrupti error fuga accusamus.
-          Cupiditate nihil blanditiis, vel ratione dicta aspernatur recusandae.
-          Nemo est exercitationem sit minima. Nisi voluptate fuga ut dignissimos
-          eligendi perspiciatis dolore harum impedit.
+        <div className="grid place-items-start text-sm">
+          <p>
+            On est <strong>mardi</strong> ! Vous pouvez donc voter pour le top 3
+            du mardi. Rien de compliqué&nbsp;: choisissez vos 3 réponses
+            préférées et validez. Vous ne pourrez pas modifier vos réponses une
+            fois validées. Les réponses sont disponibles dès le{" "}
+            <strong>mercredi</strong> !
+          </p>
+          <p>
+            Le barême est calculé sur la base d&apos;un machine learning GPT-3.
+          </p>
+          <p>
+            Un petit conseil : en tapant votre réponse, vous avez accès à celles
+            de tout le monde. Si vous voulez donner du poids à une réponse qui
+            vous semble universelle, essayez de la chercher avant de
+            l&apos;ajouter - les{" "}
+            <strong>différences orthographiques sont prises en compte</strong>.
+          </p>
         </div>
         <div>
           <Button
@@ -146,7 +158,7 @@ const Play: NextPage = () => {
             disabled={!isAbleToSubmit}
             onClick={postAnswers}
           >
-            {userVotes?.length ? "Vous avez déjà voté !" : "Voter"}
+            {userVotes?.length ? "Vous avez déjà voté, rdv demain !" : "Voter"}
           </Button>
         </div>
       </LayoutCTA>

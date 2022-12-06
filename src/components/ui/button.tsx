@@ -33,12 +33,12 @@ const Button = ({
         {
           "p-2 text-lg": size === "md",
           "p-6 text-4xl": size === "lg",
-          "cursor-not-allowed opacity-50 hover:text-zinc-50": disabled,
           "bg-emerald-600 text-zinc-50 hover:bg-emerald-700 hover:text-zinc-50":
             variant === "primary",
           "border-4 border-zinc-900 bg-transparent text-zinc-900 hover:border-emerald-600 hover:text-emerald-600":
             variant !== "primary",
           "h-full w-full": !!href,
+          "cursor-not-allowed opacity-50 hover:text-zinc-50": disabled,
         },
         className
       )}
