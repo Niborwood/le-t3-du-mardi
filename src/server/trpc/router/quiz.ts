@@ -114,7 +114,8 @@ export const quizRouter = router({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.answer.createMany({
         data: input.answers.map((answer, index) => ({
-          name: answer.toLowerCase(),
+          // Replace '?' width '' in name
+          name: answer.replace(/\?/g, "").toLowerCase(),
           score: input.answers.length - index,
           topicId: input.topicId,
           userId: ctx.session.user.id || "claxv5jgh0006tojg4pflb1ad", // test ID
