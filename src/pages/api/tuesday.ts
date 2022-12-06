@@ -46,6 +46,7 @@ const tuesday = async (req: NextApiRequest, res: NextApiResponse) => {
         await prisma.topic.update({
           data: {
             current: true,
+            votedAt: new Date(),
           },
           where: {
             id: topic.id,
