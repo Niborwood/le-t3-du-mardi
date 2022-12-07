@@ -116,9 +116,14 @@ const Home: NextPage = () => {
           </Button>
           <Button
             variant="primary"
-            href={sessionData || isTuesday ? "/play" : "/me"}
+            href={sessionData ? "/play" : "/me"}
+            disabled={!!sessionData && !isTuesday}
           >
-            {sessionData || isTuesday ? "Voter" : "Se connecter pour voter"}
+            {!sessionData
+              ? "Se connecter pour voter"
+              : isTuesday
+              ? "Voter"
+              : "Prochain vote, mardi prochain !"}
           </Button>
         </div>
       </LayoutCTA>
