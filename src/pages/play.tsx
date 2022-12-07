@@ -74,8 +74,8 @@ const Play: NextPage = () => {
 
   // REROUTE IF NOT LOGGED IN
   if (
-    (!sessionData && typeof window !== "undefined") ||
-    new Date().getDay() !== 2
+    typeof window !== "undefined" &&
+    (!sessionData || new Date().getDay() !== 2)
   ) {
     router.replace("/me");
   }
