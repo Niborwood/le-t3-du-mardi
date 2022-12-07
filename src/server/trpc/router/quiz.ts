@@ -119,6 +119,10 @@ export const quizRouter = router({
       })
     )
     .mutation(({ ctx, input }) => {
+      // If it's not tuesday, throw an error
+      if (new Date().getDay() !== 2)
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+
       return ctx.prisma.answer.createMany({
         data: input.answers.map((answer, index) => ({
           // Replace '?' width '' in name
