@@ -19,7 +19,6 @@ import { useSession } from "next-auth/react";
 const Home: NextPage = () => {
   const lastTopics = trpc.quiz.getLastTopics.useQuery();
   const { data: sessionData } = useSession();
-  const isTuesday = new Date().getDay() === 2;
 
   return (
     <>
@@ -35,12 +34,15 @@ const Home: NextPage = () => {
       {/* TITLE */}
       <LayoutTitle>
         <h1 className="py-8 font-clash text-7xl font-extrabold uppercase 2xl:row-span-2 2xl:text-9xl">
-          Le <span className="rotate-3 text-emerald-600">top 3</span> du mardi
+          Le <span className="rotate-3 text-emerald-600">top 3</span> du{" "}
+          {new Intl.DateTimeFormat("fr-FR", {
+            weekday: "long",
+          }).format(new Date())}
         </h1>
         <p className="flex flex-col items-end justify-between gap-4 border-t-2 border-zinc-800 py-4 text-lg 2xl:flex-row 2xl:text-2xl">
           <span>
-            Tous les <strong>mardis</strong>, un top 3 de n&apos;importe quoi.
-            Si on n&apos;est <strong>pas mardi</strong> ? On joue pas.
+            Tous les <strong>jours</strong>, un top 3 de n&apos;importe quoi.
+            <strong>Votez</strong> et <strong>proposez</strong> des sujets !
           </span>
           <ArrowDownRight
             className="relative top-1 rotate-45 2xl:rotate-0"
@@ -108,22 +110,15 @@ const Home: NextPage = () => {
       {/* CTA */}
       <LayoutCTA>
         <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2">
-          <Button
-            variant="secondary"
-            href={sessionData || isTuesday ? "/topics" : "/me"}
-          >
+          <Button variant="secondary" href={sessionData ? "/topics" : "/me"}>
             Voir les anciens résultats
           </Button>
           <Button
             variant="primary"
             href={sessionData ? "/play" : "/me"}
-            disabled={!!sessionData && !isTuesday}
+            disabled={!!sessionData}
           >
-            {!sessionData
-              ? "Se connecter pour voter"
-              : isTuesday
-              ? "Voter"
-              : "Prochain vote, mardi prochain !"}
+            {!sessionData ? "Se connecter pour voter" : "Voter"}
           </Button>
         </div>
       </LayoutCTA>
