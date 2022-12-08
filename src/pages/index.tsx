@@ -116,7 +116,7 @@ const Home: NextPage = () => {
           <Button
             variant="primary"
             href={sessionData ? "/play" : "/me"}
-            disabled={!!sessionData}
+            disabled={!sessionData}
           >
             {!sessionData ? "Se connecter pour voter" : "Voter"}
           </Button>
