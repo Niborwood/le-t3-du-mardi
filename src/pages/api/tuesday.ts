@@ -9,7 +9,7 @@ const tuesday = async (req: NextApiRequest, res: NextApiResponse) => {
       const { authorization } = req.headers;
 
       // Checks for authorization bearer token
-      if (authorization === `Bearer ${process.env.API_SECRET_KEY}`) {
+      if (authorization === `Bearer ${process.env.API_SECRET}`) {
         // Old current topic is set to used: true and current:false
         await prisma.topic.updateMany({
           data: {
