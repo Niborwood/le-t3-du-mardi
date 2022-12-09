@@ -53,6 +53,15 @@ const tuesday = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         });
 
+        // Delete any answer that have a score lower than 0
+        await prisma.answer.deleteMany({
+          where: {
+            score: {
+              lte: 0,
+            },
+          },
+        });
+
         res.status(200).json({ message: "Success" });
       } else {
         res.status(401).json({ success: false });
