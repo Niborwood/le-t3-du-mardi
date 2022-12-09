@@ -57,7 +57,7 @@ const tuesday = async (req: NextApiRequest, res: NextApiResponse) => {
         await prisma.answer.deleteMany({
           where: {
             score: {
-              lte: 0,
+              lt: 0,
             },
           },
         });
