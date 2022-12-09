@@ -135,16 +135,6 @@ const Play: NextPage = () => {
       <LayoutCTA>
         <div className="grid place-items-start text-sm">
           <p>
-            On est <strong>mardi</strong> ! Vous pouvez donc voter pour le top 3
-            du mardi. Rien de compliqué&nbsp;: choisissez vos 3 réponses
-            préférées et validez. Vous ne pourrez pas modifier vos réponses une
-            fois validées. Les réponses sont disponibles dès le{" "}
-            <strong>mercredi</strong> !
-          </p>
-          <p>
-            Le barême est calculé sur la base d&apos;un machine learning GPT-3.
-          </p>
-          <p>
             Un petit conseil : en tapant votre réponse, vous avez accès à celles
             de tout le monde. Si vous voulez donner du poids à une réponse qui
             vous semble universelle, essayez de la chercher avant de

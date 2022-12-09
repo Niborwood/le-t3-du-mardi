@@ -11,7 +11,7 @@ export const menus = [
   },
   {
     id: "topics",
-    name: "Sujets",
+    name: "Historique",
   },
   {
     id: "me",
