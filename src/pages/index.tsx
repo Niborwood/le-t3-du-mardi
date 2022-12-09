@@ -110,7 +110,7 @@ const Home: NextPage = () => {
       {/* CTA */}
       <LayoutCTA>
         <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2">
-          <Button variant="secondary" href={sessionData ? "/topics" : "/me"}>
+          <Button variant="secondary" href="/topics">
             Voir les anciens résultats
           </Button>
           <Button

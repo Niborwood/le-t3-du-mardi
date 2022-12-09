@@ -102,9 +102,7 @@ const Me: NextPage = () => {
         <div className="grid gap-4 lg:col-span-2 lg:grid-cols-1 2xl:grid-cols-2">
           {sessionData && (
             <Button variant="secondary" href="/topics">
-              <span className="underline underline-offset-4">Voter</span> /{" "}
-              <span className="underline underline-offset-4">Proposer</span> un
-              sujet
+              Historique
             </Button>
           )}
 
