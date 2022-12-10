@@ -16,7 +16,7 @@ const LayoutAbout = ({
             <Image
               src="/favicon.png"
               alt="Logo"
-              className="w-24 rounded-lg 2xl:w-48"
+              className="w-24 rounded-lg lg:w-16 2xl:w-48"
               width={200}
               height={200}
             />

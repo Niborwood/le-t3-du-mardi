@@ -33,7 +33,7 @@ const Home: NextPage = () => {
 
       {/* TITLE */}
       <LayoutTitle>
-        <h1 className="py-8 font-clash text-7xl font-extrabold uppercase 2xl:row-span-2 2xl:text-9xl">
+        <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-6xl 2xl:row-span-2 2xl:text-9xl">
           Le <span className="rotate-3 text-emerald-600">top 3</span> du{" "}
           {new Intl.DateTimeFormat("fr-FR", {
             weekday: "long",
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
             <strong>Votez</strong> et <strong>proposez</strong> des sujets !
           </span>
           <ArrowDownRight
-            className="relative top-1 rotate-45 2xl:rotate-0"
+            className="relative top-1 rotate-45 lg:-rotate-45 2xl:rotate-0"
             size={40}
           />
         </p>
