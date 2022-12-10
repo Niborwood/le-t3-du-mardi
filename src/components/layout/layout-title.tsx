@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { ArrowDownRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { useRouter } from "next/router";
 
 const LayoutTitle = ({
   children,
@@ -9,11 +10,14 @@ const LayoutTitle = ({
   children: ReactNode;
   empty?: boolean;
 }) => {
+  const router = useRouter();
+
   return (
     <section
       className={classNames(
         {
           "bg-transparent": empty,
+          "order-2 lg:order-none": router.pathname === "/play",
         },
         "overflow-auto rounded-lg bg-zinc-100 p-4 text-zinc-900 lg:row-span-3 lg:grid-rows-1 lg:p-8 2xl:col-span-2 2xl:row-span-2 2xl:grid 2xl:grid-rows-2"
       )}
