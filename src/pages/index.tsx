@@ -56,34 +56,35 @@ const Home: NextPage = () => {
 
       {/* PREVIOUS */}
       <LayoutPrev>
-        <main className="order-2 flex flex-col justify-between gap-2 rounded-md  bg-zinc-50 p-2 2xl:order-none 2xl:grid-rows-4 2xl:gap-4">
-          <div className="space-y-4">
-            {lastTopics.data?.length ? (
-              lastTopics.data.map((topic, index) => (
-                <button
-                  className={`flex flex-row-reverse items-center justify-end gap-2 rounded-md bg-zinc-50 px-4 py-6 text-left text-xl font-light uppercase text-zinc-900 transition-all hover:scale-105 lg:py-3 2xl:gap-4 2xl:py-0 2xl:row-start-${
-                    index + 2
-                  }`}
-                  key={topic.id}
-                >
-                  <span>
-                    Top 3{" "}
-                    <span className="font-semibold text-emerald-700">
-                      {topic.name}
-                    </span>
+        <main className="order-2 flex flex-col justify-between gap-2 rounded-md bg-zinc-50 p-2 2xl:order-none 2xl:grid-rows-4">
+          {lastTopics.data?.length ? (
+            lastTopics.data.map((topic, index) => (
+              <Button
+                className={`flex flex-row-reverse items-center justify-end gap-2 rounded-md bg-zinc-50 px-4 py-6 text-left text-base font-light uppercase text-zinc-900 transition-all lg:py-3 2xl:gap-2 2xl:py-1 2xl:row-start-${
+                  index + 2
+                }`}
+                key={topic.id}
+                size="sm"
+                variant="secondary"
+                href="/topics"
+              >
+                <span>
+                  Top 3{" "}
+                  <span className="font-semibold text-emerald-700">
+                    {topic.name}
                   </span>
-                  <ArrowRight className="min-w-[30px] 2xl:-rotate-45" />
-                </button>
-              ))
-            ) : (
-              <div className="col-auto grid place-items-center p-8 text-zinc-900">
-                Il n&apos;y a pas encore d&apos;historique.
-              </div>
-            )}
-          </div>
+                </span>
+                <ArrowRight className="min-w-[30px] 2xl:-rotate-45" />
+              </Button>
+            ))
+          ) : (
+            <div className="col-auto grid place-items-center p-8 text-zinc-900">
+              Il n&apos;y a pas encore d&apos;historique.
+            </div>
+          )}
 
           {/* See More */}
-          <Button variant="secondary" size="md" href="/topics">
+          <Button variant="primary" size="md" href="/topics">
             Historique
           </Button>
         </main>
