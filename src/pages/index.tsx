@@ -15,10 +15,14 @@ import {
 } from "../components/layout";
 import { Button } from "../components/ui";
 import { useSession } from "next-auth/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Home: NextPage = () => {
   const lastTopics = trpc.quiz.getLastTopics.useQuery();
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
+  const [parent] = useAutoAnimate<HTMLDivElement>();
+
+  // if (status === "loading" || lastTopics.isLoading) return <FullscreenLoader />;
 
   return (
     <>
@@ -110,17 +114,21 @@ const Home: NextPage = () => {
 
       {/* CTA */}
       <LayoutCTA>
-        <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2">
-          <Button variant="secondary" href="/topics">
-            Voir les anciens résultats
-          </Button>
-          <Button
-            variant="primary"
-            href={sessionData ? "/play" : "/me"}
-            disabled={!sessionData}
-          >
-            {!sessionData ? "Se connecter pour voter" : "Voter"}
-          </Button>
+        <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2" ref={parent}>
+          {status !== "loading" && (
+            <Button variant="secondary" href="/topics">
+              Voir les anciens résultats
+            </Button>
+          )}
+          {status !== "loading" && (
+            <Button
+              variant="primary"
+              href={sessionData ? "/play" : "/me"}
+              disabled={!sessionData}
+            >
+              {!sessionData ? "Se connecter pour voter" : "Voter"}
+            </Button>
+          )}
         </div>
       </LayoutCTA>
     </>
