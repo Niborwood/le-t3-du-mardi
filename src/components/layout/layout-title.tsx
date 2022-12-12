@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { ArrowDownRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/router";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const LayoutTitle = ({
   children,
@@ -11,6 +12,7 @@ const LayoutTitle = ({
   empty?: boolean;
 }) => {
   const router = useRouter();
+  const [parent] = useAutoAnimate<HTMLDivElement>();
 
   return (
     <section
@@ -21,6 +23,7 @@ const LayoutTitle = ({
         },
         "overflow-auto rounded-lg bg-zinc-100 p-4 text-zinc-900 lg:row-span-3 lg:grid-rows-1 lg:p-8 2xl:col-span-2 2xl:row-span-2 2xl:grid 2xl:grid-rows-2"
       )}
+      ref={parent}
     >
       {children}
     </section>
