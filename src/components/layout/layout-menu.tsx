@@ -23,7 +23,7 @@ export const menus = [
     id: "about",
     name: "à propos",
   },
-] as const;
+];
 
 const LayoutMenu = () => {
   const { data: sessionData, status } = useSession();
