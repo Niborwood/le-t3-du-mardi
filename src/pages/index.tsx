@@ -17,7 +17,19 @@ import { Button } from "../components/ui";
 import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const lastTopics = trpc.quiz.getLastTopics.useQuery();
+  const lastTopics = trpc.quiz.getLastTopics.useQuery(undefined, {
+    placeholderData: [
+      { id: "placeholder-1", name: "..." },
+      {
+        id: "placeholder-2",
+        name: "...",
+      },
+      {
+        id: "placeholder-3",
+        name: "...",
+      },
+    ],
+  });
   const { data: sessionData } = useSession();
 
   return (
