@@ -150,7 +150,7 @@ const Topics: NextPage = () => {
                 </div>
               </div>
               {/* Top 4 to 12 */}
-              <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-flow-col 2xl:grid-rows-3 2xl:gap-0">
+              <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-rows-3 2xl:gap-1">
                 {topAnswers?.slice(3, 12).map((answer, index) => (
                   <div key={answer.name}>
                     <p className="font-clash text-lg font-semibold">

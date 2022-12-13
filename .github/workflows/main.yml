@@ -10,4 +10,4 @@ jobs:
         run: |
           curl --request POST \
           --url 'https://top3dumardi.vercel.app/api/cron' \
-          --header 'authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
+          --header 'authorization: Bearer ${{ secrets.API_SECRET }}'

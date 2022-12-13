@@ -22,6 +22,7 @@ const Button = ({
   className,
   href,
   type = "button",
+  ...rest
 }: ButtonProps) => {
   // Generating button
   const button = (
@@ -43,13 +44,14 @@ const Button = ({
         className
       )}
       disabled={disabled}
+      {...rest}
     >
       {children}
     </button>
   );
 
   return href ? (
-    <Link className="block" href={href}>
+    <Link className="block h-full w-full" href={href} {...rest}>
       {button}
     </Link>
   ) : (

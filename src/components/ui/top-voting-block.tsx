@@ -45,9 +45,9 @@ export const TopVotingBlock = ({
       <p
         className={classNames("font-clash text-7xl font-bold", {
           // Variant One
-          "text-7xl": variant === "one",
+          "text-7xl lg:text-5xl 2xl:text-7xl": variant === "one",
           // Variant Two-Three
-          "text-5xl": variant === "two-three",
+          "text-5xl lg:text-3xl 2xl:text-5xl": variant === "two-three",
         })}
       >
         {index}.
