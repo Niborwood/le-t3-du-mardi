@@ -141,6 +141,7 @@ const Home: NextPage = () => {
               {!sessionData ? "Se connecter pour voter" : "Voter"}
             </Button>
           )}
+          {status === "loading" && "Chargement des tops..."}
         </div>
       </LayoutCTA>
     </>
