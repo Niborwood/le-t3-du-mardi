@@ -126,13 +126,18 @@ const Home: NextPage = () => {
 
       {/* CTA */}
       <LayoutCTA>
-        <div className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2" ref={parent}>
-          {status !== "loading" && (
+        {status === "loading" ? (
+          <div className="col-span-2 grid place-items-center">
+            Chargement des tops...
+          </div>
+        ) : (
+          <div
+            className="grid gap-4 2xl:col-span-2 2xl:grid-cols-2"
+            ref={parent}
+          >
             <Button variant="secondary" href="/topics">
               Voir les anciens résultats
             </Button>
-          )}
-          {status !== "loading" && (
             <Button
               variant="primary"
               href={sessionData ? "/play" : "/me"}
@@ -140,9 +145,8 @@ const Home: NextPage = () => {
             >
               {!sessionData ? "Se connecter pour voter" : "Voter"}
             </Button>
-          )}
-          {status === "loading" && "Chargement des tops..."}
-        </div>
+          </div>
+        )}
       </LayoutCTA>
     </>
   );
