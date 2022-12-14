@@ -1,3 +1,4 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import classNames from "classnames";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
@@ -16,16 +17,16 @@ import { Button } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
+  const [parent] = useAutoAnimate<HTMLSpanElement>();
   const { data: sessionData } = useSession();
 
   // TRPC
   const utils = trpc.useContext();
-  const { data: pastTopics, isLoading: pastTopicsIsLoading } =
-    trpc.quiz.getPastTopics.useQuery(undefined, {
-      onSuccess: (data) => {
-        if (!currentTopicId) setCurrentTopicId(data[0]?.id);
-      },
-    });
+  const { data: pastTopics } = trpc.quiz.getPastTopics.useQuery(undefined, {
+    onSuccess: (data) => {
+      if (!currentTopicId) setCurrentTopicId(data[0]?.id);
+    },
+  });
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery();
@@ -52,7 +53,7 @@ const Topics: NextPage = () => {
   );
   const [postTopicInput, setPostTopicInput] = useState("");
 
-  const { data: topAnswers, isLoading } =
+  const { data: topAnswers } =
     trpc.quiz.getCurrentAnswers.useQuery(currentTopicId);
 
   // DERIVED
@@ -83,7 +84,7 @@ const Topics: NextPage = () => {
       <LayoutTitle>
         {!pastTopics?.length ? (
           <div className="col-span-full row-span-full grid place-items-center">
-            Il n&apos;y a pas encore d&apos;historique.
+            Chargement de l&apos;historique...
           </div>
         ) : (
           <div className="space-y-4 lg:row-span-2 lg:grid lg:grid-rows-6 lg:gap-4 lg:space-y-0">
@@ -91,7 +92,10 @@ const Topics: NextPage = () => {
               {/* Title */}
               <h2 className="col-span-2 flex flex-col text-2xl">
                 <span>Top 3</span>
-                <span className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl">
+                <span
+                  ref={parent}
+                  className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl"
+                >
                   {currentTopic?.name}
                 </span>
               </h2>
@@ -224,14 +228,14 @@ const Topics: NextPage = () => {
               <Button
                 variant="secondary"
                 onClick={() => handleVote("increment")}
-                disabled={voteForTopicIsLoading}
+                disabled={voteForTopicIsLoading || topicToVoteIsLoading}
               >
                 {/* <ChevronUp size={60} className="m-auto" /> */}+ 1
               </Button>
               <Button
                 variant="secondary"
                 onClick={() => handleVote("decrement")}
-                disabled={voteForTopicIsLoading}
+                disabled={voteForTopicIsLoading || topicToVoteIsLoading}
               >
                 {/* <ChevronDown size={60} className="m-auto" /> */}- 1
               </Button>
