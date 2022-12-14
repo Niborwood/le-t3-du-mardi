@@ -17,7 +17,7 @@ import { Button } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
-  const [parent] = useAutoAnimate<HTMLSpanElement>();
+  const [parent] = useAutoAnimate<HTMLHeadingElement>();
   const { data: sessionData } = useSession();
 
   // TRPC
@@ -90,12 +90,9 @@ const Topics: NextPage = () => {
           <div className="space-y-4 lg:row-span-2 lg:grid lg:grid-rows-6 lg:gap-4 lg:space-y-0">
             <div className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3">
               {/* Title */}
-              <h2 className="col-span-2 flex flex-col text-2xl">
+              <h2 className="col-span-2 flex flex-col text-2xl" ref={parent}>
                 <span>Top 3</span>
-                <span
-                  ref={parent}
-                  className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl"
-                >
+                <span className="break-words font-clash text-5xl font-bold lg:text-4xl 2xl:text-6xl">
                   {currentTopic?.name}
                 </span>
               </h2>
