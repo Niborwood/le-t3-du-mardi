@@ -138,11 +138,7 @@ const Home: NextPage = () => {
             <Button variant="secondary" href="/topics">
               Voir les anciens résultats
             </Button>
-            <Button
-              variant="primary"
-              href={sessionData ? "/play" : "/me"}
-              disabled={!sessionData}
-            >
+            <Button variant="primary" href={sessionData ? "/play" : "/me"}>
               {!sessionData ? "Se connecter pour voter" : "Voter"}
             </Button>
           </div>
