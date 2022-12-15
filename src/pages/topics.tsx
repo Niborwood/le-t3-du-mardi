@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import type { FormEventHandler } from "react";
 import { useState } from "react";
 import {
@@ -19,12 +20,15 @@ import { trpc } from "../utils/trpc";
 const Topics: NextPage = () => {
   const [parent] = useAutoAnimate<HTMLHeadingElement>();
   const { data: sessionData } = useSession();
+  const router = useRouter();
+
+  const historyBase = router.query.history ? +router.query.history : 0;
 
   // TRPC
   const utils = trpc.useContext();
   const { data: pastTopics } = trpc.quiz.getPastTopics.useQuery(undefined, {
     onSuccess: (data) => {
-      if (!currentTopicId) setCurrentTopicId(data[0]?.id);
+      if (!currentTopicId) setCurrentTopicId(data[historyBase]?.id);
     },
   });
 

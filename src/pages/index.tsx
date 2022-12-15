@@ -82,7 +82,7 @@ const Home: NextPage = () => {
                 key={topic.id}
                 size="sm"
                 variant="secondary"
-                href="/topics"
+                href={`/topics?history=${index}`}
               >
                 <span>
                   Top 3{" "}

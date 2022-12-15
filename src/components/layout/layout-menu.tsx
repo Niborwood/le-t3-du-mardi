@@ -14,7 +14,7 @@ export const menus = [
   },
   {
     id: "topics",
-    name: "Historique / Sujets",
+    name: "Anciens tops",
   },
   {
     id: "me",

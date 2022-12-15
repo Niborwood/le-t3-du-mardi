@@ -22,7 +22,7 @@ export const quizRouter = router({
         ],
       },
       orderBy: {
-        createdAt: "desc",
+        votedAt: "desc",
       },
     });
   }),
