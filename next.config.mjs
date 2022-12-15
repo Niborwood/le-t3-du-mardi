@@ -4,6 +4,7 @@
  * This is especially useful for Docker builds.
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
+import withPWA from "next-pwa";
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -14,4 +15,12 @@ const config = {
     defaultLocale: "en",
   },
 };
-export default config;
+
+const nextConfig = withPWA({
+  dest: 'public',
+})(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  config
+);
+export default nextConfig;
