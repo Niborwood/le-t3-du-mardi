@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 const LayoutPrev = ({ children }: { children?: ReactNode }) => {
   const router = useRouter();
-  console.log(router.pathname);
   return (
     <section
       className={classNames(

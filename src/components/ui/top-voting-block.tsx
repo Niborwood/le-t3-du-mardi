@@ -130,7 +130,7 @@ export const TopVotingBlock = ({
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pr-4 ${
                         active
-                          ? "bg-emerald-600 pl-10 text-white"
+                          ? "bg-emerald-600 pl-10 text-slate-50"
                           : "pl-4 text-gray-900"
                       }`
                     }
@@ -142,7 +142,7 @@ export const TopVotingBlock = ({
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "text-emerald-600"
+                              active ? "text-slate-50" : "text-emerald-600"
                             }`}
                           >
                             <Check className="h-5 w-5" aria-hidden="true" />

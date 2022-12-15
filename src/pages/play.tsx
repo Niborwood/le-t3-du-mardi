@@ -15,10 +15,11 @@ import {
 } from "../components/layout";
 import { Button, TopVotingBlock } from "../components/ui";
 import Head from "next/head";
+import { ChevronsUpDown } from "lucide-react";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
-  const [parent] = useAutoAnimate<HTMLDivElement>(/* optional config */);
+  const [parent] = useAutoAnimate<HTMLDivElement>();
 
   const utils = trpc.useContext();
 
@@ -118,7 +119,7 @@ const Play: NextPage = () => {
       {/* TOP TITLE */}
       <LayoutPrev>
         <section className="col-span-2 grid items-center rounded-md bg-emerald-600 p-8 font-clash text-3xl font-semibold text-zinc-50/90">
-          <h2>
+          <h2 ref={parent}>
             <span className="font-archivo font-extralight">TOP 3 </span>
             <br />
             <span
@@ -143,6 +144,12 @@ const Play: NextPage = () => {
             vous semble universelle, essayez de la chercher avant de
             l&apos;ajouter - les{" "}
             <strong>différences orthographiques sont prises en compte</strong>.
+          </p>
+          <p>
+            Cliquez sur l&apos;icône{" "}
+            <ChevronsUpDown size={20} className="inline" /> pour voir les
+            réponses déjà données. Pour valider une réponse que vous inventez,
+            cliquez sur &quot;ajouter la réponse...&quot; ou appuyez sur Entrée.
           </p>
         </div>
         <div>

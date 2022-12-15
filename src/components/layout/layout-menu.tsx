@@ -14,11 +14,11 @@ export const menus = [
   },
   {
     id: "topics",
-    name: "Historique",
+    name: "Historique / Sujets",
   },
   {
     id: "me",
-    name: "Mes réponses",
+    name: "Mes compte",
   },
   {
     id: "about",
