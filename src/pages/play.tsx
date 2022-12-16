@@ -16,6 +16,7 @@ import {
 import { Button, TopVotingBlock } from "../components/ui";
 import Head from "next/head";
 import { ChevronsUpDown } from "lucide-react";
+import Tooltip from "@mui/material/Tooltip";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
@@ -155,10 +156,11 @@ const Play: NextPage = () => {
         <div>
           <Button
             className="h-full w-full"
-            disabled={!isAbleToSubmit}
+            disabled={!isAbleToSubmit && !userVotes?.length}
             onClick={postAnswers}
+            href={userVotes?.length ? "/topics" : undefined}
           >
-            {userVotes?.length ? "Vous avez déjà voté !" : "Voter"}
+            {userVotes?.length ? "Voir les résultats" : "Voter"}
           </Button>
         </div>
       </LayoutCTA>
