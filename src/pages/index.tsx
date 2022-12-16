@@ -49,22 +49,50 @@ const Home: NextPage = () => {
 
       {/* TITLE */}
       <LayoutTitle>
-        <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-6xl 2xl:row-span-2 2xl:text-9xl">
-          Le <span className="rotate-3 text-emerald-600">top 3</span> du{" "}
-          {new Intl.DateTimeFormat("fr-FR", {
-            weekday: "long",
-          }).format(new Date())}
-        </h1>
-        <p className="flex flex-col items-end justify-between gap-4 border-t-2 border-zinc-800 py-4 text-lg 2xl:flex-row 2xl:text-2xl">
-          <span>
-            Tous les <strong>jours</strong>, un top 3 de n&apos;importe quoi.
-            <strong>Votez</strong> et <strong>proposez</strong> des sujets !
-          </span>
-          <ArrowDownRight
-            className="relative top-1 rotate-45 lg:-rotate-45 2xl:rotate-0"
-            size={40}
-          />
-        </p>
+        <div className="row-span-2 grid 2xl:grid-rows-4">
+          <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-6xl 2xl:row-span-3 2xl:text-9xl">
+            Le <span className="rotate-3 text-emerald-600">top 3</span> du{" "}
+            {new Intl.DateTimeFormat("fr-FR", {
+              weekday: "long",
+            }).format(new Date())}
+          </h1>
+          <div className="row-span-1 gap-4 space-y-4 2xl:grid 2xl:grid-cols-3 2xl:space-y-0">
+            <Button href="/play" className="text-left normal-case">
+              <div className="font-clash text-xl font-semibold">1. Voter</div>
+              <p className="font-archivo text-sm font-light">
+                Tous les jours, un nouveau sujet de top 3 est choisi. Chacun
+                vote, soit avec ses réponses, soit avec celles des autres.
+              </p>
+            </Button>
+            <Button
+              variant="secondary"
+              className="text-left normal-case"
+              href="/topics"
+            >
+              <div className="font-clash text-xl font-semibold">
+                2. Consulter les anciens tops
+              </div>
+              <p className="font-archivo text-sm font-light">
+                Regardez les classements du vote du jour et des précédentes
+                votes. Les 12 meilleures réponses sont affichées.
+              </p>
+            </Button>
+            <Button
+              variant="secondary"
+              className="text-left normal-case"
+              href="/topics"
+            >
+              <div className="font-clash text-xl font-semibold">
+                3. Proposer et voter des tops
+              </div>
+              <p className="font-archivo text-sm font-light">
+                Vous pouvez proposer vos propres tops et voter pour ceux des
+                autres. Le vote qui a le meilleur score est sélectionné chaque
+                matin !
+              </p>
+            </Button>
+          </div>
+        </div>
       </LayoutTitle>
 
       {/* MENU */}

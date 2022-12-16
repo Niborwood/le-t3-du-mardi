@@ -155,13 +155,13 @@ const Topics: NextPage = () => {
                 </div>
               </div>
               {/* Top 4 to 12 */}
-              <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-rows-3 2xl:gap-1">
+              <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-cols-3 2xl:grid-rows-3 2xl:gap-1">
                 {topAnswers?.slice(3, 12).map((answer, index) => (
                   <div key={answer.name}>
-                    <p className="font-clash text-lg font-semibold">
+                    <p className="font-clash text-lg font-semibold leading-4">
                       {index + 4}. {answer.name}
                     </p>{" "}
-                    <p className="break-words">
+                    <p className="break-words text-sm">
                       {answer._sum.score} point
                       {answer._sum.score && answer._sum.score > 1 ? "s" : ""}
                     </p>
