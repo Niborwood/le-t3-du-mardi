@@ -16,7 +16,6 @@ import {
 import { Button, TopVotingBlock } from "../components/ui";
 import Head from "next/head";
 import { ChevronsUpDown } from "lucide-react";
-import Tooltip from "@mui/material/Tooltip";
 
 const Play: NextPage = () => {
   // AUTOANIMATE
