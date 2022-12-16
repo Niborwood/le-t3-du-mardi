@@ -18,7 +18,7 @@ export const menus = [
   },
   {
     id: "me",
-    name: "Mes compte",
+    name: "Mon compte",
   },
   {
     id: "about",
