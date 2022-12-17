@@ -18,11 +18,12 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
           <section className="flex flex-col gap-8">
             {items.map((item) => (
               <Link
-                className=""
+                className="group"
                 key={item.id}
                 href={`/${item.id === "home" ? "" : item.id}`}
               >
-                {item.name} <ArrowUpRight />
+                {item.name}{" "}
+                <ArrowUpRight className="transition-all group-hover:rotate-45" />
               </Link>
             ))}
           </section>
