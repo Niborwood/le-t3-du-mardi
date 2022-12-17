@@ -9,7 +9,7 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
           rel="stylesheet"
         />
       </Head>
-      <main className="grid grid-rows-1 gap-4 p-2 sm:min-h-screen lg:max-h-screen lg:grid-cols-3 lg:grid-rows-3 lg:p-4 2xl:grid-rows-3">
+      <main className="mt-10 grid grid-rows-1 gap-4 p-2 sm:min-h-screen lg:mt-0 lg:max-h-screen lg:grid-cols-3 lg:grid-rows-3 lg:p-4 2xl:grid-rows-3">
         {children}
       </main>
     </div>

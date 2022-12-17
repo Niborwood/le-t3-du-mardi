@@ -1,9 +1,11 @@
-import { ArrowDownRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-
 import { trpc } from "../utils/trpc";
+import { useSession } from "next-auth/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { weekday } from "../utils";
 
 // COMPONENTS
 import {
@@ -14,8 +16,6 @@ import {
   LayoutCTA,
 } from "../components/layout";
 import { Button } from "../components/ui";
-import { useSession } from "next-auth/react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Home: NextPage = () => {
   const lastTopics = trpc.quiz.getLastTopics.useQuery(undefined, {
@@ -52,9 +52,7 @@ const Home: NextPage = () => {
         <div className="row-span-2 2xl:grid 2xl:grid-rows-4">
           <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-6xl 2xl:row-span-3 2xl:text-9xl">
             Le <span className="rotate-3 text-emerald-600">top 3</span> du{" "}
-            {new Intl.DateTimeFormat("fr-FR", {
-              weekday: "long",
-            }).format(new Date())}
+            {weekday}
           </h1>
           <div className="row-span-1 gap-4 space-y-4 2xl:grid 2xl:grid-cols-3 2xl:space-y-0">
             <Button href="/play" className="relative text-left normal-case">
