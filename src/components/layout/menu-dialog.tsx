@@ -22,7 +22,9 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
                 key={item.id}
                 href={`/${item.id === "home" ? "" : item.id}`}
               >
-                {item.name}{" "}
+                <span className="transition-all group-hover:underline">
+                  {item.name}
+                </span>{" "}
                 <ArrowUpRight className="transition-all group-hover:rotate-45" />
               </Link>
             ))}
