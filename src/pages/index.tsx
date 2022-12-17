@@ -49,7 +49,7 @@ const Home: NextPage = () => {
 
       {/* TITLE */}
       <LayoutTitle>
-        <div className="row-span-2 grid 2xl:grid-rows-4">
+        <div className="row-span-2 2xl:grid 2xl:grid-rows-4">
           <h1 className="py-8 font-clash text-7xl font-extrabold uppercase lg:text-6xl 2xl:row-span-3 2xl:text-9xl">
             Le <span className="rotate-3 text-emerald-600">top 3</span> du{" "}
             {new Intl.DateTimeFormat("fr-FR", {
@@ -57,8 +57,11 @@ const Home: NextPage = () => {
             }).format(new Date())}
           </h1>
           <div className="row-span-1 gap-4 space-y-4 2xl:grid 2xl:grid-cols-3 2xl:space-y-0">
-            <Button href="/play" className="text-left normal-case">
-              <div className="font-clash text-xl font-semibold">1. Voter</div>
+            <Button href="/play" className="relative text-left normal-case">
+              <ArrowRight size={30} className="absolute right-2 bottom-2" />
+              <div className="flex items-center gap-1 font-clash text-xl font-semibold">
+                1. Voter
+              </div>
               <p className="font-archivo text-sm font-light">
                 Tous les jours, un nouveau sujet de top 3 est choisi. Chacun
                 vote, soit avec ses réponses, soit avec celles des autres.
@@ -66,9 +69,10 @@ const Home: NextPage = () => {
             </Button>
             <Button
               variant="secondary"
-              className="text-left normal-case"
+              className="relative text-left normal-case"
               href="/topics"
             >
+              <ArrowRight size={30} className="absolute right-2 bottom-2" />
               <div className="font-clash text-xl font-semibold">
                 2. Consulter les anciens tops
               </div>
@@ -79,16 +83,17 @@ const Home: NextPage = () => {
             </Button>
             <Button
               variant="secondary"
-              className="text-left normal-case"
+              className="relative text-left normal-case"
               href="/topics"
             >
+              <ArrowRight size={30} className="absolute right-2 bottom-2" />
               <div className="font-clash text-xl font-semibold">
                 3. Proposer et voter des tops
               </div>
               <p className="font-archivo text-sm font-light">
                 Vous pouvez proposer vos propres tops et voter pour ceux des
                 autres. Le vote qui a le meilleur score est sélectionné chaque
-                matin !
+                matin&nbsp;!
               </p>
             </Button>
           </div>
