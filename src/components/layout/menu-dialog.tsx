@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import Link from "next/link";
 import type { Dispatch, SetStateAction } from "react";
 import type { menus } from "./layout-menu";
@@ -29,10 +29,10 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
           </section>
         </Dialog.Panel>
         <button
-          className="absolute top-3 right-3 text-zinc-50"
+          className="absolute top-3 right-3 text-zinc-50 transition-all hover:rotate-45"
           onClick={() => setIsOpen(false)}
         >
-          <X size={35} />
+          <Plus size={35} />
         </button>
       </section>
     </Dialog>
