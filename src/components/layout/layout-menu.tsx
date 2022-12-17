@@ -2,6 +2,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Menu } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo, useState } from "react";
+import { weekday } from "../../utils";
 import { MenuDialog } from "./menu-dialog";
 import MenuItem from "./menu-item";
 
@@ -62,7 +63,9 @@ const LayoutMenu = () => {
 
       {/* MOBILE */}
       <nav className="fixed top-0 left-0 z-40 flex w-full justify-between bg-zinc-900 px-4 py-2 lg:hidden">
-        <p className="font-clash text-xl font-bold uppercase">Le top 3 du _</p>
+        <p className="font-clash text-xl font-bold uppercase">
+          Le top 3 du {weekday}
+        </p>
         <button onClick={() => setIsOpen((prev) => !prev)}>
           <Menu />
         </button>

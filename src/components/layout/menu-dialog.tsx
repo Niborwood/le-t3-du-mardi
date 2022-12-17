@@ -17,7 +17,11 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
         <Dialog.Panel className="grid h-screen w-screen place-items-center bg-emerald-600 p-8 font-clash text-5xl font-bold uppercase text-zinc-50">
           <section className="flex flex-col gap-8">
             {items.map((item) => (
-              <Link className="" key={item.id} href={item.id}>
+              <Link
+                className=""
+                key={item.id}
+                href={`/${item.id === "home" ? "" : item.id}`}
+              >
                 {item.name} <ArrowUpRight />
               </Link>
             ))}
