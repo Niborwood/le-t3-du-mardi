@@ -41,7 +41,7 @@ const LayoutMenu = () => {
       .filter((item) => item.id !== "play")
       .map((item) => ({
         ...item,
-        name: item.name === "Mes réponses" ? "Se connecter" : item.name,
+        name: item.id === "me" ? "Se connecter" : item.name,
       }));
   }, [sessionData, status]);
 
