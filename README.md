@@ -1,27 +1,24 @@
-# Create T3 App
+# Le top 3 du mardi
 
-This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
+A quick farewell app for some friends and collegues.
+Built with [create-t3-app](https://create.t3.gg/).
 
-## What's next? How do I make an app with this?
+## What is this about?
 
-We try to keep this project as simple as possible, so you can start with the most basic configuration and then move on to more advanced configuration.
+This is a simple app that allows you to answer your top 3 of anything and compare the answers with everyone else. It's a quick and easy way to share your opinion on a topic.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Every day, a new topic is chosen and you can answer it. The next day, the topic is replaced by a new one and the previous one is archived. You can still see the previous topics and their answers.
 
-- [Next-Auth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [TailwindCSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## You said "every day"? Doesn't "mardi" mean "Tuesday"?
 
-We also [roll our own docs](https://create.t3.gg) with some summary information and links to the respective documentation.
+Yes, it does. This used to be our weekly game (every Tuesday, as you figured) but it was kind of funny so we decided to keep it going every day.
 
-Also checkout these awesome tutorials on `create-t3-app`.
+## How can I play?
 
-- [Build a Blog With the T3 Stack - tRPC, TypeScript, Next.js, Prisma & Zod](https://www.youtube.com/watch?v=syEWlxVFUrY)
-- [Build a Live Chat Application with the T3 Stack - TypeScript, Tailwind, tRPC](https://www.youtube.com/watch?v=dXRRY37MPuk)
-- [Build a full stack app with create-t3-app](https://www.nexxel.dev/blog/ct3a-guestbook)
-- [A first look at create-t3-app](https://dev.to/ajcwebdev/a-first-look-at-create-t3-app-1i8f)
+Simply go to [https://top3.t3.gg](https://top3.t3.gg) and create an account using your favorite third-party authentication provider. Feel free to answer the daily topic and share your top 3 with your friends.
 
-## How do I deploy this?
+You can also create your own and share it with others. Vote for other people topics, so they can be chosen as the daily topic! They even might vote for yours ;)
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Can I play this in English?
+
+No, you can't. This app is only available in French. Sorry about that.
