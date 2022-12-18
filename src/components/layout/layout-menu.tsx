@@ -71,7 +71,7 @@ const LayoutMenu = () => {
         </button>
       </nav>
 
-      <MenuDialog isOpen={isOpen} setIsOpen={setIsOpen} items={menus} />
+      <MenuDialog isOpen={isOpen} setIsOpen={setIsOpen} items={reactiveMenus} />
     </>
   );
 };

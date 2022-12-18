@@ -56,7 +56,7 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
           </section>
         </Dialog.Panel>
         <button
-          className="absolute top-3 right-3 text-zinc-50 transition-all hover:rotate-45"
+          className="absolute top-3 right-3 rotate-45 text-zinc-50 transition-all hover:rotate-45 lg:rotate-0"
           onClick={() => setIsOpen(false)}
         >
           <Plus size={35} />
