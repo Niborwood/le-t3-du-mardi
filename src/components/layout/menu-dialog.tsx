@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import classNames from "classnames";
-import { ArrowUpRight, Plus, Share } from "lucide-react";
+import { ArrowUpRight, Link2, Plus, Share } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { Dispatch, SetStateAction } from "react";
@@ -55,6 +55,7 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
                 </Link>
               );
             })}
+
             {/* Share */}
             <button
               className="group text-left font-clash text-5xl font-bold uppercase"
@@ -65,7 +66,7 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
               >
                 Partager
               </span>{" "}
-              <Share className={classNames("transition-all")} />
+              <Link2 className={classNames("transition-all")} />
             </button>
           </section>
         </Dialog.Panel>
