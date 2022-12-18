@@ -15,9 +15,13 @@ Yes, it does. This used to be our weekly game (every Tuesday, as you figured) bu
 
 ## How can I play?
 
-Simply go to [https://top3.t3.gg](https://top3.t3.gg) and create an account using your favorite third-party authentication provider. Feel free to answer the daily topic and share your top 3 with your friends.
+Simply go to [https://top3dumardi.vercel.app/](https://top3dumardi.vercel.app/) and create an account using your favorite third-party authentication provider. Feel free to answer the daily topic and share your top 3 with your friends.
 
 You can also create your own and share it with others. Vote for other people topics, so they can be chosen as the daily topic! They even might vote for yours ;)
+
+## I can't remember the URL. Can I bookmark it?
+
+Of course, but you can also use the [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) version. It's available when you open the app on your phone. You can add it to your home screen and use it as a regular app on desktops.
 
 ## Can I play this in English?
 
