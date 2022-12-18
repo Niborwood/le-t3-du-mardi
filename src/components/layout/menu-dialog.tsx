@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import classNames from "classnames";
-import { ArrowUpRight, Plus } from "lucide-react";
+import { ArrowUpRight, Plus, Share } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { Dispatch, SetStateAction } from "react";
@@ -15,11 +15,35 @@ type MenuDialogProps = {
 export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
   const router = useRouter();
 
+  const share = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Top 10 des meilleurs films de la semaine",
+          text: "Top 10 des meilleurs films de la semaine",
+          url: "https://top3dumardi.vercel.app/",
+        })
+        .then(() => console.log("Partage réussi !"))
+        .catch((error) => console.log("Error sharing", error));
+
+      return;
+    }
+
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText("https://top3dumardi.vercel.app/")
+        .then(() => {
+          console.log("Copié dans le presse-papier");
+        });
+    }
+  };
+
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
       <section className="fixed inset-0 z-50 grid place-items-center">
         <Dialog.Panel className="grid h-screen w-screen place-items-center bg-emerald-600 p-8 font-clash text-5xl font-bold uppercase text-zinc-50">
           <section className="flex flex-col gap-8">
+            {/* Items */}
             {items.map((item) => {
               const isActive =
                 router.pathname === "/"
@@ -53,6 +77,18 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
                 </Link>
               );
             })}
+            {/* Share */}
+            <button
+              className="group text-left font-clash text-5xl font-bold uppercase"
+              onClick={share}
+            >
+              <span
+                className={classNames("transition-all group-hover:underline")}
+              >
+                Partager
+              </span>{" "}
+              <Share className={classNames("transition-all")} />
+            </button>
           </section>
         </Dialog.Panel>
         <button
