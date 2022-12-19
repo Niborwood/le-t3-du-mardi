@@ -213,9 +213,7 @@ const Topics: NextPage = () => {
         ) : topicToVote ? (
           <div className="col-span-2 grid grid-rows-2 gap-4 rounded-md bg-zinc-100 p-8 text-zinc-900 2xl:grid-cols-2 2xl:grid-rows-1">
             <div className="flex flex-col justify-between p-2">
-              <h3 className="text-2xl">
-                Votez pour le prochain sujet du mardi !
-              </h3>
+              <h3 className="text-2xl">Votez pour le prochain top 3 !</h3>
               <div>
                 <p className="text-sm">Top 3...</p>
                 <p className="font-clash text-4xl font-bold">
@@ -245,7 +243,7 @@ const Topics: NextPage = () => {
         ) : (
           <div className="col-span-2 grid place-items-center rounded-md bg-zinc-100 p-8 text-center text-zinc-900">
             <div>
-              <h3 className="text-2xl">Vous avez voté pour tous les sujets.</h3>
+              <h3 className="text-2xl">Vous avez voté pour tous les tops.</h3>
               <p>Proposez-en vous-même puisque vous êtes si malins</p>
             </div>
           </div>
@@ -263,18 +261,17 @@ const Topics: NextPage = () => {
         >
           <div className="flex flex-col justify-between p-0">
             <div>
-              <h4 className="text-3xl">Proposez votre sujet du mardi&nbsp;!</h4>
+              <h4 className="text-3xl">Proposez votre propre top 3 !</h4>
               <p>
-                Vous avez une idée de sujet pour le mardi ? Proposez-le ici.
-                S&apos;il rassemble assez de votes, il sera sélectionné pour le
-                prochain mardi.
+                Vous avez une idée de sujet de top 3 ? Proposez-le ici.
+                S&apos;il rassemble assez de votes, il sera sélectionné !
               </p>
             </div>
             {sessionData ? (
               <input
                 type="text"
                 className="w-full border-b-4 border-zinc-900 bg-transparent px-2 py-2 tracking-wider text-zinc-900 outline-none focus:ring-0"
-                placeholder="Une idée de sujet (40 caractères max.)"
+                placeholder="Une idée de top 3 (40 caractères max.)"
                 maxLength={40}
                 value={postTopicInput}
                 onChange={(e) => setPostTopicInput(e.target.value)}
@@ -284,7 +281,7 @@ const Topics: NextPage = () => {
                 <Link href="/me" className="font-normal text-emerald-600">
                   Connectez-vous
                 </Link>{" "}
-                pour proposer un sujet.
+                pour proposer un top 3.
               </p>
             )}
           </div>
