@@ -1,4 +1,5 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Dialog } from "@headlessui/react";
 import { Menu } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo, useState } from "react";
@@ -33,6 +34,7 @@ const LayoutMenu = () => {
   const { data: sessionData, status } = useSession();
   const [parent] = useAutoAnimate<HTMLUListElement>();
   const [isOpen, setIsOpen] = useState(false);
+  const [isShareToastOpen, setIsShareToastOpen] = useState(false);
 
   const reactiveMenus = useMemo(() => {
     if (status === "loading") return [];
@@ -45,10 +47,25 @@ const LayoutMenu = () => {
       }));
   }, [sessionData, status]);
 
+  const handleShare = async () => {
+    try {
+      await share();
+
+      // Open toast, then close it after 3 seconds
+      setIsShareToastOpen(true);
+      setTimeout(() => setIsShareToastOpen(false), 3000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       {/* DESKTOP */}
-      <nav className="hidden rounded-lg lg:order-2 lg:grid 2xl:order-none 2xl:grid-cols-2">
+      <nav
+        className="hidden rounded-lg lg:order-2 lg:grid 2xl:order-none 2xl:grid-cols-2"
+        ref={parent}
+      >
         <div className="grid lg:items-center lg:px-4 2xl:col-start-2 2xl:place-items-center">
           <ul
             className="space-y-4 text-right text-xl lg:space-y-2 2xl:w-2/3 2xl:space-y-4"
@@ -58,13 +75,24 @@ const LayoutMenu = () => {
               <MenuItem key={item.id} item={item} />
             ))}
             <button
-              className="ml-auto flex items-center justify-start gap-1 text-right uppercase 2xl:justify-end"
-              onClick={() => share()}
+              className="flex items-center justify-start gap-1 text-right uppercase 2xl:ml-auto 2xl:justify-end"
+              onClick={handleShare}
             >
               Partager
             </button>
           </ul>
         </div>
+
+        <Dialog
+          open={isShareToastOpen}
+          onClose={() => setIsShareToastOpen(false)}
+        >
+          <section className="fixed bottom-2 left-2 right-2 z-50 m-auto w-fit">
+            <Dialog.Panel className="rounded-lg bg-emerald-600 p-8 font-archivo font-light text-zinc-50">
+              Le lien est copié dans le presse-papier !
+            </Dialog.Panel>
+          </section>
+        </Dialog>
       </nav>
 
       {/* MOBILE */}
