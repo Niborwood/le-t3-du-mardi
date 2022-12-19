@@ -40,10 +40,6 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Le top 3 du mardi</title>
-        <meta
-          name="description"
-          content="Si c'est mardi, c'est top 3. Si c'est pas mardi, c'est pas top 3."
-        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
