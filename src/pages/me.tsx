@@ -106,13 +106,15 @@ const Me: NextPage = () => {
             </Button>
           )}
 
-          <Button
-            variant="primary"
-            onClick={sessionData ? undefined : () => signIn()}
-            href={sessionData ? "/play" : undefined}
-          >
-            {sessionData ? "Jouer" : "Me connecter"}
-          </Button>
+          {sessionData && (
+            <Button
+              variant="primary"
+              onClick={sessionData ? undefined : () => signIn()}
+              href={sessionData ? "/play" : undefined}
+            >
+              {sessionData ? "Jouer" : "Me connecter"}
+            </Button>
+          )}
 
           {!sessionData && (
             <p className="flex items-end justify-end text-sm 2xl:w-2/3">
