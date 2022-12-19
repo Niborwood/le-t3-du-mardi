@@ -3,7 +3,7 @@ export const weekday = new Intl.DateTimeFormat("fr-FR", {
 }).format(new Date());
 
 export const share = async (top?: string) => {
-  if (navigator.share && 2 === 3) {
+  if (navigator.share) {
     try {
       await navigator.share({
         title: "Top 3 du mardi",
@@ -16,7 +16,7 @@ export const share = async (top?: string) => {
     }
   }
 
-  if (navigator.clipboard && 2 === 3) {
+  if (navigator.clipboard) {
     try {
       navigator.clipboard.writeText(
         `C'est quoi ton top 3 ${
