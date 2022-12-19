@@ -2,7 +2,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Menu } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo, useState } from "react";
-import { weekday } from "../../utils";
+import { share, weekday } from "../../utils";
 import { MenuDialog } from "./menu-dialog";
 import MenuItem from "./menu-item";
 
@@ -51,12 +51,18 @@ const LayoutMenu = () => {
       <nav className="hidden rounded-lg lg:order-2 lg:grid 2xl:order-none 2xl:grid-cols-2">
         <div className="grid lg:items-center lg:px-4 2xl:col-start-2 2xl:place-items-center">
           <ul
-            className="space-y-4 text-xl lg:space-y-2 2xl:w-2/3 2xl:space-y-4"
+            className="space-y-4 text-right text-xl lg:space-y-2 2xl:w-2/3 2xl:space-y-4"
             ref={parent}
           >
             {reactiveMenus.map((item) => (
               <MenuItem key={item.id} item={item} />
             ))}
+            <button
+              className="ml-auto flex items-center justify-start gap-1 text-right uppercase 2xl:justify-end"
+              onClick={() => share()}
+            >
+              Partager
+            </button>
           </ul>
         </div>
       </nav>
