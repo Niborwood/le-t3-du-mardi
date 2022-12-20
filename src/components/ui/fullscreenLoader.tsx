@@ -15,7 +15,7 @@ export const FullscreenLoader = () => {
         />
         <meta
           property="og:image"
-          content={`https://top3dumardi.vercel.app/api/og?top=${currentTopic?.name}}`}
+          content={`https://top3dumardi.vercel.app/api/og?top=n%27importe%20quoi}`}
         />
       </Head>
       <h2 className="animate-fade-in">Le top 3 du {weekday}.</h2>
