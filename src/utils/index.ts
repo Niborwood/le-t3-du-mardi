@@ -2,25 +2,33 @@ export const weekday = new Intl.DateTimeFormat("fr-FR", {
   weekday: "long",
 }).format(new Date());
 
-export const share = () => {
+export const share = async (top?: string) => {
   if (navigator.share) {
-    navigator
-      .share({
+    try {
+      await navigator.share({
         title: "Top 3 du mardi",
-        text: "C'est quoi ton top 3 ?",
+        text: `C'est quoi ton top 3 ${top ? top + " " : ""}?`,
         url: "https://top3dumardi.vercel.app/",
-      })
-      .then(() => console.log("Partage réussi !"))
-      .catch((error) => console.log("Erreur !", error));
-
-    return;
+      });
+      return;
+    } catch (err) {
+      throw new Error("Erreur lors du partage");
+    }
   }
 
   if (navigator.clipboard) {
-    navigator.clipboard
-      .writeText("C'est quoi ton top 3 ? https://top3dumardi.vercel.app/")
-      .then(() => {
-        console.log("Copié dans le presse-papier");
-      });
+    try {
+      navigator.clipboard.writeText(
+        `C'est quoi ton top 3 ${
+          top ? top + " " : ""
+        }? \nhttps://top3dumardi.vercel.app/`
+      );
+
+      return;
+    } catch (err) {
+      throw new Error("Erreur lors de la copie");
+    }
   }
+
+  throw new Error("Partage non supporté");
 };

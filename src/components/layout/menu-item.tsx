@@ -24,7 +24,7 @@ const MenuItem = ({ item }: MenuItemProps) => {
         ref={parent}
       >
         {isActive && <ArrowRight size={16} className="relative" />}
-        <div>{item.name}</div>
+        <div className="text-right">{item.name}</div>
       </Link>
     </button>
   );

@@ -14,7 +14,7 @@ import { trpc } from "../utils/trpc";
 import Head from "next/head";
 
 const Me: NextPage = () => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
   const utils = trpc.useContext();
 
   // TRPC QUERY
@@ -106,13 +106,15 @@ const Me: NextPage = () => {
             </Button>
           )}
 
-          <Button
-            variant="primary"
-            onClick={sessionData ? undefined : () => signIn()}
-            href={sessionData ? "/play" : undefined}
-          >
-            {sessionData ? "Jouer" : "Me connecter"}
-          </Button>
+          {status !== "loading" && (
+            <Button
+              variant="primary"
+              onClick={sessionData ? undefined : () => signIn()}
+              href={sessionData ? "/play" : undefined}
+            >
+              {sessionData ? "Jouer" : "Me connecter"}
+            </Button>
+          )}
 
           {!sessionData && (
             <p className="flex items-end justify-end text-sm 2xl:w-2/3">

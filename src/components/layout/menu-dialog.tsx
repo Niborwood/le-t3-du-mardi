@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import classNames from "classnames";
-import { ArrowUpRight, Link2, Plus, Share } from "lucide-react";
+import { ArrowUpRight, Link2, Plus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { Dispatch, SetStateAction } from "react";
@@ -15,6 +15,13 @@ type MenuDialogProps = {
 
 export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
   const router = useRouter();
+  const handleShare = async () => {
+    try {
+      await share();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
@@ -59,7 +66,7 @@ export const MenuDialog = ({ isOpen, setIsOpen, items }: MenuDialogProps) => {
             {/* Share */}
             <button
               className="group text-left font-clash text-5xl font-bold uppercase"
-              onClick={share}
+              onClick={handleShare}
             >
               <span
                 className={classNames("transition-all group-hover:underline")}

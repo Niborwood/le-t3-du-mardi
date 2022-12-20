@@ -40,10 +40,6 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Le top 3 du mardi</title>
-        <meta
-          name="description"
-          content="Si c'est mardi, c'est top 3. Si c'est pas mardi, c'est pas top 3."
-        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -138,7 +134,7 @@ const Home: NextPage = () => {
 
         <aside className="order-1 grid h-full w-full place-content-center place-items-center gap-4 rounded-lg bg-zinc-50 p-8 text-center text-4xl text-zinc-800 lg:p-4 2xl:order-none">
           <ArrowLeft size={80} className="-rotate-90 2xl:rotate-0" /> Précédents
-          sujets
+          tops
         </aside>
       </LayoutPrev>
 
