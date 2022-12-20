@@ -14,7 +14,7 @@ import { trpc } from "../utils/trpc";
 import Head from "next/head";
 
 const Me: NextPage = () => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
   const utils = trpc.useContext();
 
   // TRPC QUERY
@@ -106,7 +106,7 @@ const Me: NextPage = () => {
             </Button>
           )}
 
-          {sessionData && (
+          {status !== "loading" && (
             <Button
               variant="primary"
               onClick={sessionData ? undefined : () => signIn()}
