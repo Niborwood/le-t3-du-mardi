@@ -1,5 +1,6 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import classNames from "classnames";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -21,16 +22,27 @@ const Topics: NextPage = () => {
   const [parent] = useAutoAnimate<HTMLHeadingElement>();
   const { data: sessionData } = useSession();
   const router = useRouter();
-
   const historyBase = router.query.history ? +router.query.history : 0;
+
+  // STATE
+  const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
+    undefined
+  );
+  const [postTopicInput, setPostTopicInput] = useState("");
+  const [page, setPage] = useState(0);
 
   // TRPC
   const utils = trpc.useContext();
-  const { data: pastTopics } = trpc.quiz.getPastTopics.useQuery(undefined, {
-    onSuccess: (data) => {
-      if (!currentTopicId) setCurrentTopicId(data[historyBase]?.id);
+  const { data: pastTopics } = trpc.quiz.getPastTopics.useQuery(
+    {
+      page,
     },
-  });
+    {
+      onSuccess: (data) => {
+        setCurrentTopicId(data.data[historyBase]?.id);
+      },
+    }
+  );
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery();
@@ -51,17 +63,11 @@ const Topics: NextPage = () => {
     utils.quiz.getTopicToVote.invalidate();
   };
 
-  // STATE
-  const [currentTopicId, setCurrentTopicId] = useState<string | undefined>(
-    undefined
-  );
-  const [postTopicInput, setPostTopicInput] = useState("");
-
   const { data: topAnswers } =
     trpc.quiz.getCurrentAnswers.useQuery(currentTopicId);
 
   // DERIVED
-  const currentTopic = pastTopics?.find((t) => t.id === currentTopicId);
+  const currentTopic = pastTopics?.data.find((t) => t.id === currentTopicId);
 
   // VOTE
   const handleVote = async (type: "increment" | "decrement") => {
@@ -79,6 +85,18 @@ const Topics: NextPage = () => {
     setPostTopicInput("");
   };
 
+  const handleTopicPagination = (direction: "next" | "prev") => {
+    if (page === 0 && direction === "prev") return;
+    if (direction === "next" && page * 4 >= (pastTopics?.count ?? 4) - 4)
+      return;
+
+    if (direction === "next") {
+      setPage((prev) => prev + 1);
+    } else {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -86,7 +104,7 @@ const Topics: NextPage = () => {
       </Head>
       {/* Topic list */}
       <LayoutTitle>
-        {!pastTopics?.length ? (
+        {!pastTopics?.data.length ? (
           <div className="col-span-full row-span-full grid place-items-center">
             Chargement de l&apos;historique...
           </div>
@@ -170,25 +188,45 @@ const Topics: NextPage = () => {
               </div>
             </div>
 
-            <div className="grid gap-4 2xl:grid-cols-4">
-              {pastTopics?.map((topic) => (
-                <button
-                  key={topic.id}
-                  onClick={() => setCurrentTopicId(topic.id)}
-                  className={classNames(
-                    "grid place-items-center rounded-md border-4 font-clash text-xl font-bold transition-all hover:border-zinc-900 hover:text-zinc-900",
-                    {
-                      "border-zinc-900 text-zinc-900":
-                        topic.id === currentTopicId,
-                      "border-zinc-900/30 text-zinc-900/30":
-                        topic.id !== currentTopicId,
-                    }
-                  )}
-                >
-                  {topic.name}
-                </button>
-              ))}
-            </div>
+            <section className="flex flex-col items-center gap-2 2xl:flex-row">
+              <button
+                onClick={() => handleTopicPagination("prev")}
+                disabled={page === 0}
+                className={classNames("transition-all", {
+                  "opacity-20": page === 0,
+                })}
+              >
+                <ChevronLeft className="rotate-90 2xl:rotate-0" />
+              </button>
+              <div className="grid h-full w-full flex-1 gap-4 2xl:grid-cols-4">
+                {pastTopics?.data.map((topic) => (
+                  <button
+                    key={topic.id}
+                    onClick={() => setCurrentTopicId(topic.id)}
+                    className={classNames(
+                      "grid place-items-center rounded-md border-4 p-2 font-clash text-xl font-bold transition-all hover:border-zinc-900 hover:text-zinc-900",
+                      {
+                        "border-zinc-900 text-zinc-900":
+                          topic.id === currentTopicId,
+                        "border-zinc-900/30 text-zinc-900/30":
+                          topic.id !== currentTopicId,
+                      }
+                    )}
+                  >
+                    {topic.name}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => handleTopicPagination("next")}
+                className={classNames("transition-all", {
+                  "opacity-20": page * 4 >= (pastTopics?.count ?? 4) - 4,
+                })}
+                disabled={page * 4 >= (pastTopics?.count ?? 4) - 4}
+              >
+                <ChevronRight className="rotate-90 2xl:rotate-0" />
+              </button>
+            </section>
           </div>
         )}
       </LayoutTitle>

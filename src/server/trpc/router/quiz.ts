@@ -70,32 +70,55 @@ export const quizRouter = router({
         },
       });
     }),
-  getPastTopics: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.topic.findMany({
-      take: 4,
-      where: {
-        OR: [
-          {
-            used: true,
-          },
-          {
-            current: true,
-          },
-        ],
-      },
-      orderBy: {
-        votedAt: "desc",
-      },
-      include: {
-        _count: true,
-        answers: {
-          where: {
-            banned: false,
-          },
+  getPastTopics: publicProcedure
+    .input(
+      z.object({
+        page: z.number().min(0),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const countTopic = await ctx.prisma.topic.count({
+        where: {
+          OR: [
+            {
+              used: true,
+            },
+            {
+              current: true,
+            },
+          ],
         },
-      },
-    });
-  }),
+      });
+
+      return {
+        count: countTopic,
+        data: await ctx.prisma.topic.findMany({
+          take: 4,
+          skip: input.page * 4,
+          where: {
+            OR: [
+              {
+                used: true,
+              },
+              {
+                current: true,
+              },
+            ],
+          },
+          orderBy: {
+            votedAt: "desc",
+          },
+          include: {
+            _count: true,
+            answers: {
+              where: {
+                banned: false,
+              },
+            },
+          },
+        }),
+      };
+    }),
   getTopicToVote: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findFirst({
       where: {
