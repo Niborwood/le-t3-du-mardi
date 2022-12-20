@@ -23,10 +23,6 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen bg-zinc-900 font-archivo font-extralight text-zinc-50">
       <Head>
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=archivo@1&f[]=clash-display@1&display=swap"
-          rel="stylesheet"
-        />
         <meta
           name="description"
           content="Tous les jours, un top 3 de n'importe quoi."
