@@ -9,7 +9,6 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   const [secondLoaded, setSecondLoaded] = useState(false);
 
   const { data: currentTopic } = trpc.quiz.getCurrentTopic.useQuery();
-  console.log(currentTopic);
 
   // If session is loading, show loading screen for at least 1 second
   useEffect(() => {
