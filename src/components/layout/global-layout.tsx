@@ -1,14 +1,11 @@
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { trpc } from "../../utils/trpc";
 import { FullscreenLoader } from "../ui";
 
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   const { status } = useSession();
   const [secondLoaded, setSecondLoaded] = useState(false);
-
-  const { data: currentTopic } = trpc.quiz.getCurrentTopic.useQuery();
 
   // If session is loading, show loading screen for at least 1 second
   useEffect(() => {

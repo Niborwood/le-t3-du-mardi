@@ -33,16 +33,17 @@ const Topics: NextPage = () => {
 
   // TRPC
   const utils = trpc.useContext();
-  const { data: pastTopics } = trpc.quiz.getPastTopics.useQuery(
-    {
-      page,
-    },
-    {
-      onSuccess: (data) => {
-        setCurrentTopicId(data.data[historyBase]?.id);
+  const { data: pastTopics, isLoading: isPastTopicsLoading } =
+    trpc.quiz.getPastTopics.useQuery(
+      {
+        page,
       },
-    }
-  );
+      {
+        onSuccess: (data) => {
+          setCurrentTopicId(data.data[historyBase]?.id);
+        },
+      }
+    );
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery();
@@ -104,7 +105,7 @@ const Topics: NextPage = () => {
       </Head>
       {/* Topic list */}
       <LayoutTitle>
-        {!pastTopics?.data.length ? (
+        {!pastTopics?.data.length || isPastTopicsLoading ? (
           <div className="col-span-full row-span-full grid place-items-center">
             Chargement de l&apos;historique...
           </div>
