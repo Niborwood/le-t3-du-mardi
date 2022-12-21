@@ -111,7 +111,10 @@ const Topics: NextPage = () => {
           </div>
         ) : (
           <div className="space-y-4 lg:gap-4 2xl:row-span-2 2xl:grid 2xl:grid-rows-6 2xl:space-y-0">
-            <div className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3">
+            <div
+              className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3"
+              ref={parent}
+            >
               {/* Title */}
               <h2 className="col-span-2 flex flex-col text-2xl" ref={parent}>
                 <span>Top 3</span>
