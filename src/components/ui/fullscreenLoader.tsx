@@ -12,6 +12,10 @@ export const FullscreenLoader = () => {
           content="Tous les jours, un top 3 de n'importe quoi."
         />
         <meta
+          name="og:description"
+          content="Tous les jours, un top 3 de n'importe quoi."
+        />
+        <meta
           property="og:image"
           content={`https://top3dumardi.vercel.app/api/og`}
         />
