@@ -15,7 +15,7 @@ import {
   LayoutPrev,
   LayoutTitle,
 } from "../components/layout";
-import { Button } from "../components/ui";
+import { Button, FullscreenLoader } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
@@ -33,20 +33,27 @@ const Topics: NextPage = () => {
 
   // TRPC
   const utils = trpc.useContext();
-  const { data: pastTopics, isLoading: isPastTopicsLoading } =
-    trpc.quiz.getPastTopics.useQuery(
-      {
-        page,
+  const {
+    data: pastTopics,
+    isLoading: isPastTopicsLoading,
+    isInitialLoading: pastTopicsInitialLoading,
+  } = trpc.quiz.getPastTopics.useQuery(
+    {
+      page,
+    },
+    {
+      onSuccess: (data) => {
+        setCurrentTopicId(data.data[historyBase]?.id);
       },
-      {
-        onSuccess: (data) => {
-          setCurrentTopicId(data.data[historyBase]?.id);
-        },
-      }
-    );
+    }
+  );
+
+  console.log(pastTopicsInitialLoading);
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
-    trpc.quiz.getTopicToVote.useQuery();
+    trpc.quiz.getTopicToVote.useQuery(undefined, {
+      enabled: !!sessionData,
+    });
 
   const { mutateAsync: voteForTopic, isLoading: voteForTopicIsLoading } =
     trpc.quiz.postTopicVote.useMutation({
@@ -64,8 +71,12 @@ const Topics: NextPage = () => {
     utils.quiz.getTopicToVote.invalidate();
   };
 
-  const { data: topAnswers } =
-    trpc.quiz.getCurrentAnswers.useQuery(currentTopicId);
+  const { data: topAnswers } = trpc.quiz.getCurrentAnswers.useQuery(
+    currentTopicId,
+    {
+      enabled: !!currentTopicId,
+    }
+  );
 
   // DERIVED
   const currentTopic = pastTopics?.data.find((t) => t.id === currentTopicId);
@@ -99,7 +110,9 @@ const Topics: NextPage = () => {
   };
 
   return (
-    <>
+    <FullscreenLoader
+      loaders={[isPastTopicsLoading && !pastTopicsInitialLoading]}
+    >
       <Head>
         <title>Sujets | Le top 3 du mardi</title>
       </Head>
@@ -334,7 +347,7 @@ const Topics: NextPage = () => {
           )}
         </form>
       </LayoutCTA>
-    </>
+    </FullscreenLoader>
   );
 };
 

@@ -18,8 +18,9 @@ const Me: NextPage = () => {
   const utils = trpc.useContext();
 
   // TRPC QUERY
-  const { data: user, isLoading: userIsLoading } =
-    trpc.user.getStats.useQuery();
+  const { data: user } = trpc.user.getStats.useQuery(undefined, {
+    enabled: !!sessionData,
+  });
 
   // MUTATIONS
   const mutateUnsubscribe = trpc.user.unsubscribe.useMutation({
@@ -75,7 +76,7 @@ const Me: NextPage = () => {
                 <p className="font-clash text-4xl font-semibold">
                   {user?._count.topics}
                 </p>
-                <p className="text-md lg:text-lg">sujets proposés</p>
+                <p className="text-md lg:text-lg">sujets votés</p>
               </div>
             </div>
             <div className="flex flex-col gap-4 rounded-md bg-zinc-50 p-4 text-zinc-900">
