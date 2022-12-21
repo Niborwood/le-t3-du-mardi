@@ -14,7 +14,9 @@ module.exports = {
         }
       },
       animation: {
-        ['fade-in']: "fadeIn 0.5s ease-in-out",
+        ['fade-in']: "fadeIn .2s ease-in-out forwards",
+        ['fade-in-delay']: "fadeIn .7s 1s ease-in-out forwards",
+        ['fade-out']: "fadeIn .2s ease-in-out reverse forwards",
       }
     },
   },

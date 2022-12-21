@@ -11,7 +11,7 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSecondLoaded(true);
-    }, 1500);
+    }, 2500);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -21,7 +21,7 @@ const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-900 font-archivo font-extralight text-zinc-50">
+    <div className="min-h-screen animate-fade-in bg-zinc-900 font-archivo font-extralight text-zinc-50">
       <Head>
         <meta
           name="description"
