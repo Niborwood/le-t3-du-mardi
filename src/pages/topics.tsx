@@ -46,7 +46,9 @@ const Topics: NextPage = () => {
     );
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
-    trpc.quiz.getTopicToVote.useQuery();
+    trpc.quiz.getTopicToVote.useQuery(undefined, {
+      enabled: !!sessionData,
+    });
 
   const { mutateAsync: voteForTopic, isLoading: voteForTopicIsLoading } =
     trpc.quiz.postTopicVote.useMutation({
@@ -64,8 +66,12 @@ const Topics: NextPage = () => {
     utils.quiz.getTopicToVote.invalidate();
   };
 
-  const { data: topAnswers } =
-    trpc.quiz.getCurrentAnswers.useQuery(currentTopicId);
+  const { data: topAnswers } = trpc.quiz.getCurrentAnswers.useQuery(
+    currentTopicId,
+    {
+      enabled: !!sessionData,
+    }
+  );
 
   // DERIVED
   const currentTopic = pastTopics?.data.find((t) => t.id === currentTopicId);

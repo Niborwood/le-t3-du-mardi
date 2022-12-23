@@ -18,8 +18,12 @@ const Me: NextPage = () => {
   const utils = trpc.useContext();
 
   // TRPC QUERY
-  const { data: user, isLoading: userIsLoading } =
-    trpc.user.getStats.useQuery();
+  const { data: user, isLoading: userIsLoading } = trpc.user.getStats.useQuery(
+    undefined,
+    {
+      enabled: !!sessionData,
+    }
+  );
 
   // MUTATIONS
   const mutateUnsubscribe = trpc.user.unsubscribe.useMutation({
