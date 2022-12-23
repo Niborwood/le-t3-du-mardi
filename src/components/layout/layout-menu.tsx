@@ -14,7 +14,7 @@ export const menus = [
   },
   {
     id: "play",
-    name: "Jouer",
+    name: "Voter",
   },
   {
     id: "topics",

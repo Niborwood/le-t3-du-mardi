@@ -8,8 +8,8 @@ export const quizRouter = router({
   getAllTopics: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany();
   }),
-  getLastTopics: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.topic.findMany({
+  getLastTopics: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.topic.findMany({
       take: 3,
       where: {
         OR: [
@@ -90,33 +90,55 @@ export const quizRouter = router({
         },
       });
 
-      return {
-        count: countTopic,
-        data: await ctx.prisma.topic.findMany({
-          take: 4,
-          skip: input.page * 4,
-          where: {
-            OR: [
-              {
-                used: true,
-              },
-              {
-                current: true,
-              },
-            ],
-          },
-          orderBy: {
-            votedAt: "desc",
-          },
-          include: {
-            _count: true,
-            answers: {
-              where: {
-                banned: false,
-              },
+      const topics = await ctx.prisma.topic.findMany({
+        take: 4,
+        skip: input.page * 4,
+        where: {
+          OR: [
+            {
+              used: true,
+            },
+            {
+              current: true,
+            },
+          ],
+        },
+        orderBy: {
+          votedAt: "desc",
+        },
+        include: {
+          _count: true,
+          answers: {
+            where: {
+              banned: false,
             },
           },
-        }),
+        },
+      });
+
+      const answers = await ctx.prisma.answer.groupBy({
+        by: ["name", "topicId"],
+        _sum: {
+          score: true,
+        },
+        where: {
+          topicId: {
+            in: topics.map((topic) => topic.id),
+          },
+        },
+        orderBy: {
+          _sum: {
+            score: "desc",
+          },
+        },
+      });
+
+      return {
+        count: countTopic,
+        data: topics.map((topic) => ({
+          ...topic,
+          answers: answers.filter((answer) => answer.topicId === topic.id),
+        })),
       };
     }),
   getTopicToVote: protectedProcedure.query(({ ctx }) => {

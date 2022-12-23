@@ -33,22 +33,17 @@ const Topics: NextPage = () => {
 
   // TRPC
   const utils = trpc.useContext();
-  const {
-    data: pastTopics,
-    isLoading: isPastTopicsLoading,
-    isInitialLoading: pastTopicsInitialLoading,
-  } = trpc.quiz.getPastTopics.useQuery(
-    {
-      page,
-    },
-    {
-      onSuccess: (data) => {
-        setCurrentTopicId(data.data[historyBase]?.id);
+  const { data: pastTopics, isLoading: isPastTopicsLoading } =
+    trpc.quiz.getPastTopics.useQuery(
+      {
+        page,
       },
-    }
-  );
-
-  console.log(pastTopicsInitialLoading);
+      {
+        onSuccess: (data) => {
+          setCurrentTopicId(data.data[historyBase]?.id);
+        },
+      }
+    );
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery(undefined, {
@@ -110,9 +105,7 @@ const Topics: NextPage = () => {
   };
 
   return (
-    <FullscreenLoader
-      loaders={[isPastTopicsLoading && !pastTopicsInitialLoading]}
-    >
+    <>
       <Head>
         <title>Sujets | Le top 3 du mardi</title>
       </Head>
@@ -165,16 +158,16 @@ const Topics: NextPage = () => {
                 <div className="row-span-2 flex flex-col rounded-md bg-emerald-600 p-4 text-zinc-50">
                   <span className="font-clash text-7xl font-bold">1. </span>
                   <span className="break-words font-clash text-3xl font-semibold">
-                    {topAnswers?.[0]?.name}
+                    {currentTopic?.answers[0]?.name}
                   </span>
                   <span className="text-xl">
-                    {topAnswers?.[0]?._sum.score} points
+                    {currentTopic?.answers[0]?._sum.score} points
                   </span>
                 </div>
 
                 {/* Top 2 & 3 */}
                 <div className="mb-4 grid grid-rows-2 2xl:mb-0 2xl:p-2">
-                  {topAnswers?.slice(1, 3).map((answer, index) => (
+                  {currentTopic?.answers.slice(1, 3).map((answer, index) => (
                     <div className="row-span-2 flex flex-col" key={answer.name}>
                       <span className="font-clash text-3xl font-semibold">
                         <span className="break-words font-bold">
@@ -191,7 +184,7 @@ const Topics: NextPage = () => {
               </div>
               {/* Top 4 to 12 */}
               <div className="grid-flow grid grid-cols-2 gap-4 2xl:grid-cols-3 2xl:grid-rows-3 2xl:gap-1">
-                {topAnswers?.slice(3, 12).map((answer, index) => (
+                {currentTopic?.answers.slice(3, 12).map((answer, index) => (
                   <div key={answer.name}>
                     <p className="font-clash text-lg font-semibold leading-4">
                       {index + 4}. {answer.name}
@@ -347,7 +340,7 @@ const Topics: NextPage = () => {
           )}
         </form>
       </LayoutCTA>
-    </FullscreenLoader>
+    </>
   );
 };
 

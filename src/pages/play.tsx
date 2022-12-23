@@ -80,10 +80,10 @@ const Play: NextPage = () => {
   }
 
   return (
-    <FullscreenLoader
-      loaders={[currentAnswersIsLoading, currentTopicIsLoading]}
-    >
+    <>
       <Head>
+        FullscreenLoader loaders=
+        {[currentAnswersIsLoading, currentTopicIsLoading]}
         <title>Jouer | Le Top 3 du Mardi</title>
       </Head>
       {/* ANSWERS */}
@@ -166,7 +166,7 @@ const Play: NextPage = () => {
           </Button>
         </div>
       </LayoutCTA>
-    </FullscreenLoader>
+    </>
   );
 };
 
