@@ -31,7 +31,9 @@ const Play: NextPage = () => {
   const { data: currentTopic, isLoading: currentTopicIsLoading } =
     trpc.quiz.getCurrentTopic.useQuery();
   const { data: currentAnswers, isLoading: currentAnswersIsLoading } =
-    trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id);
+    trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id, {
+      enabled: !!currentTopic,
+    });
   const { data: userVotes } = trpc.quiz.hasUserAlreadyVoted.useQuery();
 
   const answersMutation = trpc.quiz.postAnswers.useMutation({
