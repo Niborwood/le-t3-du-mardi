@@ -13,7 +13,7 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
-import { Button, TopVotingBlock } from "../components/ui";
+import { Button, FullscreenLoader, TopVotingBlock } from "../components/ui";
 import Head from "next/head";
 import { ChevronsUpDown } from "lucide-react";
 
@@ -34,8 +34,7 @@ const Play: NextPage = () => {
     trpc.quiz.getCurrentAnswers.useQuery(currentTopic?.id, {
       enabled: !!currentTopic,
     });
-  const { data: userVotes, isLoading: userVotesIsLoading } =
-    trpc.quiz.hasUserAlreadyVoted.useQuery();
+  const { data: userVotes } = trpc.quiz.hasUserAlreadyVoted.useQuery();
 
   const answersMutation = trpc.quiz.postAnswers.useMutation({
     onSuccess: () => {
@@ -81,7 +80,9 @@ const Play: NextPage = () => {
   }
 
   return (
-    <>
+    <FullscreenLoader
+      loaders={[currentAnswersIsLoading, currentTopicIsLoading]}
+    >
       <Head>
         <title>Jouer | Le Top 3 du Mardi</title>
       </Head>
@@ -165,7 +166,7 @@ const Play: NextPage = () => {
           </Button>
         </div>
       </LayoutCTA>
-    </>
+    </FullscreenLoader>
   );
 };
 

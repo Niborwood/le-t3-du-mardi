@@ -15,7 +15,7 @@ import {
   LayoutPrev,
   LayoutTitle,
 } from "../components/layout";
-import { Button } from "../components/ui";
+import { Button, FullscreenLoader } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
@@ -33,17 +33,22 @@ const Topics: NextPage = () => {
 
   // TRPC
   const utils = trpc.useContext();
-  const { data: pastTopics, isLoading: isPastTopicsLoading } =
-    trpc.quiz.getPastTopics.useQuery(
-      {
-        page,
+  const {
+    data: pastTopics,
+    isLoading: isPastTopicsLoading,
+    isInitialLoading: pastTopicsInitialLoading,
+  } = trpc.quiz.getPastTopics.useQuery(
+    {
+      page,
+    },
+    {
+      onSuccess: (data) => {
+        setCurrentTopicId(data.data[historyBase]?.id);
       },
-      {
-        onSuccess: (data) => {
-          setCurrentTopicId(data.data[historyBase]?.id);
-        },
-      }
-    );
+    }
+  );
+
+  console.log(pastTopicsInitialLoading);
 
   const { data: topicToVote, isLoading: topicToVoteIsLoading } =
     trpc.quiz.getTopicToVote.useQuery(undefined, {
@@ -69,7 +74,7 @@ const Topics: NextPage = () => {
   const { data: topAnswers } = trpc.quiz.getCurrentAnswers.useQuery(
     currentTopicId,
     {
-      enabled: !!sessionData,
+      enabled: !!currentTopicId,
     }
   );
 
@@ -105,7 +110,9 @@ const Topics: NextPage = () => {
   };
 
   return (
-    <>
+    <FullscreenLoader
+      loaders={[isPastTopicsLoading && !pastTopicsInitialLoading]}
+    >
       <Head>
         <title>Sujets | Le top 3 du mardi</title>
       </Head>
@@ -117,7 +124,10 @@ const Topics: NextPage = () => {
           </div>
         ) : (
           <div className="space-y-4 lg:gap-4 2xl:row-span-2 2xl:grid 2xl:grid-rows-6 2xl:space-y-0">
-            <div className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3">
+            <div
+              className="border-b-4 border-zinc-900 lg:grid lg:grid-cols-1 2xl:row-span-2 2xl:grid-cols-3"
+              ref={parent}
+            >
               {/* Title */}
               <h2 className="col-span-2 flex flex-col text-2xl" ref={parent}>
                 <span>Top 3</span>
@@ -337,7 +347,7 @@ const Topics: NextPage = () => {
           )}
         </form>
       </LayoutCTA>
-    </>
+    </FullscreenLoader>
   );
 };
 
