@@ -4,7 +4,7 @@ import Link from "next/link";
 
 type ButtonProps = {
   children: ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "light";
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
   onClick?: () => void;
@@ -38,6 +38,7 @@ const Button = ({
             variant === "primary",
           "border-4 border-zinc-900 bg-transparent text-zinc-900 hover:border-emerald-600 hover:text-emerald-600":
             variant !== "primary",
+          "border-4 border-zinc-50 text-zinc-50": variant === "light",
           "h-full w-full": !!href,
           "cursor-not-allowed opacity-50 hover:text-zinc-50": disabled,
         },

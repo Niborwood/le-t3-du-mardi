@@ -2,7 +2,7 @@ import Head from "next/head";
 
 const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="min-h-screen animate-fade-in bg-zinc-900 font-archivo font-extralight text-zinc-50">
+    <div className="min-h-screen animate-fade-in bg-zinc-900 bg-gradient-to-tr from-zinc-900 to-zinc-800/70 font-archivo font-extralight text-zinc-50">
       <Head>
         <meta
           name="description"
