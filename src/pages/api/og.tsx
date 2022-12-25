@@ -13,9 +13,11 @@ const og = async function () {
 
   // Fetch current topic name
   const url = process.env.VERCEL_URL;
-  const currentTopicName = await fetch(`${url}/api/current-topic`).then((res) =>
-    res.json()
-  );
+  const currentTopicName = await fetch(
+    `${
+      process.env.NODE_ENV === "production" && "https://"
+    }${url}/api/current-topic`
+  ).then((res) => res.json());
 
   return new ImageResponse(
     (

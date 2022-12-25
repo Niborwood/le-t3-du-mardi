@@ -66,13 +66,6 @@ const Topics: NextPage = () => {
     utils.quiz.getTopicToVote.invalidate();
   };
 
-  const { data: topAnswers } = trpc.quiz.getCurrentAnswers.useQuery(
-    currentTopicId,
-    {
-      enabled: !!currentTopicId,
-    }
-  );
-
   // DERIVED
   const currentTopic = pastTopics?.data.find((t) => t.id === currentTopicId);
 
