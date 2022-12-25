@@ -13,7 +13,7 @@ import {
   LayoutAbout,
   LayoutCTA,
 } from "../components/layout";
-import { Button, FullscreenLoader, TopVotingBlock } from "../components/ui";
+import { Button, TopVotingBlock } from "../components/ui";
 import Head from "next/head";
 import { ChevronsUpDown } from "lucide-react";
 

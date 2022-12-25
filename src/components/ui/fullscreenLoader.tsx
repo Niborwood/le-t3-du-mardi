@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { weekday } from "../../utils";
 
