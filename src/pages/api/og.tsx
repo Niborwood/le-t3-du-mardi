@@ -1,5 +1,4 @@
 import { ImageResponse } from "@vercel/og";
-import type { NextRequest } from "next/server";
 
 export const config = {
   runtime: "experimental-edge",
@@ -9,10 +8,14 @@ const font = fetch(
   new URL("../../assets/ClashDisplay-Bold.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-const og = async function (req: NextRequest) {
+const og = async function () {
   const fontData = await font;
-  const { searchParams } = req.nextUrl;
-  const top = searchParams.get("top");
+
+  // Fetch current topic name
+  const url = process.env.VERCEL_URL;
+  const currentTopicName = await fetch(`${url}/api/current-topic`).then((res) =>
+    res.json()
+  );
 
   return new ImageResponse(
     (
@@ -31,7 +34,9 @@ const og = async function (req: NextRequest) {
           <div tw="flex flex-col md:flex-row w-full py-12 px-4 md:items-center justify-between">
             <h2 tw="flex flex-col text-3xl sm:text-4xl tracking-tight text-zinc-50 text-left">
               <span tw="mb-4">Aujourd&apos;hui, c&apos;est top 3.</span>
-              <span tw="text-9xl mb-12">Top 3 {top || "n'importe quoi"}.</span>
+              <span tw="text-9xl mb-12">
+                Top 3 {currentTopicName || "n'importe quoi"}.
+              </span>
             </h2>
           </div>
         </div>

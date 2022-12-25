@@ -22,6 +22,7 @@ export const FullscreenLoader = () => {
       )}
     >
       <Head>
+        <title>Le top 3 du {weekday}</title>
         <meta
           name="description"
           content="Tous les jours, un top 3 de n'importe quoi."
@@ -35,10 +36,10 @@ export const FullscreenLoader = () => {
           content={`https://top3dumardi.vercel.app/api/og`}
         />
       </Head>
-      <h2 className="animate-fade-in">
+      <h1 className="animate-fade-in">
         Le top 3 du{" "}
         <span className="animate-fade-in-delay opacity-0">{weekday}.</span>
-      </h2>
+      </h1>
     </div>
   );
 };

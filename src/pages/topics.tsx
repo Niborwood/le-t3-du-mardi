@@ -15,7 +15,7 @@ import {
   LayoutPrev,
   LayoutTitle,
 } from "../components/layout";
-import { Button, FullscreenLoader } from "../components/ui";
+import { Button } from "../components/ui";
 import { trpc } from "../utils/trpc";
 
 const Topics: NextPage = () => {
