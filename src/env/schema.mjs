@@ -24,7 +24,7 @@ export const serverSchema = z.object({
   VERCEL_URL: z.string().optional(),
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
-  DISCORD_BOT_TOKEN: z.string(),
+  DISCORD_WEBHOOK: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   TWITTER_API_KEY: z.string(),
