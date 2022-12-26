@@ -1,13 +1,13 @@
-name: API call to Tuesday endpoint
+name: API call to Discord bot
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "30 5 * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: New topic every day
+      - name: New discord message every day
         run: |
           curl --request POST \
-          --url 'https://top3dumardi.vercel.app/api/cron' \
+          --url 'https://top3dumardi.vercel.app/api/discord-bot' \
           --header 'authorization: Bearer ${{ secrets.API_SECRET }}'
