@@ -43,7 +43,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@yourwebsite" />
         <meta name="twitter:creator" content="@yourtwitterhandle" />
-        <meta name="twitter:title" content={`Le top 3 du ${weekday}`} />
+        <meta
+          name="twitter:title"
+          content={`Le top 3 du ${weekday || "..."}`}
+        />
         <meta
           name="twitter:description"
           content="Tous les jours, un top 3 de n'importe quoi."
