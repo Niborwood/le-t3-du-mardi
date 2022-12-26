@@ -1,7 +1,7 @@
 name: API call to Discord bot
 on:
   schedule:
-    - cron: "30 5 * * *"
+    - cron: "30 20 * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
