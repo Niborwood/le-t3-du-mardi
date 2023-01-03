@@ -3,7 +3,7 @@ import { type NextApiRequest, type NextApiResponse } from "next";
 
 import { prisma } from "../../server/db/client";
 
-const tuesday = async (req: NextApiRequest, res: NextApiResponse) => {
+const cron = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
       const { authorization } = req.headers;
@@ -75,4 +75,4 @@ const tuesday = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default tuesday;
+export default cron;

@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await fetch(env.DISCORD_WEBHOOK, {
       method: "POST",
       body: JSON.stringify({
-        content: `Aujourd'hui c'est top 3 ! \n \n https://top3dumardi.vercel.app/`,
+        content: `Aujourd'hui c'est top 3 ! \n \n https://top3dumardi.vercel.app/?date=${new Date().toISOString()}`,
         username: `Le Top 3 du ${
           weekday.charAt(0).toUpperCase() + weekday.slice(1)
         }`,
