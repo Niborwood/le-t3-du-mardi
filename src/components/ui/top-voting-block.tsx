@@ -97,6 +97,7 @@ export const TopVotingBlock = ({
                   onChange={(event) => setQuery(event.target.value)}
                   maxLength={30}
                   placeholder={`Top ${index}`}
+                  autoComplete="off"
                 />
                 <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                   <ChevronsUpDown

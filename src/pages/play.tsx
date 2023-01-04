@@ -82,8 +82,6 @@ const Play: NextPage = () => {
   return (
     <>
       <Head>
-        FullscreenLoader loaders=
-        {[currentAnswersIsLoading, currentTopicIsLoading]}
         <title>Jouer | Le Top 3 du Mardi</title>
       </Head>
       {/* ANSWERS */}
