@@ -36,9 +36,42 @@ const cron = async (req: NextApiRequest, res: NextApiResponse) => {
           take: 1,
         });
 
-        // If no topic is found, it returns an error
+        // If no topic is found, find the topic with the least votes and set it as current
         if (!topic) {
-          res.status(404).json({ error: "No topic found" });
+          // Finds the answer with the lowest count of answers
+          const topicWithLowestAnswers = await prisma.topic.findFirst({
+            where: {
+              used: false,
+              current: false,
+            },
+            include: {
+              answers: true,
+            },
+            orderBy: {
+              answers: {
+                _count: "asc",
+              },
+            },
+            take: 1,
+          });
+
+          if (!topicWithLowestAnswers) {
+            res.status(403).json({ message: "No topics found" });
+            return;
+          }
+
+          // Sets the topic as current: true
+          await prisma.topic.update({
+            data: {
+              current: true,
+              votedAt: new Date(),
+            },
+            where: {
+              id: topicWithLowestAnswers.id,
+            },
+          });
+
+          res.status(200).json({ message: "Success, old topic" });
           return;
         }
 
@@ -62,7 +95,7 @@ const cron = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         });
 
-        res.status(200).json({ message: "Success" });
+        res.status(200).json({ message: "Success, new topic" });
       } else {
         res.status(401).json({ success: false });
       }
