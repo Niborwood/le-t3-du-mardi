@@ -41,7 +41,6 @@ const cron = async (req: NextApiRequest, res: NextApiResponse) => {
           // Finds the answer with the lowest count of answers
           const topicWithLowestAnswers = await prisma.topic.findFirst({
             where: {
-              used: false,
               current: false,
             },
             include: {
